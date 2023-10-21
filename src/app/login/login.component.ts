@@ -14,4 +14,8 @@ isNewUser: boolean;
   ngOnInit(): void {
   }
 
+  showSignUpPage(){
+    this.isNewUser = true;
+  }
+
 }
