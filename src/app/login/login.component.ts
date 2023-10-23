@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
-
+// import { CapacitorHttp, HttpResponse } from '@capacitor/core';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -15,9 +15,29 @@ password: string;
     this.isNewUser = false;
     this.password = '';
     this.username = '';
+    // // can be passed as a raw JS Object (must be JSON serializable)
+    // const doPost = async () => {
+    //   const options = {
+    //     url: 'http://10.42.0.67:8080/user/login',
+    //     headers: {},
+    //     data: {username : "caregiver", password : "caregiver"},
+    //   };
+
+    //   const response: HttpResponse = await CapacitorHttp.post(options);
+
+    //   console.log(response);
+
+    //   // or...
+    //   // const response = await CapacitorHttp.request({ ...options, method: 'POST' })
+
+    // };
+
+    // doPost()
+
    }
 
   ngOnInit(): void {
+
   }
 
   showSignUpPage(){

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { Http } from '@capacitor-community/http';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +8,7 @@ export class UserService {
   host: string;
   showLogin = new Subject<boolean>();
   constructor() {
-    this.host = 'http://localhost:8080'
+    this.host = 'http://10.42.0.67:8080'
    }
 
 
