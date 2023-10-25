@@ -15,9 +15,9 @@ export class AppComponent {
     this.isLoggedIn = false;
     this.showLogin = true;
     this.token = localStorage.getItem("user_token");
-    // if (this.token.length > 0){
-    //   this.showLogin = false;
-    // }
+    if (this.token.length > 0){
+      this.showLogin = false;
+    }
     this.userService.getProfile(this.token)
     .then(res => res.json())
     .then(res => {

@@ -9,6 +9,7 @@ import { ProfileComponent } from './dashboard/profile/profile.component';
 import { FooterComponent } from './dashboard/footer/footer.component';
 import { HeaderComponent } from './dashboard/header/header.component';
 import { FormsModule } from '@angular/forms';
+import { ProfileinfoComponent } from './dashboard/profileinfo/profileinfo.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { FormsModule } from '@angular/forms';
     ProfileComponent,
     FooterComponent,
     HeaderComponent,
+    ProfileinfoComponent,
   ],
   imports: [
     BrowserModule,

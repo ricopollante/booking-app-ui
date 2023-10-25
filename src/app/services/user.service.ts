@@ -9,6 +9,8 @@ export class UserService {
   showLogin = new Subject<boolean>();
   constructor() {
     this.host = 'http://10.42.0.67:8080'
+    //this.host = 'http://localhost:8080'
+
    }
 
 

@@ -6,28 +6,34 @@
 
   <p class="text-center mt-16">Pick a service:</p>
 
-  <div class="mx-20 my-8  flex flex-row">
-    <img class="absolute left-16 rounded-full bg-blue-300 p-4 w-20 h-20" src="assets/housekeeper.png" alt="">
-    <div class="rounded-full bg-gray-200 p-4 w-full text-center">
-      <p class=" text-2xl text-center">Housekeeper </p>
-    <p class="text-xs">(Household Chores)</p>
+  <div class="mx-20 my-8 flex flex-row">
+
+    <div class="rounded-full bg-gray-200 p-2 sm:p-4 w-full text-center relative">
+      <img class="sm:w-12 sm:h-12 sm:p-3 sm:bottom-0 absolute left-0 bottom-0 rounded-full bg-blue-300 p-2 w-16 h-16" src="assets/housekeeper.png" alt="">
+      <p class="mr-26 text-xl text-center font-semibold sm:text-xs">Housekeeper </p>
+    <p class="text-xs sm:hidden">(Household Chores)</p>
     </div>
+
   </div>
 
-  <div (click)="showCaregiverBookingForm()" class="mx-20 my-8  flex flex-row">
-    <img class="absolute left-16 rounded-full bg-blue-300 p-4 w-20 h-20" src="assets/care.png" alt="">
-    <div class="rounded-full bg-gray-200 p-4 w-full text-center">
-      <p class=" text-2xl text-center">Caregiving </p>
-    <p class="text-xs">(Companion, Babysitting, Personal Care, Errands)</p>
+  <div (click)="showCaregiverBookingForm()" class="mx-20 my-8 flex flex-row">
+
+    <div class="rounded-full bg-gray-200 p-2 sm:p-4 w-full text-center relative">
+      <img class="sm:w-12 sm:h-12 sm:p-3 sm:bottom-0 absolute left-0 bottom-0 rounded-full bg-blue-300 p-2 w-16 h-16" src="assets/care.png" alt="">
+      <p class="mr-26 text-xl text-center font-semibold sm:text-xs">Caregiving </p>
+    <p class="text-xs sm:hidden">(Companion, Babysitting, Personal Care, Errands)</p>
     </div>
+
   </div>
 
-  <div (click)="showUserBookingList()" class="mx-20 my-8  flex flex-row">
-    <img class="absolute left-16 rounded-full bg-blue-300 p-4 w-20 h-20" src="assets/booking.png" alt="">
-    <div class="rounded-full bg-gray-200 p-4 w-full text-center">
-      <p class=" text-2xl text-center">Bookings </p>
-    <p class="text-xs">(History of bookings)</p>
+  <div (click)="showUserBookingList()" class="mx-20 my-8 flex flex-row">
+
+    <div class="rounded-full bg-gray-200 p-2 sm:p-4 w-full text-center relative">
+      <img class="sm:w-12 sm:h-12 sm:p-3 sm:bottom-0 absolute left-0 bottom-0 rounded-full bg-blue-300 p-2 w-16 h-16" src="assets/booking.png" alt="">
+      <p class="mr-26 text-xl text-center font-semibold sm:text-xs">Bookings </p>
+    <p class="text-xs sm:hidden">(History of bookings)</p>
     </div>
+
   </div>
 
 </div>
