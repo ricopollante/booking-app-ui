@@ -7,7 +7,8 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "build_android" : "ng build && npx cap sync"
+    "build_android": "ng build && npx cap sync",
+    "ionic:serve": "ng.cmd run bookingapp:serve --host=localhost --port=8100"
   },
   "private": true,
   "dependencies": {
@@ -22,8 +23,12 @@
     "@capacitor-community/http": "^1.4.1",
     "@capacitor/android": "^5.5.0",
     "@capacitor/angular": "^2.0.3",
-    "@capacitor/core": "^5.5.0",
+    "@capacitor/app": "5.0.6",
+    "@capacitor/core": "5.5.1",
+    "@capacitor/haptics": "5.0.6",
     "@capacitor/ios": "^5.5.0",
+    "@capacitor/keyboard": "5.0.6",
+    "@capacitor/status-bar": "5.0.6",
     "jetifier": "^2.0.0",
     "rxjs": "~7.4.0",
     "tslib": "^2.3.0",
@@ -31,9 +36,9 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^16.2.7",
-    "@angular/cli": "^16.2.7",
+    "@angular/cli": "^16.2.8",
     "@angular/compiler-cli": "^16.2.10",
-    "@capacitor/cli": "^5.5.0",
+    "@capacitor/cli": "^5.5.1",
     "@types/jasmine": "~3.10.0",
     "@types/node": "^12.11.1",
     "autoprefixer": "^10.4.16",
@@ -45,6 +50,6 @@
     "karma-jasmine-html-reporter": "~1.7.0",
     "postcss": "^8.4.31",
     "tailwindcss": "^3.3.4",
-    "typescript": "~5.1.6"
+    "typescript": "^5.1.6"
   }
 }

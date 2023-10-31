@@ -12,10 +12,11 @@ export class AppComponent {
   token: any;
   title = 'bookingapp';
   constructor(private userService: UserService){
+    this.token = ''
     this.isLoggedIn = false;
     this.showLogin = true;
     this.token = localStorage.getItem("user_token");
-    if (this.token.length > 0){
+    if (this.token != null || this.token == ''){
       this.showLogin = false;
     }
     this.userService.getProfile(this.token)

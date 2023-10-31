@@ -8,8 +8,10 @@ export class UserService {
   host: string;
   showLogin = new Subject<boolean>();
   constructor() {
-    this.host = 'http://10.42.0.67:8080'
+    //this.host = 'http://10.42.0.67:8080'
     //this.host = 'http://localhost:8080'
+    //this.host = 'http://192.168.1.31:8080'
+    this.host = 'https://43f0-58-69-61-224.ngrok.io';
 
    }
 
