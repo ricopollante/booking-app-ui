@@ -8,10 +8,11 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "build_android": "ng build && npx cap sync",
-    "ionic:serve": "ng.cmd run bookingapp:serve --host=localhost --port=8100"
+    "ionic:serve": "ng.cmd run bookingapp:serve --ssl --host=localhost --port=8100"
   },
   "private": true,
   "dependencies": {
+    "@abacritt/angularx-social-login": "^2.1.0",
     "@angular/animations": "^16.2.10",
     "@angular/common": "^16.2.10",
     "@angular/compiler": "^16.2.10",
@@ -29,6 +30,7 @@
     "@capacitor/ios": "^5.5.0",
     "@capacitor/keyboard": "5.0.6",
     "@capacitor/status-bar": "5.0.6",
+    "@codetrix-studio/capacitor-google-auth": "^3.3.4",
     "jetifier": "^2.0.0",
     "rxjs": "~7.4.0",
     "tslib": "^2.3.0",

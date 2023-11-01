@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
+import {GoogleAuth, User} from '@codetrix-studio/capacitor-google-auth';
 // import { CapacitorHttp, HttpResponse } from '@capacitor/core';
 @Component({
   selector: 'app-login',
@@ -36,10 +37,15 @@ password: string;
 
    }
 
-  ngOnInit(): void {
+   async ngOnInit() {
+    GoogleAuth.initialize();
+}
 
+  async signIn() {
+    //User Authentication
+    const user: User = await GoogleAuth.signIn();
+    console.log(user)
   }
-
   showSignUpPage(){
     this.isNewUser = true;
   }

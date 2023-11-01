@@ -1,0 +1,13 @@
+<div>
+  <div *ngFor="let booking of bookingList" class="">
+    <div class="flex flex-row mx-16 mt-6 p-4 bg-blue-200 rounded-lg shadow-lg">
+      <img class="my-4 w-14 h-14 rounded-full shadow-xl" src="assets/user.png" alt="">
+        <div class="my-4">
+          <p>Agenda: {{booking.agenda}}</p>
+          <p>Location: {{booking.location}}</p>
+          <p  *ngIf="booking.accepted == false"  class="text-yellow-500" >Status: Waiting to accept</p>
+          <p  *ngIf="booking.accepted == true"  class="text-green-500" >Status: Accepted</p>
+        </div>
+    </div>
+  </div>
+</div>

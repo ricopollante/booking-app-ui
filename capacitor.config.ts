@@ -6,7 +6,14 @@ const config: CapacitorConfig = {
   webDir: 'dist\\bookingapp',
   server: {
     androidScheme: 'https'
-  }
+  },
+  plugins: {
+    GoogleAuth: {
+      scopes: ['profile', 'email'],
+      serverClientId: '216907772562-k80aqsd288sdpmo27bn51rhvtslbm4sc.apps.googleusercontent.com',
+      forceCodeForRefreshToken: true,
+    },
+  },
 };
 
 export default config;
