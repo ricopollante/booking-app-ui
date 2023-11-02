@@ -1,34 +1,13 @@
 <div *ngIf="isNewUser" class="w-screen h-screen">
-
-    <div class="mx-32">
-        <img class="w-64" src="assets/applogo.jpg" alt="" srcset="">
-    </div>
-
-    <div class="mx-20 my-8 flex flex-row">
-        <img class="absolute left-16 rounded-full bg-blue-300 p-4 w-14 h-14" src="assets/user.png" alt="">
-        <p class="my-3 text-xs rounded-full bg-gray-200 p-2 w-full text-center">User Sign up</p>
-    </div>
-
-    <div class="mx-20 my-8  flex flex-row">
-        <img class="absolute left-16 rounded-full bg-blue-300 p-4 w-14 h-14" src="assets/housekeeper.png" alt="">
-        <p class="my-3 text-xs rounded-full bg-gray-200 p-2 w-full text-center">Housekeeper Sign up</p>
-    </div>
-
-    <div class="mx-20 my-8  flex flex-row">
-        <img class="absolute left-16 rounded-full bg-blue-300 p-4 w-14 h-14" src="assets/care.png" alt="">
-        <p class="my-3 text-xs rounded-full bg-gray-200 p-2 w-full text-center">Caregiver Sign up </p>
-    </div>
+    <app-signup></app-signup>
 </div>
 
-
 <div *ngIf="!isNewUser" class="w-screen h-screen">
-
-
     <div class="w-full max-w-xs mx-12 mt-24">
       <div class="mx-24">
         <img class="w-full" src="assets/applogo.jpg" alt="" srcset="">
     </div>
-        <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <form class="bg-white rounded px-8 pt-6 pb-8 mb-4">
           <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
               Username

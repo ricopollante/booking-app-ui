@@ -16,20 +16,28 @@ export class AppComponent {
     this.isLoggedIn = false;
     this.showLogin = true;
     this.token = localStorage.getItem("user_token");
-    if (this.token != null || this.token == ''){
-      this.showLogin = false;
-    }
-    this.userService.getProfile(this.token)
-    .then(res => res.json())
-    .then(res => {
-      if (res){
-        this.isLoggedIn = true;
-      }
-    })
+
     this.userService.showLogin.subscribe(
       (data: any) =>{
         this.showLogin = data;
       }
     );
+
+    if (this.token == null || this.token == '' || this.token.length == 0){
+      this.showLogin = true;
+    }
+    else if(this.token.length>0){
+      this.userService.getProfile(this.token)
+      .then(res => res.json())
+      .then(res => {
+        if (res){
+          this.isLoggedIn = true;
+          this.showLogin = false;
+        }
+      })
+
+    }
+
+
 }
 }

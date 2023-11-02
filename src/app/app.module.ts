@@ -11,6 +11,7 @@ import { HeaderComponent } from './dashboard/header/header.component';
 import { FormsModule } from '@angular/forms';
 import { ProfileinfoComponent } from './dashboard/profileinfo/profileinfo.component';
 import { HttpClientModule } from  '@angular/common/http';
+import { SignupComponent } from './signup/signup.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,6 +21,7 @@ import { HttpClientModule } from  '@angular/common/http';
     FooterComponent,
     HeaderComponent,
     ProfileinfoComponent,
+    SignupComponent,
   ],
   imports: [
     BrowserModule,
