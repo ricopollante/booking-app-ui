@@ -8,10 +8,11 @@ export class UserService {
   host: string;
   showLogin = new Subject<boolean>();
   constructor() {
-    this.host = 'http://10.42.0.67:8080'
+    //this.host = 'http://10.42.0.67:8080'
     //this.host = 'http://localhost:8080'
     //this.host = 'http://192.168.1.31:8080'
     //this.host = 'https://43f0-58-69-61-224.ngrok.io';
+    this.host = 'https://2146-58-69-61-224.ngrok-free.app'
 
    }
 
@@ -80,5 +81,15 @@ export class UserService {
     this.showLogin.next(false);
   }
 
+
+  debugger(logs: string){
+    let data = new FormData()
+    data.append('logs', logs)
+    return fetch(this.host + '/user/logger', {
+      method: 'POST',
+      headers: {},
+      body: data
+  })
+  }
 
 }

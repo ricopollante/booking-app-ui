@@ -10,7 +10,7 @@ import { FooterComponent } from './dashboard/footer/footer.component';
 import { HeaderComponent } from './dashboard/header/header.component';
 import { FormsModule } from '@angular/forms';
 import { ProfileinfoComponent } from './dashboard/profileinfo/profileinfo.component';
-
+import { HttpClientModule } from  '@angular/common/http';
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,7 +24,8 @@ import { ProfileinfoComponent } from './dashboard/profileinfo/profileinfo.compon
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

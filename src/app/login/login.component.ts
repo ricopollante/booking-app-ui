@@ -12,7 +12,9 @@ export class LoginComponent implements OnInit {
 isNewUser: boolean;
 username: string;
 password: string;
+userInfo: string;
   constructor(private userService: UserService, private router: Router) {
+    this.userInfo = '';
     this.isNewUser = false;
     this.password = '';
     this.username = '';
@@ -34,18 +36,29 @@ password: string;
     // };
 
     // doPost()
-
    }
 
    async ngOnInit() {
-    GoogleAuth.initialize();
+    // try{
+    //   GoogleAuth.initialize();
+    // }
+    // catch (error) {
+    //   this.userService.debugger(String(error));
+    // }
 }
 
   async signIn() {
     //User Authentication
-    const user: User = await GoogleAuth.signIn();
-    console.log(user)
+    try {
+      const user: User = await GoogleAuth.signIn();
+      console.log(user)
+      this.userService.debugger(JSON.stringify(user));
+    }
+    catch (error) {
+      this.userService.debugger(String(error));
+    }
   }
+
   showSignUpPage(){
     this.isNewUser = true;
   }
