@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
 import {GoogleAuth, User} from '@codetrix-studio/capacitor-google-auth';
+import { Capacitor } from '@capacitor/core';
 // import { CapacitorHttp, HttpResponse } from '@capacitor/core';
 @Component({
   selector: 'app-login',
@@ -18,33 +19,19 @@ userInfo: string;
     this.isNewUser = false;
     this.password = '';
     this.username = '';
-    // // can be passed as a raw JS Object (must be JSON serializable)
-    // const doPost = async () => {
-    //   const options = {
-    //     url: 'http://10.42.0.67:8080/user/login',
-    //     headers: {},
-    //     data: {username : "caregiver", password : "caregiver"},
-    //   };
 
-    //   const response: HttpResponse = await CapacitorHttp.post(options);
-
-    //   console.log(response);
-
-    //   // or...
-    //   // const response = await CapacitorHttp.request({ ...options, method: 'POST' })
-
-    // };
-
-    // doPost()
    }
 
    async ngOnInit() {
-    // try{
-    //   GoogleAuth.initialize();
-    // }
-    // catch (error) {
-    //   this.userService.debugger(String(error));
-    // }
+    if (Capacitor.getPlatform() === 'ios') {
+      // do something
+    }
+    if (Capacitor.getPlatform() === 'android') {
+      // do something
+    }
+    else{
+      GoogleAuth.initialize();
+    }
 }
 
   async signIn() {
