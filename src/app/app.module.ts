@@ -12,6 +12,8 @@ import { FormsModule } from '@angular/forms';
 import { ProfileinfoComponent } from './dashboard/profileinfo/profileinfo.component';
 import { HttpClientModule } from  '@angular/common/http';
 import { SignupComponent } from './signup/signup.component';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { MapComponent } from './map/map.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,12 +24,14 @@ import { SignupComponent } from './signup/signup.component';
     HeaderComponent,
     ProfileinfoComponent,
     SignupComponent,
+    MapComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    LeafletModule
   ],
   providers: [],
   bootstrap: [AppComponent]

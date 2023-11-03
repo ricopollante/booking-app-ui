@@ -7,12 +7,14 @@ import { Subject } from 'rxjs';
 export class UserService {
   host: string;
   showLogin = new Subject<boolean>();
+  locSrc = new Subject<any>();
+  locDst = new Subject<any>();
   constructor() {
     //this.host = 'http://10.42.0.67:8080'
     //this.host = 'http://localhost:8080'
     //this.host = 'http://192.168.1.31:8080'
     //this.host = 'https://43f0-58-69-61-224.ngrok.io';
-    this.host = 'https://2146-58-69-61-224.ngrok-free.app'
+    this.host = 'https://1a70-58-69-61-224.ngrok-free.app'
 
    }
 
@@ -90,6 +92,15 @@ export class UserService {
       headers: {},
       body: data
   })
+  }
+
+  setSrc(lat: number, long: number){
+    this.locSrc.next({"lat" : lat, "long" : long})
+  }
+
+
+  setDst(lat: number, long: number){
+    this.locDst.next({"lat" : lat, "long" : long})
   }
 
 }
