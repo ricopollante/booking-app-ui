@@ -1,6 +1,10 @@
-<div class="map-container h-[100vh]"
+
+<div class="relative">
+  <div class="map-container h-[100vh] z-0"
   leaflet
   [leafletOptions]="options"
   (leafletMapReady)="onMapReady($event)"
   (leafletClick)="mapClicked($event)">
+</div>
+  <img (click)="userCurrentPosition()" class="absolute right-5 bottom-8 z-10 w-10" src="assets/points.png" alt="">
 </div>

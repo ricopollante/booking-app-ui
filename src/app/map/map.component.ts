@@ -35,6 +35,8 @@ export class MapComponent implements OnInit {
   constructor(private userService: UserService){
     this.destLat = 0
     this.destLong = 0
+    this.srcLat = 0
+    this.srcLong = 0
   }
 
   ngOnInit(): void {
@@ -42,11 +44,15 @@ export class MapComponent implements OnInit {
 //TEST ROUTES //GET
     this.userService.locSrc.subscribe( //UPDATE SOURCE
       (data: any) =>{
+        this.srcLat = data.lat;
+        this.srcLong = data.long;
         this.markers[1].setLatLng({ lat: data.lat, lng: data.long });
       }
     )
     this.userService.locDst.subscribe( //UPDATE DSTINATION
       (data: any) =>{
+        this.destLat = data.lat;
+        this.destLong = data.long;
         this.markers[0].setLatLng({ lat: data.lat, lng: data.long });
       }
     )
@@ -58,19 +64,19 @@ export class MapComponent implements OnInit {
   //   //this.userService.setSrc(this.destLat, this.destLong ) // send src coordinates
   // }, 1000);
 
-  const printCurrentPosition = async () => {
-    var self = this;
-    let location = await Geolocation.getCurrentPosition({
-        enableHighAccuracy: true,
-        timeout: 1000
-    });
-    const wait = Geolocation.watchPosition({enableHighAccuracy: true, timeout: 1000}, (position, err) => {
-        this.userService.debugger(JSON.stringify(location))
-        this.userService.setDst(Number(JSON.stringify(location.coords.latitude)), Number(JSON.stringify(location.coords.longitude)))
-    });
+
 }
 
-printCurrentPosition()
+userCurrentPosition = async () => { // GET USER CURRENT POSITION
+  var self = this;
+  let location = await Geolocation.getCurrentPosition({
+      enableHighAccuracy: true,
+      timeout: 1000
+  });
+  const wait = Geolocation.watchPosition({enableHighAccuracy: true, timeout: 1000}, (position, err) => {
+      this.userService.debugger(JSON.stringify(location))
+      this.userService.setDst(Number(JSON.stringify(location.coords.latitude)), Number(JSON.stringify(location.coords.longitude)))
+  });
 
   this.socket.emit('on_location', {"uuid" : "2sad-234ds-32423-45eedd", "location" : ""});
   this.socket.on('on_location_rcv', (data) => {
@@ -84,11 +90,11 @@ printCurrentPosition()
   initMarkers() {
     const initialMarkers = [
       {
-        position: { lat: 14.6178, lng: 121.0572 },  //Destination
+        position: { lat: this.destLat, lng: this.destLong },  //Destination
         draggable: false,
       },
       {
-        position: { lat: this.destLat+ Math.random()* 0.00900, lng: this.destLong+ Math.random()* 0.00900 }, //Source
+        position: { lat: this.srcLat , lng: this.srcLong  }, //Source
         draggable: false,
       }
     ];
@@ -120,9 +126,23 @@ printCurrentPosition()
       (data: any) =>{
        // console.log(data);
        var polylinePoints:  [number, number][] = [
-        [Number(initialMarkers[0].position.lat), Number(initialMarkers[0].position.lng)], //Source
-        [Number(initialMarkers[0].position.lat+ Math.random()* 0.00900 ) , Number(initialMarkers[0].position.lng+Math.random()* 0.00900  )],
-        [Number(data.lat), Number(data.long)],  //Destination
+        [Number(this.destLat), Number(this.destLong)], //Destination
+        [Number(data.lat), Number(data.long)], //Source
+      ];
+      this.map.panTo(new Leaflet.LatLng(Number(data.lat), Number(data.long)));
+      pLineGroup.clearLayers()
+      pLineGroup.addLayer(Leaflet.polyline(polylinePoints))
+      pLineGroup.addTo(this.map)
+
+      }
+    )
+
+    this.userService.locDst.subscribe(
+      (data: any) =>{
+       // console.log(data);
+       var polylinePoints:  [number, number][] = [
+        [Number(data.lat), Number(data.long)], //Destination
+        [Number(this.srcLat), Number(this.srcLong)], //Source
       ];
       this.map.panTo(new Leaflet.LatLng(Number(data.lat), Number(data.long)));
       pLineGroup.clearLayers()
