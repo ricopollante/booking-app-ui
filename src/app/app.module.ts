@@ -13,7 +13,8 @@ import { ProfileinfoComponent } from './dashboard/profileinfo/profileinfo.compon
 import { HttpClientModule } from  '@angular/common/http';
 import { SignupComponent } from './signup/signup.component';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
-import { MapComponent } from './map/map.component';
+import { MapComponent } from './dashboard/map/map.component';
+import { LoadingscreenComponent } from './loadingscreen/loadingscreen.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,6 +26,7 @@ import { MapComponent } from './map/map.component';
     ProfileinfoComponent,
     SignupComponent,
     MapComponent,
+    LoadingscreenComponent,
   ],
   imports: [
     BrowserModule,

@@ -14,8 +14,7 @@ export class UserService {
     //this.host = 'http://localhost:8080'
     //this.host = 'http://192.168.1.31:8080'
     //this.host = 'https://43f0-58-69-61-224.ngrok.io';
-    this.host = 'https://1a70-58-69-61-224.ngrok-free.app'
-
+    this.host = 'https://f760-58-69-61-224.ngrok-free.app'
    }
 
 
@@ -36,7 +35,7 @@ export class UserService {
 
   getProfile(token: string){
     return fetch(this.host + '/user/profile', {
-      method: 'GET',
+      method: 'POST',
       headers: {
         Authorization: `Bearer ${token}`
       }
@@ -45,17 +44,19 @@ export class UserService {
 
   getBookings(){
     return fetch(this.host + '/book/list', {
-      method: 'GET',
+      method: 'POST',
       headers: {}
   })
   }
 
-  bookAccept(id: string){
+  bookAccept(id: string, token: string){
     let data = new FormData()
     data.append('id', id)
     return fetch(this.host + '/book/accept', {
       method: 'POST',
-      headers: {},
+      headers: {
+        Authorization: `Bearer ${token}`
+      },
       body: data
   })
   }
@@ -101,6 +102,15 @@ export class UserService {
 
   setDst(lat: number, long: number){
     this.locDst.next({"lat" : lat, "long" : long})
+  }
+
+  getChannel(token: string){
+    return fetch(this.host + '/user/get_uuid', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+  })
   }
 
 }

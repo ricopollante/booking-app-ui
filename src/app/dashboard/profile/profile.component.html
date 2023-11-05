@@ -44,15 +44,28 @@
     <p class="text-center text-blue-400 text-4xl">{{name}}</p>
   </div>
 
-  <div>
+  <div class=" mb-36">
     <div *ngFor="let booking of bookingList" class="">
-      <div  *ngIf="(booking.accepted == false)" class="flex flex-row mx-16 mt-6 p-4 bg-blue-200 rounded-lg shadow-lg">
+      <div class="flex flex-row mx-16 mt-6 p-4 bg-blue-200 rounded-lg shadow-lg relative">
         <img class="my-4 w-14 h-14 rounded-full shadow-xl" src="assets/user.png" alt="">
           <div class="my-4">
             <p>Agenda: {{booking.agenda}}</p>
             <p>Location: {{booking.location}}</p>
-            <button (click)="acceptBooking(booking.id)" type="button" class=" text-white bg-blue-500 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-md px-4 py-2 mt-2 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">ACCEPT</button>
-            <button type="button" class=" text-white bg-red-500 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-md px-4 py-2 mt-2 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-blue-800">REPORT</button>
+            <div class="flex flex-row w-full">
+              <button  *ngIf="(booking.accepted == false)" (click)="acceptBooking(booking.id)" type="button" class="w-full text-white bg-blue-500 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-md px-4 py-2 mt-2 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">ACCEPT</button>
+              <button *ngIf="booking.accepted == true" type="button" class="w-full text-white bg-blue-500 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-md px-4 py-2 mt-2 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">MESSAGE</button>
+              <button type="button" class="w-full text-white bg-red-500 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-md px-4 py-2 mt-2 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-blue-800">REPORT</button>
+            </div>
+
+            <div *ngIf="booking.accepted == true" class="absolute right-0 top-0">
+              <a class="p-0" routerLink="/map" routerLinkActive="active">
+                <img class="w-8 h-8 mt-6 mx-6 sm:w-6 sm:h-6 sm:mb-2" src="assets/track.png" alt="">
+              </a>
+            </div>
+          </div>
+          <div>
+
+
           </div>
       </div>
     </div>
@@ -82,7 +95,7 @@
 </div>
 
 
-<div *ngIf="isShowBooking && !showBookingList">
+<div class="mb-36" *ngIf="isShowBooking && !showBookingList">
   <div>
     <div *ngFor="let booking of bookingList" class="">
       <div class="flex flex-row mx-16 mt-6 p-4 bg-blue-200 rounded-lg shadow-lg">
@@ -90,8 +103,12 @@
           <div class="my-4">
             <p>Agenda: {{booking.agenda}}</p>
             <p>Location: {{booking.location}}</p>
-            <p  *ngIf="booking.accepted == false"  class="text-yellow-500" >Status: Waiting to accept</p>
-            <p  *ngIf="booking.accepted == true"  class="text-green-500" >Status: Accepted</p>
+            <div class="flex flex-row">
+              <p *ngIf="booking.accepted == false">Status: </p>
+              <p  *ngIf="booking.accepted == false"  class="text-yellow-500 mx-2 font-bold" >Waiting</p>
+              <p *ngIf="booking.accepted == true">Status: </p>
+              <p  *ngIf="booking.accepted == true"  class="text-green-500 mx-2 font-bold" >Accepted</p>
+            </div>
           </div>
       </div>
     </div>
@@ -99,17 +116,28 @@
 </div>
 
 
-<div *ngIf="showBookingList">
+<div class="mb-36" *ngIf="showBookingList">
   <div>
     <p class="text-center text-2xl font-semibold text-blue-900">BOOKINGS</p>
     <div *ngFor="let booking of bookingList" class="">
-      <div class="flex flex-row mx-16 mt-6 p-4 bg-blue-200 rounded-lg shadow-lg">
+      <div class="flex flex-row mx-16 mt-6 p-4 bg-blue-200 rounded-lg shadow-lg relative">
         <img class="my-4 w-14 h-14 rounded-full shadow-xl" src="assets/user.png" alt="">
           <div class="my-4">
-            <p>Agenda: {{booking.agenda}}</p>
-            <p>Location: {{booking.location}}</p>
-            <p  *ngIf="booking.accepted == false" class="text-yellow-500" >Status: Waiting to accept</p>
-            <p  *ngIf="booking.accepted == true"  class="text-green-500" >Status: Accepted</p>
+            <div>
+              <p>Agenda: {{booking.agenda}}</p>
+              <p>Location: {{booking.location}}</p>
+              <div class="flex flex-row">
+                <p *ngIf="booking.accepted == false">Status: </p>
+                <p  *ngIf="booking.accepted == false"  class="text-yellow-500 mx-2 font-bold" >Waiting</p>
+                <p *ngIf="booking.accepted == true">Status: </p>
+                <p  *ngIf="booking.accepted == true"  class="text-green-500 mx-2 font-bold" >Accepted</p>
+              </div>
+            </div>
+            <div *ngIf="booking.accepted == true" class="absolute right-0 top-0">
+              <a routerLink="/map" routerLinkActive="active">
+                <img class="w-11 h-11 mt-6 mx-6 sm:w-6 sm:h-6 sm:mb-2" src="assets/track.png" alt="">
+              </a>
+            </div>
           </div>
       </div>
     </div>

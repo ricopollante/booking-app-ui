@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as Leaflet from 'leaflet';
-import { UserService } from '../services/user.service';
+import { UserService } from '../../services/user.service';
 import {io} from 'socket.io-client';
 import { Geolocation } from '@capacitor/geolocation';
 
@@ -14,7 +14,11 @@ Leaflet.Icon.Default.imagePath = 'assets/';
   styleUrls: ['./map.component.css']
 })
 export class MapComponent implements OnInit {
-  private socket = io('https://8410-58-69-61-224.ngrok-free.app/');
+  private socket = io('https://3275-58-69-61-224.ngrok-free.app',{
+    extraHeaders: {
+      "ngrok-skip-browser-warning" : "69420"
+    }
+  });
   destLat: any;
   destLong: any;
   srcLat: any;
@@ -31,12 +35,18 @@ export class MapComponent implements OnInit {
     zoom: 16,
     //center: { lat: 14.1407, lng: 121.4692 }
   }
-
+  token: any
   constructor(private userService: UserService){
     this.destLat = 0
     this.destLong = 0
     this.srcLat = 0
     this.srcLong = 0
+    this.token = localStorage.getItem("user_token");
+
+    this.socket.on("connect_error", (err) => {
+      console.log(`connect_error due to ${err.message}`);
+    });
+
   }
 
   ngOnInit(): void {
@@ -64,6 +74,18 @@ export class MapComponent implements OnInit {
   //   //this.userService.setSrc(this.destLat, this.destLong ) // send src coordinates
   // }, 1000);
 
+  this.userService.getChannel(this.token)
+  .then(res => res.json())
+  .then(res => {
+    res.data.forEach( (value: any) => {
+      this.socket.emit('on_location', {"uuid" : value.uuid, "location" : ""}); // listen and save src coordinates
+    });
+  })
+
+  this.socket.on('on_location_rcv', (data) => {
+    console.log(data)
+    this.userService.setSrc(data[0], data[1] )
+});
 
 }
 
@@ -75,14 +97,9 @@ userCurrentPosition = async () => { // GET USER CURRENT POSITION
   });
   const wait = Geolocation.watchPosition({enableHighAccuracy: true, timeout: 1000}, (position, err) => {
       this.userService.debugger(JSON.stringify(location))
-      this.userService.setDst(Number(JSON.stringify(location.coords.latitude)), Number(JSON.stringify(location.coords.longitude)))
+      this.userService.setDst(Number(JSON.stringify(location.coords.latitude)), Number(JSON.stringify(location.coords.longitude))) // save dst coordinates
   });
 
-  this.socket.emit('on_location', {"uuid" : "2sad-234ds-32423-45eedd", "location" : ""});
-  this.socket.on('on_location_rcv', (data) => {
-    console.log(data)
-    this.userService.setSrc(data[0], data[1] ) // send src coordinates
-  });
 
   }
 

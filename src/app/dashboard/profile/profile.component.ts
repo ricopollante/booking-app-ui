@@ -97,7 +97,7 @@ export class ProfileComponent implements OnInit {
     this.isShowBooking = true;
   }
   acceptBooking(id: string){
-    this.userService.bookAccept(id);
+    this.userService.bookAccept(id,this.token);
     window.location.reload()
   }
 
