@@ -3,6 +3,11 @@ import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
 import {GoogleAuth, User} from '@codetrix-studio/capacitor-google-auth';
 import { Capacitor } from '@capacitor/core';
+import {
+  FacebookLogin,
+  FacebookLoginResponse,
+} from '@capacitor-community/facebook-login';
+
 // import { CapacitorHttp, HttpResponse } from '@capacitor/core';
 @Component({
   selector: 'app-login',
@@ -31,6 +36,8 @@ userInfo: string;
     }
     else{
       GoogleAuth.initialize();
+      // use hook after platform dom ready
+      await FacebookLogin.initialize({ appId: '1073203297189449' });
     }
 }
 
@@ -44,6 +51,31 @@ userInfo: string;
     catch (error) {
       this.userService.debugger(String(error));
     }
+  }
+
+  async facebookLogin(){
+    const FACEBOOK_PERMISSIONS = [
+      'email',
+      // 'user_birthday',
+      // 'user_photos',
+      // 'user_gender',
+    ];
+    const result = await (<FacebookLoginResponse><unknown>(
+        FacebookLogin.login({ permissions: FACEBOOK_PERMISSIONS })
+      ));
+
+    if (result.accessToken) {
+      // Login successful.
+      console.log(`Facebook access token is ${result.accessToken.token}`);
+      console.log(`Facebook: ${JSON.stringify(result)}`);
+      this.userService.debugger(String(result));
+    }
+    const getProfile = await FacebookLogin.getProfile<{
+      email: string;
+    }>({ fields: ['email'] });
+
+    console.log(`Facebook user's email is ${getProfile.email}`);
+    this.userService.debugger(String(getProfile.email));
   }
 
   showSignUpPage(){

@@ -14,7 +14,7 @@ export class UserService {
     //this.host = 'http://localhost:8080'
     //this.host = 'http://192.168.1.31:8080'
     //this.host = 'https://43f0-58-69-61-224.ngrok.io';
-    this.host = 'https://f760-58-69-61-224.ngrok-free.app'
+    this.host = 'https://5d2e-58-69-61-224.ngrok-free.app'
    }
 
 
