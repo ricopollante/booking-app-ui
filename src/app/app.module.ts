@@ -15,6 +15,8 @@ import { SignupComponent } from './signup/signup.component';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { MapComponent } from './dashboard/map/map.component';
 import { LoadingscreenComponent } from './loadingscreen/loadingscreen.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,7 +35,13 @@ import { LoadingscreenComponent } from './loadingscreen/loadingscreen.component'
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    LeafletModule
+    LeafletModule,
+    BrowserAnimationsModule, // required animations module
+    ToastrModule.forRoot(
+      {
+        maxOpened: 1
+      }
+    ), // ToastrModule added
   ],
   providers: [],
   bootstrap: [AppComponent]

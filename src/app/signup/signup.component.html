@@ -1,4 +1,5 @@
-<div *ngIf="!isUserSignUp">
+<app-header></app-header>
+<div *ngIf="!isUserSignUp && !isHousekeeperSignUp && !isCaregiverSignUp && !showOTPVerify && !showSignUpForm">
   <div class="mx-32">
     <img class="w-64" src="assets/applogo.jpg" alt="" srcset="">
   </div>
@@ -10,14 +11,14 @@
     </div>
   </div>
 
-  <div class="mx-20 my-8 flex flex-row">
+  <div (click)="showHouseKeeperSignup()" class="mx-20 my-8 flex flex-row">
     <div class="rounded-full bg-gray-200 p-2 sm:p-4 w-full text-center relative">
       <img class="sm:w-12 sm:h-12 sm:p-3 sm:bottom-0 absolute left-0 bottom-0 rounded-full bg-blue-300 p-2 w-16 h-16" src="assets/housekeeper.png" alt="">
       <p class="mr-26 text-xl text-center font-semibold sm:text-xs">Housekeeper Sign up</p>
     </div>
   </div>
 
-  <div class="mx-20 my-8 flex flex-row">
+  <div (click)="showCaregiverSignup()" class="mx-20 my-8 flex flex-row">
     <div class="rounded-full bg-gray-200 p-2 sm:p-4 w-full text-center relative">
       <img class="sm:w-12 sm:h-12 sm:p-3 sm:bottom-0 absolute left-0 bottom-0 rounded-full bg-blue-300 p-2 w-16 h-16" src="assets/care.png" alt="">
       <p class="mr-26 text-xl text-center font-semibold sm:text-xs">Caregiver Sign up</p>
@@ -26,40 +27,160 @@
 </div>
 
 
-  <div *ngIf="isUserSignUp" class="w-screen h-screen">
+<div *ngIf="isHousekeeperSignUp && !showOTPVerify && !showSignUpForm" class="w-screen h-screen">
+  <div class="w-full max-w-xs mx-12 mt-24">
+    <div class="mx-24">
+      <img class="w-full" src="assets/applogo.jpg" alt="" srcset="">
+  </div>
+      <!-- <form class="bg-white rounded px-8 pt-6 pb-8 mb-4"> -->
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
+            Mobile
+          </label>
+          <input [(ngModel)]="mobile" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="Mobile">
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
+            Username
+          </label>
+          <input [(ngModel)]="username" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="Username">
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
+            Password
+          </label>
+          <input [(ngModel)]="password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" type="text" placeholder="Password">
+          <!-- <p class="text-red-500 text-xs italic">Please choose a password.</p> -->
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
+            Confirm Password
+          </label>
+          <input [(ngModel)]="confirm_password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" type="text" placeholder="Confirm Password">
+          <!-- <p class="text-red-500 text-xs italic">Please choose a password.</p> -->
+        </div>
+        <div>
+          <button (click)="sendOTPmobile()"  class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
+            Sign Up
+          </button>
+          <button class="w-full content-center text-gray-800 font-bold py-2 px-4 text-center rounded inline-flex items-center shadow-md border justify-center">
+            <span>
+                <img class="h-4 w-4 mr-2" src="assets/google.png" />
+            </span>
+            <span class="font-medium">Sign Up with Google</span>
+        </button>
+        <button class="w-full content-center text-gray-800 font-bold py-2 px-4 text-center rounded inline-flex items-center shadow-md border justify-center">
+          <span>
+              <img class="h-4 w-4 mr-2" src="assets/fb.png" />
+          </span>
+          <span class="font-medium ">Sign Up with Facebook</span>
+      </button>
+          <!-- <a class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="#">
+            Forgot Password?
+          </a> -->
+        </div>
+      <!-- </form> -->
+      <!-- <p class="text-center text-gray-500 text-xs">
+        &copy;2020 Acme Corp. All rights reserved.
+      </p> -->
+    </div>
+
+</div>
+
+<div *ngIf="isCaregiverSignUp && !showOTPVerify && !showSignUpForm" class="w-screen h-screen">
+  <div class="w-full max-w-xs mx-12 mt-24">
+    <div class="mx-24">
+      <img class="w-full" src="assets/applogo.jpg" alt="" srcset="">
+  </div>
+      <!-- <form class="bg-white rounded px-8 pt-6 pb-8 mb-4"> -->
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
+            Mobile
+          </label>
+          <input [(ngModel)]="mobile" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="Mobile">
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
+            Username
+          </label>
+          <input [(ngModel)]="username" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="Username">
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
+            Password
+          </label>
+          <input [(ngModel)]="password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" type="text" placeholder="Password">
+          <!-- <p class="text-red-500 text-xs italic">Please choose a password.</p> -->
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
+            Confirm Password
+          </label>
+          <input [(ngModel)]="confirm_password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" type="text" placeholder="Confirm Password">
+          <!-- <p class="text-red-500 text-xs italic">Please choose a password.</p> -->
+        </div>
+        <div>
+          <button (click)="sendOTPmobile()"  class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
+            Sign Up
+          </button>
+          <button class="w-full content-center text-gray-800 font-bold py-2 px-4 text-center rounded inline-flex items-center shadow-md border justify-center">
+            <span>
+                <img class="h-4 w-4 mr-2" src="assets/google.png" />
+            </span>
+            <span class="font-medium">Sign Up with Google</span>
+        </button>
+        <button class="w-full content-center text-gray-800 font-bold py-2 px-4 text-center rounded inline-flex items-center shadow-md border justify-center">
+          <span>
+              <img class="h-4 w-4 mr-2" src="assets/fb.png" />
+          </span>
+          <span class="font-medium ">Sign Up with Facebook</span>
+      </button>
+          <!-- <a class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="#">
+            Forgot Password?
+          </a> -->
+        </div>
+      <!-- </form> -->
+      <!-- <p class="text-center text-gray-500 text-xs">
+        &copy;2020 Acme Corp. All rights reserved.
+      </p> -->
+    </div>
+
+</div>
+
+  <div *ngIf="isUserSignUp && !showOTPVerify && !showSignUpForm" class="w-screen h-screen">
     <div class="w-full max-w-xs mx-12 mt-24">
       <div class="mx-24">
         <img class="w-full" src="assets/applogo.jpg" alt="" srcset="">
     </div>
-        <form class="bg-white rounded px-8 pt-6 pb-8 mb-4">
+        <!-- <form class="bg-white rounded px-8 pt-6 pb-8 mb-4"> -->
           <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
               Mobile
             </label>
-            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="Mobile">
+            <input [(ngModel)]="mobile" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="Mobile">
           </div>
           <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
               Username
             </label>
-            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="Username">
+            <input [(ngModel)]="username" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="Username">
           </div>
           <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
               Password
             </label>
-            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" type="text" placeholder="Password">
+            <input [(ngModel)]="password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" type="text" placeholder="Password">
             <!-- <p class="text-red-500 text-xs italic">Please choose a password.</p> -->
           </div>
           <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
               Confirm Password
             </label>
-            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" type="text" placeholder="Confirm Password">
+            <input [(ngModel)]="confirm_password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" type="text" placeholder="Confirm Password">
             <!-- <p class="text-red-500 text-xs italic">Please choose a password.</p> -->
           </div>
           <div>
-            <button  class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
+            <button (click)="sendOTPmobile()"  class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
               Sign Up
             </button>
             <button class="w-full content-center text-gray-800 font-bold py-2 px-4 text-center rounded inline-flex items-center shadow-md border justify-center">
@@ -78,10 +199,149 @@
               Forgot Password?
             </a> -->
           </div>
-        </form>
+        <!-- </form> -->
         <!-- <p class="text-center text-gray-500 text-xs">
           &copy;2020 Acme Corp. All rights reserved.
         </p> -->
       </div>
 
 </div>
+
+<div *ngIf="showOTPVerify && !showSignUpForm" class="h-screen flex flex-col items-center justify-center">
+  <div>
+    <img class="w-[250px] mb-12" src="assets\mail.png" alt="" srcset="">
+  </div>
+  <div class="mb-4 text-center w-[250px] ">
+    <p class="font-semibold text-2xl mb-4">OTP VERIFICATION </p>
+    <label class="block text-gray-700 text-sm mb-12" for="password">
+    Enter OTP sent to {{mobile}}
+    </label>
+    <input [(ngModel)]="verifyOTP" class="text-center shadow-lg appearance-none border rounded w-full py-2.5 px-2 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" maxlength="6" id="password" type="text" placeholder="Code">
+    <!-- <p class="text-red-500 text-xs italic">Please choose a password.</p> -->
+  </div>
+  <div *ngIf="!OTPexpired  && OTPSec>10">
+    OTP expires in: {{OTPMin}}:{{OTPSec}}
+  </div>
+  <div *ngIf="!OTPexpired && OTPSec<10">
+    OTP expires in: {{OTPMin}}:0{{OTPSec}}
+  </div>
+  <div *ngIf="OTPexpired" class="flex flex-row">
+    <p>Didnt received the OTP? </p>
+    <p (click)="sendOTPmobile()" class="text-blue-400 font-semibold mx-4">RESEND OTP</p>
+  </div>
+
+  <div>
+    <button (click)="verifyOTPinput()"  class="w-full bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2.5 px-24 rounded focus:outline-none focus:shadow-outline shadow-2xl" type="button">
+      Verify & Proceed
+    </button>
+  </div>
+</div>
+
+<div *ngIf="showSignUpForm && isUserSignUp" class="mx-12">
+<p class="text-2xl font-bold mb-24 text-center">Sign Up (User)</p>
+
+  <input [(ngModel)]="lastname" class="shadow-lg appearance-none border rounded w-full py-2.5 px-2 my-2 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Last Name">
+
+  <input [(ngModel)]="firstname" class="shadow-lg appearance-none border rounded w-full py-2.5 px-2 my-2 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="First Name">
+
+  <input [(ngModel)]="middlename" class="shadow-lg appearance-none border rounded w-full py-2.5 px-2 my-2 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Middle Name">
+
+  <input [(ngModel)]="address" class="shadow-lg appearance-none border rounded w-full py-2.5 px-2 my-2 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Address">
+
+  <div class="relative max-w-sm">
+    <div class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">
+      <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+        <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
+      </svg>
+    </div>
+    <input datepicker type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 my-2" placeholder="Birth Date">
+  </div>
+
+
+<select  #region (change)="selectRegion(region.value)" id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 my-2">
+  <option value="" selected>Region</option>
+  <option *ngFor="let region of Regions" value="{{region.name}}">{{region.name}}</option>
+</select>
+
+<select #city (change)="selectCity(city.value)" id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 my-2">
+  <option value="" selected>City</option>
+  <option *ngFor="let city of City" value="{{city.name}}">{{city.name}}</option>
+</select>
+
+<select #brgy (change)="selectBrgy(brgy.value)" id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 my-2">
+  <option value="" selected>Barangay</option>
+  <option *ngFor="let brgy of Barangay" value="{{brgy.name}}">{{brgy.name}}</option>
+</select>
+
+<p class="text-md mt-8 text-center">Person to contact in case of Emergency.</p>
+
+
+<input [(ngModel)]="ec_fullname" class="shadow-lg appearance-none border rounded w-full py-2.5 px-2 my-2 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Full Name">
+
+
+<input [(ngModel)]="ec_relationship" class="shadow-lg appearance-none border rounded w-full py-2.5 px-2 my-2 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Relationship">
+
+
+<input [(ngModel)]="ec_mobile" class="shadow-lg appearance-none border rounded w-full py-2.5 px-2 my-2 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Mobile">
+
+<button  class="w-full bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2.5 px-24 rounded focus:outline-none focus:shadow-outline shadow-2xl" type="button">
+  Submit
+</button>
+</div>
+
+<div *ngIf="showSignUpForm && isHousekeeperSignUp" class="mx-12">
+  <p class="text-2xl font-bold mb-24 text-center">Sign Up (Housekeeper)</p>
+
+    <input [(ngModel)]="lastname" class="shadow-lg appearance-none border rounded w-full py-2.5 px-2 my-2 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Last Name">
+
+    <input [(ngModel)]="firstname" class="shadow-lg appearance-none border rounded w-full py-2.5 px-2 my-2 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="First Name">
+
+    <input [(ngModel)]="middlename" class="shadow-lg appearance-none border rounded w-full py-2.5 px-2 my-2 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Middle Name">
+
+    <input [(ngModel)]="address" class="shadow-lg appearance-none border rounded w-full py-2.5 px-2 my-2 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Address">
+
+    <div class="relative max-w-sm">
+      <div class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">
+        <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+          <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
+        </svg>
+      </div>
+      <input datepicker type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 my-2" placeholder="Birth Date">
+    </div>
+
+
+  <select  #region (change)="selectRegion(region.value)" id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 my-2">
+    <option value="" selected>Region</option>
+    <option *ngFor="let region of Regions" value="{{region.name}}">{{region.name}}</option>
+  </select>
+
+  <select #city (change)="selectCity(city.value)" id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 my-2">
+    <option value="" selected>City</option>
+    <option *ngFor="let city of City" value="{{city.name}}">{{city.name}}</option>
+  </select>
+
+  <select #brgy (change)="selectBrgy(brgy.value)" id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 my-2">
+    <option value="" selected>Barangay</option>
+    <option *ngFor="let brgy of Barangay" value="{{brgy.name}}">{{brgy.name}}</option>
+  </select>
+
+  <p class="text-md mt-8 text-center">Person to contact in case of Emergency.</p>
+
+
+  <input [(ngModel)]="ec_fullname" class="shadow-lg appearance-none border rounded w-full py-2.5 px-2 my-2 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Full Name">
+
+
+  <input [(ngModel)]="ec_relationship" class="shadow-lg appearance-none border rounded w-full py-2.5 px-2 my-2 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Relationship">
+
+
+  <input [(ngModel)]="ec_mobile" class="shadow-lg appearance-none border rounded w-full py-2.5 px-2 my-2 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Mobile">
+
+  <p class="text-md mt-8 text-center">Supporting Documents (KYC)</p>
+
+  <input type="file" class="file-upload" onchange="console.log(event.target.files)">
+
+
+  <button  class="w-full bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2.5 px-24 rounded focus:outline-none focus:shadow-outline shadow-2xl" type="button">
+    Submit
+  </button>
+  </div>

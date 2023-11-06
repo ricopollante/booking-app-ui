@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-
+import { Preferences } from '@capacitor/preferences';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
 @Injectable({
   providedIn: 'root'
 })
@@ -9,7 +11,7 @@ export class UserService {
   showLogin = new Subject<boolean>();
   locSrc = new Subject<any>();
   locDst = new Subject<any>();
-  constructor() {
+  constructor(private toastrService: ToastrService) {
     //this.host = 'http://10.42.0.67:8080'
     //this.host = 'http://localhost:8080'
     //this.host = 'http://192.168.1.31:8080'
@@ -112,5 +114,70 @@ export class UserService {
       }
   })
   }
+
+  async saveSession(key: string, value: any){
+    await Preferences.set({
+      key: key,
+      value: value
+    });
+  }
+
+  async getSession(key: string){
+    const ret = await Preferences.get({ key: key });
+    const user = ret.value
+    return user
+  }
+
+  sendOTP(receiver: string, message: string){
+    let apiKey = "ixxbHzeryU-kZBIAJRD_x76xlblaTugUeiUtEbGXEmk7J1LGc911pe_ow7fGNJ5i";
+
+    fetch('https://api.httpsms.com/v1/messages/send', {
+        method: 'POST',
+        headers: {
+            'x-api-key': apiKey,
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            "content": message,
+            "from": "+639959462351",
+            "to": receiver
+        })
+    })
+    .then(res => res.json())
+    .then((data) => console.log(data));
+      }
+
+getPhRegions(){
+  return fetch('https://psgc.gitlab.io/api/regions/', {
+    method: 'GET',
+    headers: {}
+})
+}
+
+
+getPhCities(){
+  return fetch('https://psgc.gitlab.io/api/cities/', {
+    method: 'GET',
+    headers: {}
+})
+}
+
+
+getPhBrgys(){
+  return fetch('https://psgc.gitlab.io/api/barangays/', {
+    method: 'GET',
+    headers: {}
+})
+}
+
+
+toastError(error: string, body: string) {
+        this.toastrService.error(body, error);
+      }
+
+toastSuccess(success: string, body: string) {
+        this.toastrService.success(body, success);
+      }
 
 }
