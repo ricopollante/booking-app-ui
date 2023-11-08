@@ -8,6 +8,7 @@ import { ToastrModule, ToastrService } from 'ngx-toastr';
 })
 export class UserService {
   host: string;
+  socketioHost: string;
   showLogin = new Subject<boolean>();
   locSrc = new Subject<any>();
   locDst = new Subject<any>();
@@ -16,7 +17,8 @@ export class UserService {
     //this.host = 'http://localhost:8080'
     //this.host = 'http://192.168.1.31:8080'
     //this.host = 'https://43f0-58-69-61-224.ngrok.io';
-    this.host = 'https://5d2e-58-69-61-224.ngrok-free.app'
+    this.host = 'https://b6b0-58-69-61-224.ngrok-free.app'
+    this.socketioHost = ''
    }
 
 
@@ -171,6 +173,33 @@ getPhBrgys(){
 })
 }
 
+signup(lastname: string, midname:string, bdate:string, address:string, region:string, city:string, barangay:string, email:string,
+  ec_fullname:string, ec_relationship:string,ec_mobile:string,user_type:string,validid:string, firstname:string,mobile:string,username:string,password:string){
+  var formdata = new FormData();
+formdata.append("lastname",username);
+formdata.append("midname", midname);
+formdata.append("bdate", bdate);
+formdata.append("address", address);
+formdata.append("region", region);
+formdata.append("city", city);
+formdata.append("barangay", barangay);
+formdata.append("email", email);
+formdata.append("ec_fullname", ec_fullname);
+formdata.append("ec_relationship", ec_relationship);
+formdata.append("ec_mobile",ec_mobile);
+formdata.append("user_type", user_type);
+formdata.append("validid", validid);
+formdata.append("firstname", firstname);
+formdata.append("mobile", mobile);
+formdata.append("username", username);
+formdata.append("password", password);
+  return fetch(this.host + '/user/signup', {
+    method: 'POST',
+    headers: {},
+    body: formdata
+  })
+}
+
 
 toastError(error: string, body: string) {
         this.toastrService.error(body, error);
@@ -180,4 +209,11 @@ toastSuccess(success: string, body: string) {
         this.toastrService.success(body, success);
       }
 
+getApiHost(){
+  return this.host
+}
+
+getSocketioHost(){
+  return this.socketioHost
+}
 }

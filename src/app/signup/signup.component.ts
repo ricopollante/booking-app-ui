@@ -1,12 +1,16 @@
 import { Component } from '@angular/core';
 import { UserService } from '../services/user.service';
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { throwError } from 'rxjs';
+
+
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css']
 })
 export class SignupComponent {
-
+  email: any;
   mobile: string;
   username: string;
   password: string;
@@ -32,11 +36,18 @@ export class SignupComponent {
   ec_fullname: any;
   ec_relationship: any;
   ec_mobile: any;
+  valid_id: any;
   isUserSignUp: boolean
   isHousekeeperSignUp: boolean;
   isCaregiverSignUp: boolean;
   isSMS: boolean;
-  constructor(private userService: UserService){
+  status: "initial" | "uploading" | "success" | "fail" = "initial"; // Variable to store file status
+  file: File | null = null; // Variable to store file
+  files: any[]=[]
+  token: any;
+  isMobile: boolean;
+
+  constructor(private userService: UserService, private http: HttpClient){
     this.isSMS = false;
     this.isHousekeeperSignUp = false;
     this.isCaregiverSignUp = false;
@@ -52,6 +63,8 @@ export class SignupComponent {
     this.confirm_password = ''
     this.smsOTP = '';
     this.isUserSignUp = false;
+    this.token = localStorage.getItem("user_token");
+    this.isMobile=false;
   }
 
   showUserSignup(){
@@ -108,6 +121,7 @@ generateString(length: number) {
       this.userService.toastError('OTP expired', 'Please resend an OTP again.')
     }
     else if(this.verifyOTP==this.smsOTP){
+      this.isMobile = true;
       this.showSignUpForm = true;
       this.userService.saveSession('username',this.username)
       this.userService.saveSession('password',this.password)
@@ -150,4 +164,69 @@ generateString(length: number) {
     this.selectedBrgy = brgy
     console.log(this.selectedBrgy)
   }
+
+  onChange(event: any) {
+    const file: File = event.target.files[0];
+    if (file) {
+      this.status = "initial";
+      this.file = file;
+    }
+
+    this.files.push(this.file?.name)
+     // we will implement this method later
+     if (this.file) {
+      const formData = new FormData();
+
+      formData.append('file', this.file, this.file.name);
+      formData.append('username', this.username);
+      const upload$ = this.http.post(this.userService.getApiHost()+"/user/upload", formData,{
+        headers: new HttpHeaders().set('Authorization', 'Bearer ' + this.token),
+         });
+
+      this.status = 'uploading';
+
+      upload$.subscribe({
+        next: () => {
+          this.status = 'success';
+        },
+        error: (error: any) => {
+          this.status = 'fail';
+          return throwError(() => error);
+        },
+      });
+    }
+
+  }
+
+  signUpUser() {
+
+  }
+
+  signUpHousekeeper() {
+    console.log('singup housekeeper..')
+    if(this.isMobile){
+      this.userService.signup(this.lastname, this.middlename, this.bdate, this.address, this.selectedRegion, this.selectedCity, this.selectedBrgy, '',
+        this.ec_fullname, this.ec_relationship, this.ec_mobile, "3",this.valid_id, this.firstname, this.mobile, this.username, this.password)
+    }
+    else if(!this.mobile){
+      this.userService.signup(this.lastname, this.middlename, this.bdate, this.address, this.selectedRegion, this.selectedCity, this.selectedBrgy, this.email,
+        this.ec_fullname, this.ec_relationship, this.ec_mobile, "3",this.valid_id, this.firstname, '', this.email, this.email)
+    }
+    this.userService.toastSuccess('Success', 'Housekeeper Sign Up successfully')
+
+  }
+
+  signUpCaregiver() {
+
+    if(this.isMobile){
+      this.userService.signup(this.lastname, this.middlename, this.bdate, this.address, this.selectedRegion, this.selectedCity, this.selectedBrgy, '',
+        this.ec_fullname, this.ec_relationship, this.ec_mobile, "2",this.valid_id, this.firstname, this.mobile, this.username, this.password)
+    }
+    else if(!this.mobile){
+      this.userService.signup(this.lastname, this.middlename, this.bdate, this.address, this.selectedRegion, this.selectedCity, this.selectedBrgy, this.email,
+        this.ec_fullname, this.ec_relationship, this.ec_mobile, "2",this.valid_id, this.firstname, '', this.email, this.email)
+    }
+
+  }
+
 }

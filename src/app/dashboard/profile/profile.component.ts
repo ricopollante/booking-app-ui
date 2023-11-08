@@ -11,6 +11,7 @@ export class ProfileComponent implements OnInit {
   name: string;
   isUser: boolean;
   isCaregiver: boolean;
+  isHousekeeper: boolean;
   isShowCaregiverBookForm: boolean;
   isShowBooking: boolean;
   agenda: string
@@ -21,7 +22,11 @@ export class ProfileComponent implements OnInit {
   prefgender: string
   bookingList: any;
   showBookingList:  boolean;
+  isVerified: boolean;
+  isShowAcceptBookings: boolean;
   constructor(private userService: UserService) {
+    this.isShowAcceptBookings = false;
+    this.isVerified = false;
     this.showBookingList = false;
     this.agenda = ''
     this.location = ''
@@ -29,12 +34,13 @@ export class ProfileComponent implements OnInit {
     this.notes = ''
     this.rentals = ''
     this.prefgender = ''
-    this.isShowCaregiverBookForm = false;
     this.isShowBooking = false;
     this.isUser = false;
-    this.isCaregiver = false;
     this.name = '';
+    this.isHousekeeper = true;
     this.token = localStorage.getItem("user_token");
+    this.isCaregiver = false;
+    this.isShowCaregiverBookForm = false;
     console.log(this.token)
     this.userService.getProfile(this.token)
     .then(res => res.json())
@@ -42,13 +48,25 @@ export class ProfileComponent implements OnInit {
       if (res){
         console.log(res);
         this.name = res.firstname;
+        if(res.verify_status){
+            this.isVerified = true;
+        }
         if (res.user_type == 'caregiver'){
           this.isCaregiver = true;
           this.isUser = false;
+          this.isHousekeeper = false;
+          this.isShowAcceptBookings = true;
         }
         else if (res.user_type == 'user'){
           this.isUser = true;
           this.isCaregiver = false;
+          this.isHousekeeper = false;
+        }
+        else if (res.user_type == 'housekeeper'){
+          this.isUser = false;
+          this.isCaregiver = false;
+          this.isHousekeeper = true;
+          this.isShowAcceptBookings = true;
         }
       }
     })

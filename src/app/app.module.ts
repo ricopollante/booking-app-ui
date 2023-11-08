@@ -17,6 +17,11 @@ import { MapComponent } from './dashboard/map/map.component';
 import { LoadingscreenComponent } from './loadingscreen/loadingscreen.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatNativeDateModule} from '@angular/material/core';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,6 +47,7 @@ import { ToastrModule } from 'ngx-toastr';
         maxOpened: 1
       }
     ), // ToastrModule added
+    MatFormFieldModule, MatInputModule, MatDatepickerModule, MatNativeDateModule
   ],
   providers: [],
   bootstrap: [AppComponent]
