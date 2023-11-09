@@ -21,6 +21,9 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatNativeDateModule} from '@angular/material/core';
+import { BookingComponent } from './dashboard/booking/booking.component';
+import { CaregivingComponent } from './dashboard/booking/caregiving/caregiving.component';
+import { HousekeepingComponent } from './dashboard/booking/housekeeping/housekeeping.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +37,9 @@ import {MatNativeDateModule} from '@angular/material/core';
     SignupComponent,
     MapComponent,
     LoadingscreenComponent,
+    BookingComponent,
+    CaregivingComponent,
+    HousekeepingComponent
   ],
   imports: [
     BrowserModule,
