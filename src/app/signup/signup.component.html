@@ -350,7 +350,7 @@
 
 
 
-  <button (click)="signUpHousekeeper()" class="w-full bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2.5 px-24 rounded focus:outline-none focus:shadow-outline shadow-2xl" type="button">
+  <button  (click)="signUpHousekeeper()" class="w-full bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2.5 px-24 rounded focus:outline-none focus:shadow-outline shadow-2xl" type="button">
     Submit
   </button>
   <!-- <section [ngSwitch]="status">
@@ -361,6 +361,84 @@
   </section> -->
   </div>
 
-  <app-loadingscreen *ngIf="showSignUpForm && isHousekeeperSignUp && status=='uploading'"></app-loadingscreen>
+  <div *ngIf="showSignUpForm && isCaregiverSignUp" class="mx-12">
+    <p class="text-2xl font-bold mb-24 text-center">Sign Up (Caregiver)</p>
 
-  <app-loadingscreen *ngIf="showSignUpForm && isCaregiverSignUp && status=='uploading'"></app-loadingscreen>
+      <input [(ngModel)]="lastname" class="shadow-lg appearance-none border rounded w-full py-2.5 px-2 my-2 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Last Name">
+
+      <input [(ngModel)]="firstname" class="shadow-lg appearance-none border rounded w-full py-2.5 px-2 my-2 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="First Name">
+
+      <input [(ngModel)]="middlename" class="shadow-lg appearance-none border rounded w-full py-2.5 px-2 my-2 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Middle Name">
+
+      <input [(ngModel)]="address" class="shadow-lg appearance-none border rounded w-full py-2.5 px-2 my-2 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Address">
+
+
+      <div class="flex flex-row justify-between">
+        <p>Birth Date</p>
+        <input [(ngModel)]="bdate"  class="w-full py-2.5 px-2" type="date" placeholder="Birth Date">
+      </div>
+    <select  #region (change)="selectRegion(region.value)" id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 my-2">
+      <option value="" selected>Region</option>
+      <option *ngFor="let region of Regions" value="{{region.name}}">{{region.name}}</option>
+    </select>
+
+    <select #city (change)="selectCity(city.value)" id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 my-2">
+      <option value="" selected>City</option>
+      <option *ngFor="let city of City" value="{{city.name}}">{{city.name}}</option>
+    </select>
+
+    <select #brgy (change)="selectBrgy(brgy.value)" id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 my-2">
+      <option value="" selected>Barangay</option>
+      <option *ngFor="let brgy of Barangay" value="{{brgy.name}}">{{brgy.name}}</option>
+    </select>
+
+    <p class="text-md mt-8 text-center">Person to contact in case of Emergency.</p>
+
+
+    <input [(ngModel)]="ec_fullname" class="shadow-lg appearance-none border rounded w-full py-2.5 px-2 my-2 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Full Name">
+
+
+    <input [(ngModel)]="ec_relationship" class="shadow-lg appearance-none border rounded w-full py-2.5 px-2 my-2 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Relationship">
+
+
+    <input [(ngModel)]="ec_mobile" class="shadow-lg appearance-none border rounded w-full py-2.5 px-2 my-2 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Mobile">
+
+    <p class="text-md mt-8 text-center">Supporting Documents (KYC)</p>
+
+    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Valid ID</label>
+  <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 mb-6 file-input" id="file_input" type="file" (change)="onChange($event)" #fileUpload>
+
+
+  <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Birth Certificate</label>
+  <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400  mb-6 file-input" id="file_input" type="file"  (change)="onChange($event)" #fileUpload>
+
+
+  <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">NBI clearance</label>
+  <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400  mb-6 file-input" id="file_input" type="file"  (change)="onChange($event)" #fileUpload>
+
+
+  <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Police Clearance</label>
+  <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400  mb-6 file-input" id="file_input" type="file"  (change)="onChange($event)" #fileUpload>
+
+
+  <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">TESDA certification</label>
+  <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400  mb-6 file-input" id="file_input" type="file" (change)="onChange($event)" #fileUpload>
+
+
+
+    <button  (click)="signUpCaregiver()" class="w-full bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2.5 px-24 rounded focus:outline-none focus:shadow-outline shadow-2xl" type="button">
+      Submit
+    </button>
+    <!-- <section [ngSwitch]="status">
+      <p *ngSwitchCase="'uploading'">⏳ Uploading...</p>
+      <p *ngSwitchCase="'success'">✅ Done!</p>
+      <p *ngSwitchCase="'fail'">❌ Error!</p>
+      <p *ngSwitchDefault>😶 Waiting to upload...</p>
+    </section> -->
+    </div>
+
+
+
+  <!-- <app-loadingscreen *ngIf="showSignUpForm && isHousekeeperSignUp && status=='uploading'"></app-loadingscreen>
+
+  <app-loadingscreen *ngIf="showSignUpForm && isCaregiverSignUp && status=='uploading'"></app-loadingscreen> -->

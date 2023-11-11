@@ -26,10 +26,17 @@ export class ProfileComponent implements OnInit {
   isVerified: boolean;
   isShowAcceptBookings: boolean;
   user_id: any
+  pet: any
+  cars_count: any
+  accepter_id:any
+  usertype: "USER" | "CAREGIVER" | "HOUSEKEEPER" = "USER";
+  navBook: "waiting" | "accepted" | "history" = "waiting";
+
   constructor(private userService: UserService) {
     this.isShowAcceptBookings = false;
     this.isVerified = true;
     this.showBookingList = false;
+    this.pet = ''
     this.agenda = ''
     this.location = ''
     this.duration = ''
@@ -52,6 +59,12 @@ export class ProfileComponent implements OnInit {
         console.log(res);
         this.name = res.firstname;
         this.user_id = res.user_id
+        this.usertype = res.user_type.toUpperCase()
+          this.userService.getBookings(this.user_id)
+          .then(res => res.json())
+          .then(res => {
+              this.bookingList = res.data;
+          })
         if(!res.verify_status){
             this.isVerified = false;
         }
@@ -75,11 +88,7 @@ export class ProfileComponent implements OnInit {
       }
     })
 
-    this.userService.getBookings(this.user_id)
-    .then(res => res.json())
-    .then(res => {
-        this.bookingList = res.data;
-    })
+
 
   }
 
@@ -120,9 +129,9 @@ export class ProfileComponent implements OnInit {
     this.prefgender = event.target.value;
   }
 
-  submitBook(){
+  bookCompanion(){
     //console.log(this.agenda, this.location, this.duration, this.notes, this.rentals, this.prefgender)
-    this.userService.bookService(this.agenda, this.location, this.location, this.notes, this.rentals, this.prefgender)
+    this.userService.bookService(this.agenda, this.location, this.location, this.notes, this.rentals, this.prefgender,'5', this.user_id, this.pet, this.cars_count, this.accepter_id)
     this.isShowBooking = true;
   }
   acceptBooking(id: string){
@@ -132,5 +141,17 @@ export class ProfileComponent implements OnInit {
 
   showUserBookingList(){
     this.showBookingList = true;
+  }
+
+  showNavWaiting(){
+    this.navBook = "waiting"
+  }
+
+  showNavAccepted(){
+    this.navBook = "accepted"
+  }
+
+  showNavHistory(){
+    this.navBook = "history"
   }
 }

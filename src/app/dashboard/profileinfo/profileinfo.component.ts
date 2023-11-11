@@ -9,6 +9,7 @@ import { UserService } from 'src/app/services/user.service';
 export class ProfileinfoComponent {
   token: any;
   profileInfo: any;
+  user: any
 constructor(private userService: UserService){
   this.token = localStorage.getItem("user_token");
   this.userService.getProfile(this.token)
@@ -16,6 +17,7 @@ constructor(private userService: UserService){
     .then(res => {
       console.log(res)
       this.profileInfo = res
+      this.user = res.user_type.toUpperCase()
     })
   }
 

@@ -6,5 +6,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./caregiving.component.css']
 })
 export class CaregivingComponent {
+  isShowServiceForm: "list" | "companion" | "personal_care" | "babysitting" | "errands" = "list";
+  constructor(){
 
+  }
+
+  showCompanion(){
+    this.isShowServiceForm = "companion";
+  }
 }

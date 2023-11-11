@@ -28,6 +28,7 @@ userInfo: string;
    }
 
    async ngOnInit() {
+    console.log("LOGIN PAGE....")
     if (Capacitor.getPlatform() === 'ios') {
       // do something
     }

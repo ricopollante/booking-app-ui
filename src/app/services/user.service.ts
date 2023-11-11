@@ -17,7 +17,7 @@ export class UserService {
     //this.host = 'http://localhost:8080'
     //this.host = 'http://192.168.1.31:8080'
     //this.host = 'https://43f0-58-69-61-224.ngrok.io';
-    this.host = 'https://aadc-58-69-61-224.ngrok-free.app'
+    this.host = 'https://7d8f-58-69-61-224.ngrok-free.app'
     this.socketioHost = ''
    }
 
@@ -68,7 +68,7 @@ export class UserService {
   })
   }
 
-  bookService(agenda: string, location: string, duration: string, notes: string, rentals: string, prefgender: string){
+  bookService(agenda: string, location: string, duration: string, notes: string, rentals: string, prefgender: string, service_type:string, user_id:string, pet:string, cars_count:string, accepter_id:string){
     let data = new FormData()
     data.append('agenda', agenda)
     data.append('location', location)
@@ -76,6 +76,11 @@ export class UserService {
     data.append('notes', notes)
     data.append('rentals', rentals)
     data.append('prefgender', prefgender)
+    data.append('service_type', service_type)
+    data.append('user_id', user_id)
+    data.append('pet', pet)
+    data.append('cars_count', cars_count)
+    data.append('accepter_id', accepter_id)
     return fetch(this.host + '/book/caregiver', {
       method: 'POST',
       headers: {},

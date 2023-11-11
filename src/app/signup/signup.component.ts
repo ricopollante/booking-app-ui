@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { UserService } from '../services/user.service';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { throwError } from 'rxjs';
-
+import { Router } from '@angular/router';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-signup',
@@ -46,8 +47,8 @@ export class SignupComponent {
   files: any[]=[]
   token: any;
   isMobile: boolean;
-
-  constructor(private userService: UserService, private http: HttpClient){
+  navHome: any
+  constructor(@Inject(DOCUMENT) private document: Document, private userService: UserService, private http: HttpClient, private router: Router){
     this.isSMS = false;
     this.isHousekeeperSignUp = false;
     this.isCaregiverSignUp = false;
@@ -65,6 +66,7 @@ export class SignupComponent {
     this.isUserSignUp = false;
     this.token = localStorage.getItem("user_token");
     this.isMobile=false;
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
   }
 
   showUserSignup(){
@@ -212,7 +214,10 @@ generateString(length: number) {
       this.userService.signup(this.lastname, this.middlename, this.bdate, this.address, this.selectedRegion, this.selectedCity, this.selectedBrgy, this.email,
         this.ec_fullname, this.ec_relationship, this.ec_mobile, "3",this.valid_id, this.firstname, '', this.email, this.email)
     }
+
+    this.document.location.href = "/login"
     this.userService.toastSuccess('Success', 'Housekeeper Sign Up successfully')
+
 
   }
 
@@ -226,6 +231,10 @@ generateString(length: number) {
       this.userService.signup(this.lastname, this.middlename, this.bdate, this.address, this.selectedRegion, this.selectedCity, this.selectedBrgy, this.email,
         this.ec_fullname, this.ec_relationship, this.ec_mobile, "2",this.valid_id, this.firstname, '', this.email, this.email)
     }
+
+    this.document.location.href = "/login"
+    this.userService.toastSuccess('Success', 'Caregiver Sign Up successfully')
+
 
   }
 

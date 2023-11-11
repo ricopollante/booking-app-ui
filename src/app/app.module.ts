@@ -24,6 +24,7 @@ import {MatNativeDateModule} from '@angular/material/core';
 import { BookingComponent } from './dashboard/booking/booking.component';
 import { CaregivingComponent } from './dashboard/booking/caregiving/caregiving.component';
 import { HousekeepingComponent } from './dashboard/booking/housekeeping/housekeeping.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { HousekeepingComponent } from './dashboard/booking/housekeeping/housekee
     HousekeepingComponent
   ],
   imports: [
+    RouterModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,
