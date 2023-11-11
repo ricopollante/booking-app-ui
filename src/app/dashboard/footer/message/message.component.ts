@@ -9,11 +9,11 @@ import { UserService } from 'src/app/services/user.service';
 export class MessageComponent {
   bookingList: any
   constructor(private userService: UserService){
-    this.userService.getBookings()
-    .then(res => res.json())
-    .then(res => {
-        this.bookingList = res.data;
-    })
+    // this.userService.getBookings()
+    // .then(res => res.json())
+    // .then(res => {
+    //     this.bookingList = res.data;
+    // })
 
   }
 }

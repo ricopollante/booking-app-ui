@@ -25,6 +25,7 @@ export class ProfileComponent implements OnInit {
   showBookingList:  boolean;
   isVerified: boolean;
   isShowAcceptBookings: boolean;
+  user_id: any
   constructor(private userService: UserService) {
     this.isShowAcceptBookings = false;
     this.isVerified = true;
@@ -50,6 +51,7 @@ export class ProfileComponent implements OnInit {
       if (res){
         console.log(res);
         this.name = res.firstname;
+        this.user_id = res.user_id
         if(!res.verify_status){
             this.isVerified = false;
         }
@@ -73,7 +75,7 @@ export class ProfileComponent implements OnInit {
       }
     })
 
-    this.userService.getBookings()
+    this.userService.getBookings(this.user_id)
     .then(res => res.json())
     .then(res => {
         this.bookingList = res.data;
