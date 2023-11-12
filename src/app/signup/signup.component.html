@@ -297,6 +297,14 @@
     <input [(ngModel)]="address" class="shadow-lg appearance-none border rounded w-full py-2.5 px-2 my-2 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Address">
 
 
+    <select  #gender (change)="selectGender(gender.value)" id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 my-2">
+      <option value="" selected>Gender</option>
+      <option value="male">Male</option>
+      <option value="female">Female</option>
+    </select>
+
+    <input [(ngModel)]="rate" class="shadow-lg appearance-none border rounded w-full py-2.5 px-2 my-2 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Rate">
+
     <div class="flex flex-row justify-between">
       <p>Birth Date</p>
       <input [(ngModel)]="bdate"  class="w-full py-2.5 px-2" type="date" placeholder="Birth Date">
@@ -371,6 +379,15 @@
       <input [(ngModel)]="middlename" class="shadow-lg appearance-none border rounded w-full py-2.5 px-2 my-2 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Middle Name">
 
       <input [(ngModel)]="address" class="shadow-lg appearance-none border rounded w-full py-2.5 px-2 my-2 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Address">
+
+      <select  #gender (change)="selectGender(gender.value)" id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 my-2">
+        <option value="" selected>Gender</option>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+      </select>
+
+
+      <input [(ngModel)]="rate" class="shadow-lg appearance-none border rounded w-full py-2.5 px-2 my-2 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Rate">
 
 
       <div class="flex flex-row justify-between">

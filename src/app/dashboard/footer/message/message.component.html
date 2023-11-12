@@ -1,13 +1,27 @@
-<!-- <div>
-  <div *ngFor="let booking of bookingList" class="">
-    <div class="flex flex-row mx-16 mt-6 p-4 bg-blue-200 rounded-lg shadow-lg">
-      <img class="my-4 w-14 h-14 rounded-full shadow-xl" src="assets/user.png" alt="">
-        <div class="my-4">
-          <p>Agenda: {{booking.agenda}}</p>
-          <p>Location: {{booking.location}}</p>
-          <p  *ngIf="booking.accepted == false"  class="text-yellow-500" >Status: Waiting to accept</p>
-          <p  *ngIf="booking.accepted == true"  class="text-green-500" >Status: Accepted</p>
-        </div>
+<div class="flex h-screen flex-col bg-gray-100">
+  <div class="bg-gradient-to-r from-blue-500 to-purple-500 py-4">
+    <h1 class="text-center text-2xl font-bold text-white">Chat App - ClueMediator.com</h1>
+  </div>
+  <div class="flex-grow overflow-y-auto">
+    <div class="flex flex-col space-y-2 p-4">
+      <!-- Individual chat message -->
+
+      <div class="flex items-center self-end rounded-xl rounded-tr bg-blue-500 py-2 px-3 text-white">
+        <p>This is a sender message</p>
+      </div>
+
+      <div class="flex items-center self-start rounded-xl rounded-tl bg-gray-300 py-2 px-3">
+        <p>This is a receiver message</p>
+      </div>
+
+      <div class="flex items-center self-end rounded-xl rounded-tr bg-blue-500 py-2 px-3 text-white">
+        <p>This is a sender message</p>
+      </div>
+
     </div>
   </div>
-</div> -->
+  <div class="flex items-center p-4">
+    <input type="text" placeholder="Type your message..." class="w-full rounded-lg border border-gray-300 px-4 py-2" />
+    <button class="ml-2 rounded-lg bg-blue-500 px-4 py-2 text-white">Send</button>
+  </div>
+</div>

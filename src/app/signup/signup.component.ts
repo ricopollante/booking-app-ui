@@ -29,6 +29,8 @@ export class SignupComponent {
   Regions: any;
   City: any;
   Barangay: any;
+  gender: any
+  rate: any
   lastname: any;
   firstname: any;
   middlename: any;
@@ -200,6 +202,10 @@ generateString(length: number) {
 
   }
 
+  selectGender(data:string){
+    this.gender = data;
+  }
+
   signUpUser() {
 
   }
@@ -208,11 +214,11 @@ generateString(length: number) {
     console.log('singup housekeeper..')
     if(this.isMobile){
       this.userService.signup(this.lastname, this.middlename, this.bdate, this.address, this.selectedRegion, this.selectedCity, this.selectedBrgy, '',
-        this.ec_fullname, this.ec_relationship, this.ec_mobile, "3",this.valid_id, this.firstname, this.mobile, this.username, this.password)
+        this.ec_fullname, this.ec_relationship, this.ec_mobile, "3",this.valid_id, this.firstname, this.mobile, this.username, this.password, this.gender, this.rate)
     }
     else if(!this.mobile){
       this.userService.signup(this.lastname, this.middlename, this.bdate, this.address, this.selectedRegion, this.selectedCity, this.selectedBrgy, this.email,
-        this.ec_fullname, this.ec_relationship, this.ec_mobile, "3",this.valid_id, this.firstname, '', this.email, this.email)
+        this.ec_fullname, this.ec_relationship, this.ec_mobile, "3",this.valid_id, this.firstname, '', this.email, this.email, this.gender, this.rate)
     }
 
     this.document.location.href = "/login"
@@ -225,11 +231,11 @@ generateString(length: number) {
 
     if(this.isMobile){
       this.userService.signup(this.lastname, this.middlename, this.bdate, this.address, this.selectedRegion, this.selectedCity, this.selectedBrgy, '',
-        this.ec_fullname, this.ec_relationship, this.ec_mobile, "2",this.valid_id, this.firstname, this.mobile, this.username, this.password)
+        this.ec_fullname, this.ec_relationship, this.ec_mobile, "2",this.valid_id, this.firstname, this.mobile, this.username, this.password, this.gender, this.rate)
     }
     else if(!this.mobile){
       this.userService.signup(this.lastname, this.middlename, this.bdate, this.address, this.selectedRegion, this.selectedCity, this.selectedBrgy, this.email,
-        this.ec_fullname, this.ec_relationship, this.ec_mobile, "2",this.valid_id, this.firstname, '', this.email, this.email)
+        this.ec_fullname, this.ec_relationship, this.ec_mobile, "2",this.valid_id, this.firstname, '', this.email, this.email, this.gender, this.rate)
     }
 
     this.document.location.href = "/login"

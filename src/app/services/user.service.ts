@@ -12,12 +12,13 @@ export class UserService {
   showLogin = new Subject<boolean>();
   locSrc = new Subject<any>();
   locDst = new Subject<any>();
+  availableStaff = new Subject<any>();
   constructor(private toastrService: ToastrService) {
     //this.host = 'http://10.42.0.67:8080'
     //this.host = 'http://localhost:8080'
     //this.host = 'http://192.168.1.31:8080'
     //this.host = 'https://43f0-58-69-61-224.ngrok.io';
-    this.host = 'https://7d8f-58-69-61-224.ngrok-free.app'
+    this.host = 'https://40cf-110-54-128-56.ngrok-free.app'
     this.socketioHost = ''
    }
 
@@ -182,7 +183,7 @@ getPhBrgys(){
 }
 
 signup(lastname: string, midname:string, bdate:string, address:string, region:string, city:string, barangay:string, email:string,
-  ec_fullname:string, ec_relationship:string,ec_mobile:string,user_type:string,validid:string, firstname:string,mobile:string,username:string,password:string){
+  ec_fullname:string, ec_relationship:string,ec_mobile:string,user_type:string,validid:string, firstname:string,mobile:string,username:string,password:string, gender: string, rate:string){
   var formdata = new FormData();
 formdata.append("lastname",username);
 formdata.append("midname", midname);
@@ -201,6 +202,8 @@ formdata.append("firstname", firstname);
 formdata.append("mobile", mobile);
 formdata.append("username", username);
 formdata.append("password", password);
+formdata.append("gender", gender);
+formdata.append("rate", rate);
   return fetch(this.host + '/user/signup', {
     method: 'POST',
     headers: {},
@@ -210,37 +213,67 @@ formdata.append("password", password);
 
 getServicetypes(){
   return fetch(this.host+"/book/service/types", {
-    method: 'GET',
+    method: 'POST',
     headers: {}
 })
 }
 getAgenda(){
   return fetch(this.host+"/book/service/agenda", {
-    method: 'GET',
+    method: 'POST',
     headers: {}
 })
 }
 
+getDuration(){
+  return fetch(this.host+"/book/service/duration", {
+    method: 'POST',
+    headers: {}
+})
+}
+
+
 getRental(){
   return fetch(this.host+"/book/service/rental", {
-    method: 'GET',
+    method: 'POST',
     headers: {}
 })
 }
 
 getGender(){
   return fetch(this.host+"/book/service/gender", {
-    method: 'GET',
+    method: 'POST',
     headers: {}
 })
 }
 
 getRate(){
   return fetch(this.host+"/book/service/rate", {
-    method: 'GET',
+    method: 'POST',
     headers: {}
 })
 }
+
+getCaregiver(gender:string){
+  var formdata = new FormData();
+  formdata.append("gender", gender);
+  return fetch(this.host+"/user/list/caregiver", {
+    method: 'POST',
+    headers: {},
+    body: formdata
+})
+}
+
+
+getHousekeeper(gender:string){
+  var formdata = new FormData();
+  formdata.append("gender", gender);
+  return fetch(this.host+"user/list/housekeeper", {
+    method: 'POST',
+    headers: {},
+    body: formdata
+})
+}
+
 
 
 toastError(error: string, body: string) {
@@ -258,4 +291,23 @@ getApiHost(){
 getSocketioHost(){
   return this.socketioHost
 }
+
+getAvailableStaff(stafftype:string, gender:string){
+
+    if(stafftype == 'caregiver'){
+      this.getCaregiver(gender)
+      .then(res => res.json())
+      .then(res => {
+          this.availableStaff.next(res);
+      })
+    }
+    else if(stafftype == 'housekeeper'){
+      this.getHousekeeper(gender)
+      .then(res => res.json())
+      .then(res => {
+          this.availableStaff.next(res);
+      })
+    }
+}
+
 }
