@@ -25,12 +25,13 @@ export class CaregivingComponent implements OnInit{
   selectedRate: any;
   selectedDuration: any;
   selectedAccepterID: any
+  age: any
+  pet: any
   location: any
   serviceType: "" |"companion" | "personal_care" | "babysitting" | "errands" = "";
   token: any;
   user_id: any
   constructor(@Inject(DOCUMENT) private document: Document, private userService: UserService){
-      this.selectedRate = '300'
       this.token = localStorage.getItem("user_token");
   }
 
@@ -107,9 +108,19 @@ export class CaregivingComponent implements OnInit{
   startBooking(){
     switch(this.serviceType){
       case 'companion':
-       this.userService.bookService(this.selectedAgenda, this.location, this.selectedDuration, this.notes, this.selectedRental, '','5', this.user_id, '', '', this.selectedAccepterID)
-         this.document.location.href = "/dashboard"
-         break;
+       this.userService.bookService(this.selectedAgenda, this.location, this.selectedDuration, this.notes, this.selectedRental, '0','5', this.user_id, '', '', this.selectedAccepterID, this.selectedRate)
+       .then(res => res.json())
+       .then(async res => {
+        await this.userService.toastSuccess("Success", "Booked Successfully")
+
+        setTimeout(() => {
+          this.document.location.href = "/dashboard"
+        }, 3000);
+
+       })
+       break;
+
+
    }
 
 
@@ -121,8 +132,9 @@ export class CaregivingComponent implements OnInit{
    console.log(this.serviceType)
    console.log(this.notes)
    console.log(this.selectedAccepterID)
+   console.log(this.pet)
+   console.log(this.selectedRate)
 
-   //this.document.location.href = "/dashboard"
   }
 
 
@@ -146,6 +158,7 @@ export class CaregivingComponent implements OnInit{
 
   selectRate(data: string){
     this.selectedRate = data
+    console.log(data)
   }
 
   selectDuration(data: string){

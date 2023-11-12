@@ -129,11 +129,11 @@ export class ProfileComponent implements OnInit {
     this.prefgender = event.target.value;
   }
 
-  bookCompanion(){
-    //console.log(this.agenda, this.location, this.duration, this.notes, this.rentals, this.prefgender)
-    this.userService.bookService(this.agenda, this.location, this.location, this.notes, this.rentals, this.prefgender,'5', this.user_id, this.pet, this.cars_count, this.accepter_id)
-    this.isShowBooking = true;
-  }
+  // bookCompanion(){
+  //   //console.log(this.agenda, this.location, this.duration, this.notes, this.rentals, this.prefgender)
+  //   this.userService.bookService(this.agenda, this.location, this.location, this.notes, this.rentals, this.prefgender,'5', this.user_id, this.pet, this.cars_count, this.accepter_id)
+  //   this.isShowBooking = true;
+  // }
   acceptBooking(id: string){
     this.userService.bookAccept(id,this.token);
     window.location.reload()

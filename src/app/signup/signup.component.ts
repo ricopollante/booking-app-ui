@@ -109,7 +109,7 @@ generateString(length: number) {
     }, 1000);
     this.showOTPVerify = true;
     this.mobile = this.mobile.replace("0","+63")
-    this.smsOTP = "5" //this.generateString(6)
+    this.smsOTP = "1234" //this.generateString(6)
     //this.userService.sendOTP(this.mobile, `
 // Your OTP: ${this.smsOTP}
 // Valid for 5 minutes. Keep it safe.

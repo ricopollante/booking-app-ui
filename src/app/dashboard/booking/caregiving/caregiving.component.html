@@ -11,8 +11,6 @@
       <p class="text-center">Personal Care</p>
     </div>
 
-
-
     <div (click)="showStaffServers('babysitting')" class="w-full p-8 bg-gray-300 rounded-lg">
       <img class="w-36" src="assets/babysitting.png" alt="" srcset="">
       <p class="text-center">Babysitting</p>
@@ -33,26 +31,26 @@
       <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Agenda</label>
       <select #agenda (change)="selectAgenda(agenda.value)" id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4">
         <option selected>Select</option>
-        <option *ngFor="let agenda of agendas" value="{{agenda.text}}">{{agenda.text}}</option>
+        <option *ngFor="let agenda of agendas" value="{{agenda.id}}">{{agenda.text}}</option>
       </select>
 
       <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Duration</label>
       <select #Duration (change)="selectDuration(Duration.value)"  id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4">
         <option selected>Select</option>
-        <option *ngFor="let duration of duration" value="{{duration.text}}">{{duration.text}}</option>
+        <option *ngFor="let duration of duration" value="{{duration.id}}">{{duration.text}}</option>
       </select>
 
 
       <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Rate</label>
       <select #Rate (change)="selectRate(Rate.value)"  id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4">
-        <option selected>{{selectedRate}} PHP</option>
+        <option  *ngFor="let rates of rates"  value="{{rates.id}}" selected>{{rates.text}} PHP</option>
       </select>
 
 
       <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Rentals</label>
       <select  #Rentals (change)="selectRental(Rentals.value)"  id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4">
         <option selected>Select</option>
-        <option *ngFor="let rentals of rentals" value="{{rentals.text}}">{{rentals.text}}</option>
+        <option *ngFor="let rentals of rentals" value="{{rentals.id}}">{{rentals.text}}</option>
       </select>
 
       <label for="Notes" class="block text-sm font-medium text-gray-900 dark:text-white">Notes</label>
@@ -61,6 +59,108 @@
     </div>
     <button (click)="startBooking()" type="button" class="w-full text-white bg-blue-400 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-md px-6 py-2.5 mt-2 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">SUBMIT</button>
   </div>
+
+
+  <div *ngIf="isShowServiceForm == 'personal_care'">
+    <p class="text-center text-2xl font-semibold text-blue-900">BOOK A SERVICE</p>
+    <p class="mt-16">Please fill out the form:</p>
+    <div class="shadow-md w-full p-6 rounded-lg bg-blue-300">
+
+      <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Agenda</label>
+      <select #agenda (change)="selectAgenda(agenda.value)" id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4">
+        <option selected>Select</option>
+        <option *ngFor="let agenda of agendas" value="{{agenda.id}}">{{agenda.text}}</option>
+      </select>
+
+      <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Duration</label>
+      <select #Duration (change)="selectDuration(Duration.value)"  id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4">
+        <option selected>Select</option>
+        <option *ngFor="let duration of duration" value="{{duration.id}}">{{duration.text}}</option>
+      </select>
+
+
+      <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Rate</label>
+      <select #Rate (change)="selectRate(Rate.value)"  id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4">
+        <option  *ngFor="let rates of rates"  value="{{rates.id}}" selected>{{rates.text}} PHP</option>
+      </select>
+
+      <label for="Notes" class="block text-sm font-medium text-gray-900 dark:text-white">Notes</label>
+      <textarea [(ngModel)]="notes" class="shadow-lg appearance-none border rounded w-full py-2.5 px-2 my-2 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder=""></textarea>
+
+    </div>
+    <button (click)="startBooking()" type="button" class="w-full text-white bg-blue-400 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-md px-6 py-2.5 mt-2 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">SUBMIT</button>
+  </div>
+
+
+  <div *ngIf="isShowServiceForm == 'babysitting'">
+    <p class="text-center text-2xl font-semibold text-blue-900">BOOK A SERVICE</p>
+    <p class="mt-16">Please fill out the form:</p>
+    <div class="shadow-md w-full p-6 rounded-lg bg-blue-300">
+
+      <div class="flex items-center mb-4">
+        <input [(ngModel)]="pet" id="default-radio-1" type="radio" value="PET CAT" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+        <label for="default-radio-1" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">PET CAT</label>
+        <input [(ngModel)]="pet" id="default-radio-1" type="radio" value="PET DOG" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+        <label for="default-radio-1" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">PET DOG</label>
+        <input [(ngModel)]="pet" id="default-radio-1" type="radio" value="HUMAN BABY" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+        <label for="default-radio-1" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">HUMAN BABY</label>
+    </div>
+
+
+
+      <label for="Notes" class="block text-sm font-medium text-gray-900 dark:text-white">Age</label>
+      <input [(ngModel)]="age" class="shadow-lg appearance-none border rounded w-full py-2.5 px-2 my-2 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="">
+
+
+      <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Duration</label>
+      <select #Duration (change)="selectDuration(Duration.value)"  id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4">
+        <option selected>Select</option>
+        <option *ngFor="let duration of duration" value="{{duration.id}}">{{duration.text}}</option>
+      </select>
+
+
+      <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Rate</label>
+      <select #Rate (change)="selectRate(Rate.value)"  id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4">
+        <option  *ngFor="let rates of rates"  value="{{rates.id}}" selected>{{rates.text}} PHP</option>
+      </select>
+
+      <label for="Notes" class="block text-sm font-medium text-gray-900 dark:text-white">Notes</label>
+      <textarea [(ngModel)]="notes" class="shadow-lg appearance-none border rounded w-full py-2.5 px-2 my-2 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder=""></textarea>
+
+    </div>
+    <button (click)="startBooking()" type="button" class="w-full text-white bg-blue-400 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-md px-6 py-2.5 mt-2 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">SUBMIT</button>
+  </div>
+
+  <div *ngIf="isShowServiceForm == 'errands'">
+    <p class="text-center text-2xl font-semibold text-blue-900">BOOK A SERVICE</p>
+    <p class="mt-16">Please fill out the form:</p>
+    <div class="shadow-md w-full p-6 rounded-lg bg-blue-300">
+
+      <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Agenda</label>
+      <select #agenda (change)="selectAgenda(agenda.value)" id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4">
+        <option selected>Select</option>
+        <option *ngFor="let agenda of agendas" value="{{agenda.id}}">{{agenda.text}}</option>
+      </select>
+
+      <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Duration</label>
+      <select #Duration (change)="selectDuration(Duration.value)"  id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4">
+        <option selected>Select</option>
+        <option *ngFor="let duration of duration" value="{{duration.id}}">{{duration.text}}</option>
+      </select>
+
+
+      <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Rate</label>
+      <select #Rate (change)="selectRate(Rate.value)"  id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4">
+        <option  *ngFor="let rates of rates"  value="{{rates.id}}" selected>{{rates.text}} PHP</option>
+      </select>
+
+      <label for="Notes" class="block text-sm font-medium text-gray-900 dark:text-white">Notes</label>
+      <textarea [(ngModel)]="notes" class="shadow-lg appearance-none border rounded w-full py-2.5 px-2 my-2 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder=""></textarea>
+
+    </div>
+    <button (click)="startBooking()" type="button" class="w-full text-white bg-blue-400 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-md px-6 py-2.5 mt-2 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">SUBMIT</button>
+  </div>
+
 
 </div>
 
