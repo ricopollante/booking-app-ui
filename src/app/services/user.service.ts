@@ -340,8 +340,8 @@ listBookingaccepted(id: string, accepter:string, status:string){
 
 createChannelMessage(sender_id:string, receiver_id:string){
   var formdata = new FormData();
-  formdata.append("sender_id", sender_id);
-  formdata.append("receiver_id", receiver_id);
+  formdata.append("sender_userid", sender_id);
+  formdata.append("receiver_userid", receiver_id);
   return fetch(this.host+"/user/create_channel", {
     method: 'POST',
     headers: {},

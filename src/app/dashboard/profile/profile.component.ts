@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
-
+import {io} from 'socket.io-client';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -35,7 +35,11 @@ export class ProfileComponent implements OnInit {
   navBook: "waiting" | "accepted" | "history" = "waiting";
   isShowServices: any
   isTimerStarted: any
-
+  private socket = io('https://5d33-110-54-130-215.ngrok-free.app',{
+    extraHeaders: {
+      "ngrok-skip-browser-warning" : "69420"
+    }
+  });
 
   constructor(private userService: UserService) {
 
@@ -192,10 +196,18 @@ export class ProfileComponent implements OnInit {
     this.isShowServices = true;
   }
 
-  acceptBooking(booking_id:string){
+  acceptBooking(booking_id:string, receiver_id:string){
       this.userService.bookAccept(booking_id,this.token)
       this.userService.listBookingwaiting(this.user_id, 'accepter','false')
       this.userService.listBookingaccepted(this.user_id, 'accepter','true')
       this.userService.toastSuccess("Success", "Booking accepted")
+      this.userService.createChannelMessage(this.user_id,receiver_id)
+      .then(res => res.json())
+      .then(res => {
+        console.log(res+" "+this.user_id+" "+receiver_id)
+        this.socket.emit('on_message', {"uuid" : res.channel, "data" : "Hello I'm glad to accept your booking. Feel free to contact me via this chat.", "user_id" : this.user_id});
+        this.userService.saveMessage(this.user_id, res.channel, "Hello I'm glad to accept your booking. Feel free to contact me via this chat.");
+        this.userService.updateChannels(this.user_id)
+      })
   }
 }

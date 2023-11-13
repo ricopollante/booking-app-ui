@@ -45,8 +45,6 @@ export class MessageComponent implements OnInit{
           data.channel.forEach( (value: any) => {
             this.socket.emit('on_message', {"uuid" : String(value.uuid), "data" : ""}); // listen and save src coordinates
           });
-
-
       })
 
       this.userService.messages.subscribe(
@@ -64,7 +62,7 @@ export class MessageComponent implements OnInit{
           }
           setTimeout(() => {
             this.userService.updateMessages(data.uuid)
-            this.userService.updateChannels(res.user_id)
+            this.userService.updateChannels(this.user_id)
           }, 1000);
 
 
@@ -78,7 +76,10 @@ export class MessageComponent implements OnInit{
   }
 
   ngOnInit(): void {
-
+    setInterval(() => {
+      this.userService.updateChannels(this.user_id)
+      console.log("updating channels...")
+    }, 3000);
     this.openMessage = false;
   }
 

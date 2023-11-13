@@ -125,7 +125,7 @@
                   <p>Agenda: {{booking.agenda}}</p>
                   <p>Location: {{booking.location}}</p>
                   <div class="flex flex-row w-full">
-                    <button  *ngIf="(booking.accepted == false)" (click)="acceptBooking(booking.id)" type="button" class="w-full text-white bg-blue-500 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-md px-4 py-2 mt-2 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">ACCEPT</button>
+                    <button  *ngIf="(booking.accepted == false)" (click)="acceptBooking(booking.id, booking.user)" type="button" class="w-full text-white bg-blue-500 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-md px-4 py-2 mt-2 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">ACCEPT</button>
                     <button *ngIf="booking.accepted == true" type="button" class="w-full text-white bg-blue-500 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-md px-4 py-2 mt-2 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">MESSAGE</button>
                     <button type="button" class="w-full text-white bg-red-500 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-md px-4 py-2 mt-2 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-blue-800">REPORT</button>
                   </div>
@@ -161,7 +161,7 @@
                   <p>Agenda: {{booking.agenda}}</p>
                   <p>Location: {{booking.location}}</p>
                   <div class="flex flex-row w-full">
-                    <button  *ngIf="(booking.accepted == false)" (click)="acceptBooking(booking.id)" type="button" class="w-full text-white bg-blue-500 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-md px-4 py-2 mt-2 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">ACCEPT</button>
+                    <button  *ngIf="(booking.accepted == false)" (click)="acceptBooking(booking.id, booking.user)" type="button" class="w-full text-white bg-blue-500 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-md px-4 py-2 mt-2 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">ACCEPT</button>
                     <button *ngIf="booking.accepted == true" type="button" class="w-full text-white bg-blue-500 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-md px-4 py-2 mt-2 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">MESSAGE</button>
                     <button type="button" class="w-full text-white bg-red-500 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-md px-4 py-2 mt-2 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-blue-800">REPORT</button>
                   </div>
@@ -247,7 +247,7 @@
 
             </div>
             <div  class="w-full h-20 flex flex-col items-end justify-center">
-                <button (click)="acceptBooking(booking.id)" *ngIf="usertype=='CAREGIVER' || usertype=='HOUSEKEEPER' "  class="text-center w-1/2 bg-blue-500 text-xs hover:bg-blue-700 text-white font-normal py-2 px-4 rounded  mt-4">
+                <button (click)="acceptBooking(booking.id, booking.user)" *ngIf="usertype=='CAREGIVER' || usertype=='HOUSEKEEPER' "  class="text-center w-1/2 bg-blue-500 text-xs hover:bg-blue-700 text-white font-normal py-2 px-4 rounded  mt-4">
                   Accept
                 </button>
                 <button *ngIf="usertype=='CAREGIVER' || usertype=='HOUSEKEEPER' "  class="text-center w-1/2 bg-red-500 text-xs hover:bg-red-700 text-white font-normal py-2 px-4 my-2 rounded  mt-4">
