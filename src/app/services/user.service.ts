@@ -371,6 +371,19 @@ getMyMessages(uuid: string){
 })
 }
 
+saveMessage(user_id:string, uuid:string, body:string){
+  var formdata = new FormData();
+  formdata.append("uuid", uuid);
+  formdata.append("user_id", user_id);
+  formdata.append("body", body);
+  return fetch(this.host + '/user/save_message', {
+    method: 'POST',
+    headers: {
+    },
+    body: formdata
+})
+}
+
 updateChannels(user_id: string){
   this.getAllChannelOfMessage(user_id)
   .then(res => res.json())
@@ -384,7 +397,7 @@ updateMessages(uuid: string){
   this.getMyMessages(uuid)
   .then(res => res.json())
   .then(res => {
-    this.channels.next(res)
+    this.messages.next(res)
   })
 }
 

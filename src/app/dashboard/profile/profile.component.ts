@@ -35,8 +35,7 @@ export class ProfileComponent implements OnInit {
   navBook: "waiting" | "accepted" | "history" = "waiting";
   isShowServices: any
   isTimerStarted: any
-  channels: any
-  messages: any
+
 
   constructor(private userService: UserService) {
 
@@ -66,16 +65,6 @@ export class ProfileComponent implements OnInit {
         console.log(res);
         this.name = res.firstname;
         this.user_id = res.user_id
-
-        this.userService.channels.subscribe(
-        (data: any) =>{
-            this.channels = data.data
-        })
-
-        this.userService.messages.subscribe(
-          (data: any) =>{
-            this.messages = data.data
-          })
 
 
         this.userService.bookinglistWaiting.subscribe(

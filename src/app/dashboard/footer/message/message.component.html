@@ -1,4 +1,4 @@
-<div *ngIf="openMessage" class="flex h-screen flex-col">
+<div *ngIf="openMessage" class="flex h-screen flex-col overflow-y-auto">
   <div class="py-4 flex flex-row">
     <img class="w-14 rounded-full p-2 bg-gray-300 mx-2" src="assets/user.png" alt="">
     <div>
@@ -11,47 +11,43 @@
     <div *ngFor="let message of messages" class="flex flex-col space-y-2 p-4">
       <!-- Individual chat message -->
 
-      <div *ngIf="message.sender_id==user_id" class="flex items-center self-end rounded-xl rounded-tr bg-blue-500 py-2 px-3 text-white">
-        <p>{{message.body}}</p>
-      </div>
-
-      <div *ngIf="message.sender_id!=user_id" class="flex items-center self-start rounded-xl rounded-tl bg-gray-300 py-2 px-3">
+      <div *ngIf="message.sender_id==user_id" class="flex items-center self-start rounded-xl rounded-tl bg-gray-300 py-2 px-3">
         <p>{{message.body}}</p>
 
       </div>
+
+      <div *ngIf="message.sender_id!=user_id" class="flex items-center self-end rounded-xl rounded-tr bg-blue-500 py-2 px-3 text-white">
+        <p>{{message.body}}</p>
+      </div>
+
+
+
 
     </div>
-    <div *ngFor="let message of messages" class="flex flex-col space-y-2 p-4">
-      <!-- Individual chat message -->
 
-      <div *ngIf="message.sender_id==user_id" class="flex items-center self-end rounded-xl rounded-tr bg-blue-500 py-2 px-3 text-white">
-        <p>{{message.body}}</p>
-      </div>
-
-      <div *ngIf="message.sender_id!=user_id" class="flex items-center self-start rounded-xl rounded-tl bg-gray-300 py-2 px-3">
-        <p>{{message.body}}</p>
-
-      </div>
-
-    </div>
 
   </div>
-  <div class="flex items-center p-4">
-    <input type="text" placeholder="Type your message..." class="w-full rounded-lg border border-gray-300 px-4 py-2" />
-    <button class="ml-2 rounded-lg bg-blue-500 px-4 py-2 text-white">Send</button>
+  <div class="flex items-center p-4 mb-16">
+    <input [(ngModel)]="messageToSend" value="213" type="text" placeholder="Type your message..." class="w-full rounded-lg border border-gray-300 px-4 py-2" />
+    <button (click)="sendMessage()" class="ml-2 rounded-lg bg-blue-500 px-4 py-2 text-white">Send</button>
   </div>
 </div>
 
 <div *ngIf="!openMessage" class="w-full">
        <div *ngFor="let channel of channels" class=" w-full">
-        <div (click)="openMessageConversation(channel.uuid, channel.name)"  class="w-full flex flex-row my-8 cursor-pointer p-2">
+
+        <div  *ngIf="channel.user_id!=user_id" (click)="openMessageConversation(channel.uuid, channel.name)"  class="w-full flex flex-row my-8 cursor-pointer p-2">
+
           <div class="mx-2">
             <img class="w-14 rounded-full bg-gray-300 p-2 mt-2" src="assets/user.png" alt="">
           </div>
+
           <div class="w-full">
             <p class="font-semibold">{{channel.name}}</p>
             <p class="w-full rounded-xl rounded-tl bg-white text-sm py-4 pl-4 pr-16 shadow-lg">{{channel.recent_message}}</p>
           </div>
+
         </div>
+
        </div>
 </div>
