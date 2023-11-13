@@ -206,10 +206,6 @@ generateString(length: number) {
     this.gender = data;
   }
 
-  signUpUser() {
-
-  }
-
   signUpHousekeeper() {
     console.log('singup housekeeper..')
     if(this.isMobile){
@@ -238,10 +234,29 @@ generateString(length: number) {
         this.ec_fullname, this.ec_relationship, this.ec_mobile, "2",this.valid_id, this.firstname, '', this.email, this.email, this.gender, this.rate)
     }
 
-    this.document.location.href = "/login"
+    this.document.location.href = "/dashboard"
     this.userService.toastSuccess('Success', 'Caregiver Sign Up successfully')
 
 
   }
+
+
+  signUpUser() {
+
+    if(this.isMobile){
+      this.userService.signup(this.lastname, this.middlename, this.bdate, this.address, this.selectedRegion, this.selectedCity, this.selectedBrgy, '',
+        this.ec_fullname, this.ec_relationship, this.ec_mobile, "1",this.valid_id, this.firstname, this.mobile, this.username, this.password, this.gender, this.rate)
+    }
+    else if(!this.mobile){
+      this.userService.signup(this.lastname, this.middlename, this.bdate, this.address, this.selectedRegion, this.selectedCity, this.selectedBrgy, this.email,
+        this.ec_fullname, this.ec_relationship, this.ec_mobile, "1",this.valid_id, this.firstname, '', this.email, this.email, this.gender, this.rate)
+    }
+
+    this.document.location.href = "/dashboard"
+    this.userService.toastSuccess('Success', 'User Sign Up successfully')
+
+
+  }
+
 
 }

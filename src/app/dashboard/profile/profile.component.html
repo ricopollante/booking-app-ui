@@ -1,4 +1,4 @@
-<div *ngIf="usertype=='USER'">
+<div *ngIf="isShowServices">
     <div class="mb-36" *ngIf="isShowBooking && !showBookingList">
       <div>
         <div *ngFor="let booking of bookingList" class="">
@@ -185,7 +185,11 @@
     </div>
 </div>
 
-<div *ngIf="usertype=='CAREGIVER' || usertype=='HOUSEKEEPER' " class="w-[400px]">
+<div *ngIf="usertype=='CAREGIVER' || usertype=='HOUSEKEEPER' || usertype=='USER' && !isShowServices" class="w-full">
+  <div (click)="showServices()" *ngIf="usertype=='USER'" class="flex flex-row w-full justify-end">
+    <p class="text-black text-right my-2 font-semibold text-xs">Book a service</p>
+    <img class="w-5 h-5 ml-2 mt-1.5" src="assets/right-arrow.png" alt="">
+  </div>
 
   <div class="w-full flex flex-col items-center">
     <a href="#" class="block max-w-sm px-6 py-10 bg-blue-300 border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 relative w-full">
@@ -215,9 +219,9 @@
 
   </div>
 
-  <div  *ngIf="navBook=='waiting'"  class="w-full flex flex-col items-center" >
+  <div  *ngIf="navBook=='waiting'"  class="w-full h-screen flex flex-col items-center" >
     <!-- BOOKINGS -->
-      <div class="flex flex-row w-full justify-between shadow-lg rounded-lg border p-4 my-2 hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+      <div *ngFor="let booking of bookingListWaiting" class="flex flex-row w-full justify-between shadow-lg rounded-lg border p-4 my-2 hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
             <div class="flex flex-row w-full ">
               <div>
                 <img class="w-20 mr-24 bg-gray-200 rounded-lg" src="assets\wash.png" alt="">
@@ -226,33 +230,42 @@
 
                 <div class="flex flex-grow w-[100px] mb-1">
                   <img class="w-3.5 h-3.5 mr-2" src="assets/taskpng.png" alt="">
-                  <p class="text-xs font-semibold">Play with my kids on the playground</p>
+                  <p class="text-xs font-semibold">{{booking.agenda}}</p>
                 </div>
                 <!-- <p class="text-xs text-yellow-400 font-semibold">Please do it carefully don't try to agitate her. please be kind to her</p> -->
 
                 <div class="flex flex-row w-[100px] mb-1">
                   <img class="w-3.5 h-3.5 mr-2" src="assets/timer.png" alt="">
-                  <p class="text-xs font-semibold text-black">30 MINS</p>
+                  <p class="text-xs font-semibold text-black">{{booking.duration}}</p>
                 </div>
 
                 <div class="flex flex-row w-[100px] mb-1">
-                  <img class="w-3.5 h-3.5 mr-2" src="assets/marker-icon.png" alt="">
-                  <p class="text-xs font-semibold text-black">#4 zone 5 emita manila</p>
+                  <!-- <img class="w-3.5 h-3.5 mr-2" src="assets/marker-icon.png" alt=""> -->
+                  <p class="text-xs text-black">Notes: {{booking.notes}}</p>
                 </div>
               </div>
 
             </div>
-            <div class=" w-full h-20 flex flex-col items-end justify-center mx-2">
-                <button class="w-1/2 bg-blue-500 text-sm hover:bg-blue-700 text-white font-normal py-2 px-4 rounded">
+            <div  class="w-full h-20 flex flex-col items-end justify-center">
+                <button (click)="acceptBooking(booking.id)" *ngIf="usertype=='CAREGIVER' || usertype=='HOUSEKEEPER' "  class="text-center w-1/2 bg-blue-500 text-xs hover:bg-blue-700 text-white font-normal py-2 px-4 rounded  mt-4">
                   Accept
+                </button>
+                <button *ngIf="usertype=='CAREGIVER' || usertype=='HOUSEKEEPER' "  class="text-center w-1/2 bg-red-500 text-xs hover:bg-red-700 text-white font-normal py-2 px-4 my-2 rounded  mt-4">
+                  Decline
+                </button>
+                <button *ngIf="usertype=='USER'" class="text-center w-1/2 bg-blue-500 text-xs hover:bg-blue-700 text-white font-normal py-2 px-0 rounded mt-4">
+                  Waiting
+                </button>
+                 <button *ngIf="usertype=='USER'" class="text-center w-1/2 bg-red-500 text-xs hover:bg-red-700 text-white font-normal py-2 px-0 rounded mt-4">
+                  Cancel
                 </button>
             </div>
       </div>
   </div>
 
-  <div  *ngIf="navBook=='accepted'"  class="w-full flex flex-col items-center" >
+  <div  *ngIf="navBook=='accepted'"  class="w-full h-screen flex flex-col items-center" >
     <!-- BOOKINGS -->
-      <div class="flex flex-row w-full justify-between shadow-lg rounded-lg border p-4 my-2 hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+      <div *ngFor="let booking of bookingListAccepted" class="flex flex-row w-full justify-between shadow-lg rounded-lg border p-4 my-2 hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
             <div class="flex flex-row w-full ">
               <div>
                 <img class="w-20 mr-24 bg-gray-200 rounded-lg" src="assets\wash.png" alt="">
@@ -261,31 +274,41 @@
 
                 <div class="flex flex-grow w-[100px] mb-1">
                   <img class="w-3.5 h-3.5 mr-2" src="assets/taskpng.png" alt="">
-                  <p class="text-xs font-semibold">Play with my kids on the playground</p>
+                  <p class="text-xs font-semibold">{{booking.agenda}}</p>
                 </div>
                 <!-- <p class="text-xs text-yellow-400 font-semibold">Please do it carefully don't try to agitate her. please be kind to her</p> -->
 
                 <div class="flex flex-row w-[100px] mb-1">
                   <img class="w-3.5 h-3.5 mr-2" src="assets/timer.png" alt="">
-                  <p class="text-xs font-semibold text-black">30 MINS</p>
+                  <p class="text-xs font-semibold text-black">{{booking.duration}}</p>
                 </div>
 
                 <div class="flex flex-row w-[100px] mb-1">
-                  <img class="w-3.5 h-3.5 mr-2" src="assets/marker-icon.png" alt="">
-                  <p class="text-xs font-semibold text-black">#4 zone 5 emita manila</p>
+                  <!-- <img class="w-3.5 h-3.5 mr-2" src="assets/marker-icon.png" alt=""> -->
+                  <p class="text-xs text-black">Notes: {{booking.notes}}</p>
                 </div>
               </div>
 
             </div>
             <div class=" w-full h-20 flex flex-col items-end justify-center mx-2">
-                <p>Ongoing</p>
+              <div class="flex flex-row mr-2.5"  *ngIf="usertype=='CAREGIVER' || usertype=='HOUSEKEEPER' || usertype=='USER' ">
+                 <img class="w-4 h-4 mt-5 mr-2" src="assets/timer.png" alt="">
+                 <p  class="text-center font-bold mt-4">
+                  00 : 30 : 00
+                 </p>
+              </div>
+
+              <button *ngIf="usertype=='CAREGIVER' || usertype=='HOUSEKEEPER' "  class="text-center w-full bg-blue-500 text-xs hover:bg-blue-700 text-white font-normal py-2 rounded ml-4 mt-4">
+                Start
+              </button>
+
             </div>
       </div>
   </div>
 
-  <div  *ngIf="navBook=='history'"  class="w-full flex flex-col items-center" >
+  <div  *ngIf="navBook=='history'"  class="w-full h-screen flex flex-col items-center" >
     <!-- BOOKINGS -->
-      <div class="flex flex-row w-full justify-between shadow-lg rounded-lg border p-4 my-2 hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+      <div *ngFor="let booking of bookingList" class="flex flex-row w-full justify-between shadow-lg rounded-lg border p-4 my-2 hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
             <div class="flex flex-row w-full ">
               <div>
                 <img class="w-20 mr-24 bg-gray-200 rounded-lg" src="assets\wash.png" alt="">
@@ -294,25 +317,32 @@
 
                 <div class="flex flex-grow w-[100px] mb-1">
                   <img class="w-3.5 h-3.5 mr-2" src="assets/taskpng.png" alt="">
-                  <p class="text-xs font-semibold">Play with my kids on the playground</p>
+                  <p class="text-xs font-semibold">{{booking.agenda}}</p>
                 </div>
                 <!-- <p class="text-xs text-yellow-400 font-semibold">Please do it carefully don't try to agitate her. please be kind to her</p> -->
 
                 <div class="flex flex-row w-[100px] mb-1">
                   <img class="w-3.5 h-3.5 mr-2" src="assets/timer.png" alt="">
-                  <p class="text-xs font-semibold text-black">30 MINS</p>
+                  <p class="text-xs font-semibold text-black">{{booking.duration}}</p>
                 </div>
 
                 <div class="flex flex-row w-[100px] mb-1">
-                  <img class="w-3.5 h-3.5 mr-2" src="assets/marker-icon.png" alt="">
-                  <p class="text-xs font-semibold text-black">#4 zone 5 emita manila</p>
+                  <!-- <img class="w-3.5 h-3.5 mr-2" src="assets/marker-icon.png" alt=""> -->
+                  <p class="text-xs text-black">Notes: {{booking.notes}}</p>
                 </div>
+
               </div>
 
             </div>
-            <div class=" w-full h-20 flex flex-col items-end justify-center mx-2">
-                <p>HISTORY</p>
+            <div class="flex flex-col">
+              <button *ngIf="usertype=='CAREGIVER' || usertype=='HOUSEKEEPER' || usertype=='USER' "  class="text-center w-full bg-blue-500 text-xs hover:bg-blue-700 text-white font-normal py-2 px-4 rounded  mt-4">
+               Receipt
+              </button>
+              <button *ngIf="usertype=='CAREGIVER' || usertype=='HOUSEKEEPER' || usertype=='USER'"  class="text-center w-full bg-red-500 text-xs hover:bg-red-700 text-white font-normal py-2 px-4 my-2 rounded  mt-4">
+                Delete
+              </button>
             </div>
+
       </div>
   </div>
 

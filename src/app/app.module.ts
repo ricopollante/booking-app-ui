@@ -25,6 +25,7 @@ import { BookingComponent } from './dashboard/booking/booking.component';
 import { CaregivingComponent } from './dashboard/booking/caregiving/caregiving.component';
 import { HousekeepingComponent } from './dashboard/booking/housekeeping/housekeeping.component';
 import { RouterModule } from '@angular/router';
+import { MessageComponent } from './dashboard/footer/message/message.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { RouterModule } from '@angular/router';
     LoadingscreenComponent,
     BookingComponent,
     CaregivingComponent,
-    HousekeepingComponent
+    HousekeepingComponent,
+    MessageComponent
   ],
   imports: [
     RouterModule,

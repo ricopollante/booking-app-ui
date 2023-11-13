@@ -13,13 +13,17 @@ export class UserService {
   locSrc = new Subject<any>();
   locDst = new Subject<any>();
   availableStaff = new Subject<any>();
+  bookinglistWaiting = new Subject<any>();
+  bookinglistAccepted = new Subject<any>();
+  channels = new Subject<any>();
+  messages = new Subject<any>();
   constructor(private toastrService: ToastrService) {
     //this.host = 'http://10.42.0.67:8080'
     //this.host = 'http://localhost:8080'
     //this.host = 'http://192.168.1.31:8080'
     //this.host = 'https://43f0-58-69-61-224.ngrok.io';
-    this.host = 'https://d348-216-247-90-81.ngrok-free.app'
-    this.socketioHost = ''
+    this.host = 'https://767d-110-54-130-215.ngrok-free.app'
+    this.socketioHost = 'https://5d33-110-54-130-215.ngrok-free.app'
    }
 
 
@@ -47,9 +51,15 @@ export class UserService {
   })
   }
 
-  getBookings(userid: string){
+  getBookings(id: string, type:string, status:string){
     let data = new FormData()
-    data.append('userid', userid)
+    if (type=="user"){
+      data.append('userid', id)
+    }
+    else if(type=="accepter"){
+      data.append('accepter_id', id)
+    }
+    data.append('status', status)
     return fetch(this.host + '/book/list', {
       method: 'POST',
       headers: {},
@@ -310,5 +320,74 @@ getAvailableStaff(stafftype:string, gender:string){
       })
     }
 }
+
+listBookingwaiting(id: string, accepter:string, status:string){
+  this.getBookings(id, accepter, status)
+  .then(res => res.json())
+      .then(res => {
+          this.bookinglistWaiting.next(res)
+      })
+}
+
+listBookingaccepted(id: string, accepter:string, status:string){
+  this.getBookings(id, accepter, status)
+  .then(res => res.json())
+      .then(res => {
+          this.bookinglistAccepted.next(res)
+      })
+}
+
+
+createChannelMessage(sender_id:string, receiver_id:string){
+  var formdata = new FormData();
+  formdata.append("sender_id", sender_id);
+  formdata.append("receiver_id", receiver_id);
+  return fetch(this.host+"/user/create_channel", {
+    method: 'POST',
+    headers: {},
+    body: formdata
+})
+}
+
+getAllChannelOfMessage(user_id: string){
+  var formdata = new FormData();
+  formdata.append("user_id", user_id);
+  return fetch(this.host + '/user/select_channel', {
+    method: 'POST',
+    headers: {
+    },
+    body: formdata
+})
+}
+
+getMyMessages(uuid: string){
+  var formdata = new FormData();
+  formdata.append("uuid", uuid);
+  return fetch(this.host + '/user/get_message', {
+    method: 'POST',
+    headers: {
+    },
+    body: formdata
+})
+}
+
+updateChannels(user_id: string){
+  this.getAllChannelOfMessage(user_id)
+  .then(res => res.json())
+  .then(res => {
+    this.channels.next(res)
+  })
+}
+
+
+updateMessages(uuid: string){
+  this.getMyMessages(uuid)
+  .then(res => res.json())
+  .then(res => {
+    this.channels.next(res)
+  })
+}
+
+
 
 }

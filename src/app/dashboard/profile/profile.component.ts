@@ -21,6 +21,8 @@ export class ProfileComponent implements OnInit {
   notes: string
   rentals: string
   prefgender: string
+  bookingListWaiting: any;
+  bookingListAccepted: any;
   bookingList: any;
   showBookingList:  boolean;
   isVerified: boolean;
@@ -31,8 +33,13 @@ export class ProfileComponent implements OnInit {
   accepter_id:any
   usertype: "USER" | "CAREGIVER" | "HOUSEKEEPER" = "USER";
   navBook: "waiting" | "accepted" | "history" = "waiting";
+  isShowServices: any
+  isTimerStarted: any
+  channels: any
+  messages: any
 
   constructor(private userService: UserService) {
+
     this.isShowAcceptBookings = false;
     this.isVerified = true;
     this.showBookingList = false;
@@ -59,8 +66,33 @@ export class ProfileComponent implements OnInit {
         console.log(res);
         this.name = res.firstname;
         this.user_id = res.user_id
+
+        this.userService.channels.subscribe(
+        (data: any) =>{
+            this.channels = data.data
+        })
+
+        this.userService.messages.subscribe(
+          (data: any) =>{
+            this.messages = data.data
+          })
+
+
+        this.userService.bookinglistWaiting.subscribe(
+        (data: any) =>{
+              this.bookingListWaiting = data.data
+              console.log(data.data)
+        })
+
+        this.userService.bookinglistAccepted.subscribe(
+        (data: any) =>{
+              this.bookingListAccepted = data.data
+              console.log(data.data)
+        })
+
+
         this.usertype = res.user_type.toUpperCase()
-          this.userService.getBookings(this.user_id)
+          this.userService.getBookings(this.user_id, 'user', 'false')
           .then(res => res.json())
           .then(res => {
               this.bookingList = res.data;
@@ -86,6 +118,18 @@ export class ProfileComponent implements OnInit {
           this.isShowAcceptBookings = true;
         }
       }
+
+      if (this.isUser){
+        this.userService.listBookingwaiting(this.user_id, 'user','false')
+        this.userService.listBookingaccepted(this.user_id, 'user','true')
+        console.log("USER.....")
+      }
+      else{
+        this.userService.listBookingwaiting(this.user_id, 'accepter','false')
+        this.userService.listBookingaccepted(this.user_id, 'accepter','true')
+        console.log("NON-USER.....")
+      }
+
     })
 
 
@@ -134,10 +178,10 @@ export class ProfileComponent implements OnInit {
   //   this.userService.bookService(this.agenda, this.location, this.location, this.notes, this.rentals, this.prefgender,'5', this.user_id, this.pet, this.cars_count, this.accepter_id)
   //   this.isShowBooking = true;
   // }
-  acceptBooking(id: string){
-    this.userService.bookAccept(id,this.token);
-    window.location.reload()
-  }
+  // acceptBooking(id: string){
+  //   this.userService.bookAccept(id,this.token);
+  //   window.location.reload()
+  // }
 
   showUserBookingList(){
     this.showBookingList = true;
@@ -153,5 +197,16 @@ export class ProfileComponent implements OnInit {
 
   showNavHistory(){
     this.navBook = "history"
+  }
+
+  showServices(){
+    this.isShowServices = true;
+  }
+
+  acceptBooking(booking_id:string){
+      this.userService.bookAccept(booking_id,this.token)
+      this.userService.listBookingwaiting(this.user_id, 'accepter','false')
+      this.userService.listBookingaccepted(this.user_id, 'accepter','true')
+      this.userService.toastSuccess("Success", "Booking accepted")
   }
 }

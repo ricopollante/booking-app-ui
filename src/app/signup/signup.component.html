@@ -27,7 +27,7 @@
 </div>
 
 
-<div *ngIf="isHousekeeperSignUp && !showOTPVerify && !showSignUpForm" class="w-screen h-screen">
+<div *ngIf="isHousekeeperSignUp && !showOTPVerify && !showSignUpForm" class="w-screen h-screen  flex flex-col items-center justify-center">
   <div class="w-full max-w-xs mx-12 mt-24">
     <div class="mx-24">
       <img class="w-full" src="assets/applogo.jpg" alt="" srcset="">
@@ -87,7 +87,7 @@
 
 </div>
 
-<div *ngIf="isCaregiverSignUp && !showOTPVerify && !showSignUpForm" class="w-screen h-screen">
+<div *ngIf="isCaregiverSignUp && !showOTPVerify && !showSignUpForm" class="w-screen h-screen  flex flex-col items-center justify-center">
   <div class="w-full max-w-xs mx-12 mt-24">
     <div class="mx-24">
       <img class="w-full" src="assets/applogo.jpg" alt="" srcset="">
@@ -147,7 +147,7 @@
 
 </div>
 
-  <div *ngIf="isUserSignUp && !showOTPVerify && !showSignUpForm" class="w-screen h-screen">
+  <div *ngIf="isUserSignUp && !showOTPVerify && !showSignUpForm" class="w-screen h-screen  flex flex-col items-center justify-center">
     <div class="w-full max-w-xs mx-12 mt-24">
       <div class="mx-24">
         <img class="w-full" src="assets/applogo.jpg" alt="" srcset="">
@@ -280,7 +280,7 @@
 
 <input [(ngModel)]="ec_mobile" class="shadow-lg appearance-none border rounded w-full py-2.5 px-2 my-2 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Mobile">
 
-<button  class="w-full bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2.5 px-24 rounded focus:outline-none focus:shadow-outline shadow-2xl" type="button">
+<button (click)=" signUpUser()" class="w-full bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2.5 px-24 rounded focus:outline-none focus:shadow-outline shadow-2xl" type="button">
   Submit
 </button>
 </div>
