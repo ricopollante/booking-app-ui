@@ -26,6 +26,8 @@ import { CaregivingComponent } from './dashboard/booking/caregiving/caregiving.c
 import { HousekeepingComponent } from './dashboard/booking/housekeeping/housekeeping.component';
 import { RouterModule } from '@angular/router';
 import { MessageComponent } from './dashboard/footer/message/message.component';
+import { UnderdevelopmentComponent } from './underdevelopment/underdevelopment.component';
+import { AdminComponent } from './admin/admin.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +44,9 @@ import { MessageComponent } from './dashboard/footer/message/message.component';
     BookingComponent,
     CaregivingComponent,
     HousekeepingComponent,
-    MessageComponent
+    MessageComponent,
+    UnderdevelopmentComponent,
+    AdminComponent
   ],
   imports: [
     RouterModule,

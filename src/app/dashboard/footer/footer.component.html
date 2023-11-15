@@ -1,9 +1,13 @@
-<footer class="relative">
+<footer *ngIf="!isAdmin" class="relative">
 
   <div class="fixed left-0 right-0 bottom-0 bg-blue-300 rounded-full sm:px-0 sm:py:0 px-4 py-2 w-screen">
     <ul class="flex flex-row justify-between">
       <li><img class="w-11 h-11 mt-6 mx-6 sm:w-6 sm:h-6 sm:mb-2" src="assets/faq.png" alt=""></li>
-      <li><img class="w-11 h-11 mt-6 mx-6 sm:w-6 sm:h-6 sm:mb-2" src="assets/shopping-cart.png" alt=""></li>
+      <li>
+        <a routerLink="/underdevw" routerLinkActive="active">
+        <img class="w-11 h-11 mt-6 mx-6 sm:w-6 sm:h-6 sm:mb-2" src="assets/shopping-cart.png" alt="">
+        </a>
+      </li>
       <li>
         <a routerLink="/" routerLinkActive="active">
           <img class="w-20 h-20 mx-2  sm:w-11 sm:h-11  sm:mt-2" src="assets/home.png" alt="">

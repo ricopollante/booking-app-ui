@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, InjectionToken, OnInit } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
 import {io} from 'socket.io-client';
+import { DOCUMENT } from '@angular/common';
+
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -35,14 +37,24 @@ export class ProfileComponent implements OnInit {
   navBook: "waiting" | "accepted" | "history" = "waiting";
   isShowServices: any
   isTimerStarted: any
-  private socket = io('https://5d33-110-54-130-215.ngrok-free.app',{
+  sec: any
+  min: any
+  hr: any
+  Date: Date;
+  approvedBookID: any
+  user_type: any
+  private socket = io('https://0a98-216-247-89-37.ngrok-free.app',{
     extraHeaders: {
       "ngrok-skip-browser-warning" : "69420"
     }
   });
 
-  constructor(private userService: UserService) {
-
+  constructor(private userService: UserService, @Inject(DOCUMENT) private document: Document) {
+    this.isTimerStarted = false
+    this.Date = new Date();
+    this.hr = '00'
+    this.min = '00'
+    this.sec = '00'
     this.isShowAcceptBookings = false;
     this.isVerified = true;
     this.showBookingList = false;
@@ -69,18 +81,31 @@ export class ProfileComponent implements OnInit {
         console.log(res);
         this.name = res.firstname;
         this.user_id = res.user_id
+        localStorage.setItem("user_type",res.user_type)
+
 
 
         this.userService.bookinglistWaiting.subscribe(
         (data: any) =>{
               this.bookingListWaiting = data.data
               console.log(data.data)
+
         })
 
         this.userService.bookinglistAccepted.subscribe(
         (data: any) =>{
               this.bookingListAccepted = data.data
               console.log(data.data)
+              this.approvedBookID = data.data[0].id
+              localStorage.setItem("accepter_id",data.data[0].accepter)
+              localStorage.setItem("user_id",data.data[0].user)
+
+               this.userService.selectMapChannel(this.user_id, data.data[0].accepter)
+                .then(res => res.json())
+                .then(res => {
+                  localStorage.setItem("channel_uuid",res.uuid)
+              })
+
         })
 
 
@@ -122,6 +147,34 @@ export class ProfileComponent implements OnInit {
         this.userService.listBookingaccepted(this.user_id, 'accepter','true')
         console.log("NON-USER.....")
       }
+
+      this.userService.getBookings(this.user_id, 'accepter', 'true')
+      .then(res => res.json())
+          .then(res => {
+            console.log(res)
+            this.userService.getBookingTimer(res.data[0].id)
+            .then(res => res.json())
+            .then(res => {
+              if (res.start){
+                this.startTimer(res.booking)
+              }
+            })
+          })
+
+      this.userService.getBookings(this.user_id, 'user', 'true')
+          .then(res => res.json())
+              .then(res => {
+                console.log(res)
+                this.userService.getBookingTimer(res.data[0].id)
+                .then(res => res.json())
+                .then(res => {
+                  if (res.start){
+                    this.startTimer(res.booking)
+                  }
+                })
+              })
+
+
 
     })
 
@@ -210,4 +263,64 @@ export class ProfileComponent implements OnInit {
         this.userService.updateChannels(this.user_id)
       })
   }
+
+  startTimer(booking_id: string){
+    if (!this.isTimerStarted){
+      this.userService.startBookingTimer(booking_id);
+    }
+
+    this.isTimerStarted = true;
+    this.userService.getBookingTimer(booking_id)
+    .then(res => res.json())
+    .then(res => {
+
+        var log = res.start;
+
+          var time = this.Date.getHours() + ":" + this.Date.getMinutes() + ":" + this.Date.getSeconds();
+          var currentHr = time.split(":")[0]
+          var currentMin = time.split(":")[1]
+          var currentSec = time.split(":")[2]
+          var logHr = String(log).split(" ")[1].split(":")[0]
+          var logMin = String(log).split(" ")[1].split(":")[1]
+          var logSec = String(log).split(" ")[1].split(":")[2]
+          this.hr = Math.abs(Number(currentHr) - Number(logHr));
+          this.min = Math.abs((Number(currentMin) - Number(logMin)));
+          this.sec = Math.abs((Number(currentSec) - Number(logSec)));
+
+          setInterval(() => {
+            this.sec++;
+            if (this.sec>59)
+            {
+                this.min++;
+                this.sec = 0;
+            }
+            if (this.min>59){
+              this.hr++;
+              this.min = 0;
+            }
+
+          }, 1000)
+          if (this.isUser){
+            this.userService.listBookingwaiting(this.user_id, 'user','false')
+            this.userService.listBookingaccepted(this.user_id, 'user','true')
+            console.log("USER.....")
+          }
+          else{
+            this.userService.listBookingwaiting(this.user_id, 'accepter','false')
+            this.userService.listBookingaccepted(this.user_id, 'accepter','true')
+            console.log("NON-USER.....")
+          }
+
+    })
+
+
+
+  }
+
+
+  gotoMap(){
+    this.document.location.href = "/map"
+  }
+
 }
+

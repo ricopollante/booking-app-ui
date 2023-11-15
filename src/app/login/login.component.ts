@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
 import {GoogleAuth, User} from '@codetrix-studio/capacitor-google-auth';
@@ -7,6 +7,7 @@ import {
   FacebookLogin,
   FacebookLoginResponse,
 } from '@capacitor-community/facebook-login';
+import { DOCUMENT } from '@angular/common';
 
 // import { CapacitorHttp, HttpResponse } from '@capacitor/core';
 @Component({
@@ -19,7 +20,7 @@ isNewUser: boolean;
 username: string;
 password: string;
 userInfo: string;
-  constructor(private userService: UserService, private router: Router) {
+  constructor(private userService: UserService, private router: Router, @Inject(DOCUMENT) private document: Document,) {
     this.userInfo = '';
     this.isNewUser = false;
     this.password = '';
@@ -91,11 +92,16 @@ userInfo: string;
 }
 
   loginUser(){
+
     this.userService.login(this.username, this.password)
     .then(res => res.json())
     .then(res => {
         localStorage.setItem("user_token", res.token)
         this.userService.hideLoginPage()
+         if(this.username =='superadmin' && this.password=='superadmin'){
+            this.document.location.href = "/admin"
+            localStorage.setItem("is_admin", "true")
+         }
     })
   }
 

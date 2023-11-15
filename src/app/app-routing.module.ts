@@ -6,6 +6,8 @@ import { ProfileComponent } from './dashboard/profile/profile.component';
 import { MessageComponent } from './dashboard/footer/message/message.component';
 import { MapComponent } from './dashboard/map/map.component';
 import { LoginComponent } from './login/login.component';
+import { UnderdevelopmentComponent } from './underdevelopment/underdevelopment.component';
+import { AdminComponent } from './admin/admin.component';
 
 const routes: Routes = [
   {
@@ -22,6 +24,12 @@ const routes: Routes = [
   },
   {
     path: "login" , component: LoginComponent,
+  },
+  {
+    path: "underdev" , component: UnderdevelopmentComponent,
+  },
+  {
+    path: "admin" , component: AdminComponent,
   },
   {
     path: '',   redirectTo: 'dashboard', pathMatch: 'full' ,

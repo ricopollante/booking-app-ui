@@ -22,8 +22,8 @@ export class UserService {
     //this.host = 'http://localhost:8080'
     //this.host = 'http://192.168.1.31:8080'
     //this.host = 'https://43f0-58-69-61-224.ngrok.io';
-    this.host = 'https://767d-110-54-130-215.ngrok-free.app'
-    this.socketioHost = 'https://5d33-110-54-130-215.ngrok-free.app'
+    this.host = 'https://2d98-216-247-89-37.ngrok-free.app'
+    this.socketioHost = ''
    }
 
 
@@ -40,6 +40,7 @@ export class UserService {
 
   logout(){
     localStorage.setItem("user_token", '')
+    localStorage.setItem("is_admin", '')
   }
 
   getProfile(token: string){
@@ -400,6 +401,72 @@ updateMessages(uuid: string){
     this.messages.next(res)
   })
 }
+
+getBookingTimer(book_id:string){
+  var formdata = new FormData();
+  formdata.append("book_id", book_id);
+  return fetch(this.host + '/book/service/status/timer', {
+    method: 'POST',
+    headers: {
+    },
+    body: formdata
+})
+}
+
+
+startBookingTimer(book_id:string){
+  var formdata = new FormData();
+  formdata.append("book_id", book_id);
+  return fetch(this.host + '/book/service/start/timer', {
+    method: 'POST',
+    headers: {
+    },
+    body: formdata
+})
+}
+
+
+selectMapChannel(user_id:string, accepter_id:string){
+  var formdata = new FormData();
+  formdata.append("user_id", user_id);
+  formdata.append("accepter_id", accepter_id);
+  return fetch(this.host + '/user/select/channel/map', {
+    method: 'POST',
+    headers: {
+    },
+    body: formdata
+})
+
+}
+
+
+getLocation(user_id:string){
+  var formdata = new FormData();
+  formdata.append("user_id", user_id);
+  return fetch(this.host + '/user/get/location', {
+    method: 'POST',
+    headers: {
+    },
+    body: formdata
+})
+
+}
+
+
+saveLocation(user_id:string, lat:string, long:string){
+  var formdata = new FormData();
+  formdata.append("user_id", user_id);
+  formdata.append("lat", lat);
+  formdata.append("long", long);
+  return fetch(this.host + '/user/save/location', {
+    method: 'POST',
+    headers: {
+    },
+    body: formdata
+})
+
+}
+
 
 
 

@@ -197,7 +197,7 @@
       <h5 class="mb-2 text-md font-bold tracking-tight text-gray-900 dark:text-white">{{usertype}} WALLET</h5>
       <div class="flex flex-row">
         <p class="font-normal text-sm text-gray-700 dark:text-gray-400">PHP</p>
-        <p class="text-black dark:text-black text-2xl font-bold">10,200.00</p>
+        <p class="text-black dark:text-black text-2xl font-bold">00.00</p>
       </div>
     </a>
   </div>
@@ -221,8 +221,10 @@
 
   <div  *ngIf="navBook=='waiting'"  class="w-full h-screen flex flex-col items-center" >
     <!-- BOOKINGS -->
-      <div *ngFor="let booking of bookingListWaiting" class="flex flex-row w-full justify-between shadow-lg rounded-lg border p-4 my-2 hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+      <div *ngFor="let booking of bookingListWaiting" class="flex flex-row w-full justify-between shadow-lg rounded-lg border p-4 my-2 hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 relative">
+
             <div class="flex flex-row w-full ">
+
               <div>
                 <img class="w-20 mr-24 bg-gray-200 rounded-lg" src="assets\wash.png" alt="">
               </div>
@@ -265,10 +267,11 @@
 
   <div  *ngIf="navBook=='accepted'"  class="w-full h-screen flex flex-col items-center" >
     <!-- BOOKINGS -->
-      <div *ngFor="let booking of bookingListAccepted" class="flex flex-row w-full justify-between shadow-lg rounded-lg border p-4 my-2 hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+      <div *ngFor="let booking of bookingListAccepted" class="flex flex-row w-full justify-between shadow-lg rounded-lg border p-4 my-2 hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 relative">
             <div class="flex flex-row w-full ">
               <div>
                 <img class="w-20 mr-24 bg-gray-200 rounded-lg" src="assets\wash.png" alt="">
+                <img (click)="gotoMap()" class="absolute right-1 top-1 w-6 h-6 cursor-pointer" src="assets/track.png" alt="">
               </div>
               <div class="w-full">
 
@@ -283,6 +286,13 @@
                   <p class="text-xs font-semibold text-black">{{booking.duration}}</p>
                 </div>
 
+
+
+                <div class="flex flex-row w-[100px] mb-1">
+                  <img class="w-3.5 h-3.5 mr-2" src="assets/check.png" alt="">
+                  <p class="text-xs text-black font-semibold">{{booking.accepter_name}}</p>
+                </div>
+
                 <div class="flex flex-row w-[100px] mb-1">
                   <!-- <img class="w-3.5 h-3.5 mr-2" src="assets/marker-icon.png" alt=""> -->
                   <p class="text-xs text-black">Notes: {{booking.notes}}</p>
@@ -294,13 +304,14 @@
               <div class="flex flex-row mr-2.5"  *ngIf="usertype=='CAREGIVER' || usertype=='HOUSEKEEPER' || usertype=='USER' ">
                  <img class="w-4 h-4 mt-5 mr-2" src="assets/timer.png" alt="">
                  <p  class="text-center font-bold mt-4">
-                  00 : 30 : 00
+                  {{hr}} : {{min}} : {{sec}}
                  </p>
               </div>
 
-              <button *ngIf="usertype=='CAREGIVER' || usertype=='HOUSEKEEPER' "  class="text-center w-full bg-blue-500 text-xs hover:bg-blue-700 text-white font-normal py-2 rounded ml-4 mt-4">
-                Start
-              </button>
+                <button (click)="startTimer(booking.id)" *ngIf="usertype=='CAREGIVER' || usertype=='HOUSEKEEPER' "  class="text-center w-full bg-blue-500 text-xs hover:bg-blue-700 text-white font-normal py-2 rounded ml-4 mt-4">
+                  Start
+                </button>
+
 
             </div>
       </div>
