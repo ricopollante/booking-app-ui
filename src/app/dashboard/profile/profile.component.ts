@@ -25,6 +25,7 @@ export class ProfileComponent implements OnInit {
   prefgender: string
   bookingListWaiting: any;
   bookingListAccepted: any;
+  bookingListHistory: any;
   bookingList: any;
   showBookingList:  boolean;
   isVerified: boolean;
@@ -43,6 +44,9 @@ export class ProfileComponent implements OnInit {
   Date: Date;
   approvedBookID: any
   user_type: any
+  rate: any
+  overtime: any
+  overtimeCharge:any
   private socket = io('https://0a98-216-247-89-37.ngrok-free.app',{
     extraHeaders: {
       "ngrok-skip-browser-warning" : "69420"
@@ -50,6 +54,8 @@ export class ProfileComponent implements OnInit {
   });
 
   constructor(private userService: UserService, @Inject(DOCUMENT) private document: Document) {
+    this.overtimeCharge = 0
+    this.overtime = false
     this.isTimerStarted = false
     this.Date = new Date();
     this.hr = '00'
@@ -92,9 +98,20 @@ export class ProfileComponent implements OnInit {
 
         })
 
+
+        this.userService.bookinglistHistory.subscribe(
+          (data: any) =>{
+                this.bookingListHistory = data.data
+                console.log(data.data)
+
+          })
+
         this.userService.bookinglistAccepted.subscribe(
         (data: any) =>{
               this.bookingListAccepted = data.data
+
+              this.rate =  data.data[0].rate
+              this.duration =  data.data[0].duration
               console.log(data.data)
               this.approvedBookID = data.data[0].id
               localStorage.setItem("accepter_id",data.data[0].accepter)
@@ -140,11 +157,13 @@ export class ProfileComponent implements OnInit {
       if (this.isUser){
         this.userService.listBookingwaiting(this.user_id, 'user','false')
         this.userService.listBookingaccepted(this.user_id, 'user','true')
+        this.userService.listBookingHistory(this.user_id, 'user','ended')
         console.log("USER.....")
       }
       else{
         this.userService.listBookingwaiting(this.user_id, 'accepter','false')
         this.userService.listBookingaccepted(this.user_id, 'accepter','true')
+        this.userService.listBookingHistory(this.user_id, 'accepter','ended')
         console.log("NON-USER.....")
       }
 
@@ -288,6 +307,7 @@ export class ProfileComponent implements OnInit {
           this.sec = Math.abs((Number(currentSec) - Number(logSec)));
 
           setInterval(() => {
+            console.log(this.overtimeCharge)
             this.sec++;
             if (this.sec>59)
             {
@@ -298,7 +318,28 @@ export class ProfileComponent implements OnInit {
               this.hr++;
               this.min = 0;
             }
+              if (this.duration.includes("hr")){
+                console.log('Overtime')
+                  if (this.hr > Number(this.duration.replace("hr",""))){
+                    this.overtime = true;
+                    console.log('Overtime...')
+                    this.overtimeCharge = this.overtimeCharge + (Number(this.rate.replace("php","")) * 0.016)
+                  }
 
+                  if (this.hr == Number(this.duration.replace("hr",""))){
+                    if (this.min>0)
+                      this.overtime = true;
+                      console.log('Overtime...........')
+                      this.overtimeCharge = this.overtimeCharge + (Number(this.rate.replace("php","")) * 0.016)
+                  }
+
+              }
+              if (this.duration.includes("m")){
+                (this.min > Number(this.duration.replace("m","")))
+                this.overtime = true;
+                console.log('Overtime')
+                this.overtimeCharge = this.overtimeCharge + (Number(this.rate.replace("php","")) * 0.016)
+              }
           }, 1000)
           if (this.isUser){
             this.userService.listBookingwaiting(this.user_id, 'user','false')
@@ -320,6 +361,10 @@ export class ProfileComponent implements OnInit {
 
   gotoMap(){
     this.document.location.href = "/map"
+  }
+
+  endBooking(booking_id:string){
+    this.userService.endBooking(booking_id, this.overtimeCharge)
   }
 
 }

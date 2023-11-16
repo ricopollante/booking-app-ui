@@ -28,6 +28,7 @@ import { RouterModule } from '@angular/router';
 import { MessageComponent } from './dashboard/footer/message/message.component';
 import { UnderdevelopmentComponent } from './underdevelopment/underdevelopment.component';
 import { AdminComponent } from './admin/admin.component';
+import { SosComponent } from './sos/sos.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { AdminComponent } from './admin/admin.component';
     HousekeepingComponent,
     MessageComponent,
     UnderdevelopmentComponent,
-    AdminComponent
+    AdminComponent,
+    SosComponent
   ],
   imports: [
     RouterModule,

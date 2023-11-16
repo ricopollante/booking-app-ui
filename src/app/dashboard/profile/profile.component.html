@@ -303,13 +303,23 @@
             <div class=" w-full h-20 flex flex-col items-end justify-center mx-2">
               <div class="flex flex-row mr-2.5"  *ngIf="usertype=='CAREGIVER' || usertype=='HOUSEKEEPER' || usertype=='USER' ">
                  <img class="w-4 h-4 mt-5 mr-2" src="assets/timer.png" alt="">
-                 <p  class="text-center font-bold mt-4">
+                 <p *ngIf="!overtime" class="text-center font-bold mt-4">
                   {{hr}} : {{min}} : {{sec}}
                  </p>
+                 <div *ngIf="overtime">
+                  <p  class="text-center font-bold mt-4 text-red-500">
+                    {{hr}} : {{min}} : {{sec}}
+                   </p>
+                   <p class="text-red-500 text-sm">Overtime! this will result in extra charges. </p>
+                 </div>
+
               </div>
 
                 <button (click)="startTimer(booking.id)" *ngIf="usertype=='CAREGIVER' || usertype=='HOUSEKEEPER' "  class="text-center w-full bg-blue-500 text-xs hover:bg-blue-700 text-white font-normal py-2 rounded ml-4 mt-4">
                   Start
+                </button>
+                <button (click)="endBooking(booking.id)" *ngIf="usertype=='USER'" class="text-center w-full bg-blue-500 text-xs hover:bg-blue-700 text-white font-normal py-2 rounded ml-4 mt-4">
+                  END
                 </button>
 
 
@@ -319,7 +329,7 @@
 
   <div  *ngIf="navBook=='history'"  class="w-full h-screen flex flex-col items-center" >
     <!-- BOOKINGS -->
-      <div *ngFor="let booking of bookingList" class="flex flex-row w-full justify-between shadow-lg rounded-lg border p-4 my-2 hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+      <div *ngFor="let booking of bookingListHistory" class="flex flex-row w-full justify-between shadow-lg rounded-lg border p-4 my-2 hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
             <div class="flex flex-row w-full ">
               <div>
                 <img class="w-20 mr-24 bg-gray-200 rounded-lg" src="assets\wash.png" alt="">
@@ -340,6 +350,10 @@
                 <div class="flex flex-row w-[100px] mb-1">
                   <!-- <img class="w-3.5 h-3.5 mr-2" src="assets/marker-icon.png" alt=""> -->
                   <p class="text-xs text-black">Notes: {{booking.notes}}</p>
+                </div>
+                <div class="flex flex-row w-[100px] mb-1">
+                  <!-- <img class="w-3.5 h-3.5 mr-2" src="assets/marker-icon.png" alt=""> -->
+                  <p class="text-xs text-black">Fee: PHP {{booking.overtime_charge}} </p>
                 </div>
 
               </div>

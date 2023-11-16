@@ -15,6 +15,7 @@ export class UserService {
   availableStaff = new Subject<any>();
   bookinglistWaiting = new Subject<any>();
   bookinglistAccepted = new Subject<any>();
+  bookinglistHistory = new Subject<any>();
   channels = new Subject<any>();
   messages = new Subject<any>();
   constructor(private toastrService: ToastrService) {
@@ -22,7 +23,7 @@ export class UserService {
     //this.host = 'http://localhost:8080'
     //this.host = 'http://192.168.1.31:8080'
     //this.host = 'https://43f0-58-69-61-224.ngrok.io';
-    this.host = 'https://2d98-216-247-89-37.ngrok-free.app'
+    this.host = 'https://27f9-112-198-121-251.ngrok-free.app'
     this.socketioHost = ''
    }
 
@@ -338,6 +339,14 @@ listBookingaccepted(id: string, accepter:string, status:string){
       })
 }
 
+listBookingHistory(id: string, accepter:string, status:string){
+  this.getBookings(id, accepter, status)
+  .then(res => res.json())
+      .then(res => {
+          this.bookinglistHistory.next(res)
+      })
+}
+
 
 createChannelMessage(sender_id:string, receiver_id:string){
   var formdata = new FormData();
@@ -466,6 +475,21 @@ saveLocation(user_id:string, lat:string, long:string){
 })
 
 }
+
+
+endBooking(book_id:string, overtime_charge:string){
+  var formdata = new FormData();
+  formdata.append("book_id", book_id);
+  formdata.append("overtime_charge", overtime_charge);
+  return fetch(this.host + '/book/service/end/booking', {
+    method: 'POST',
+    headers: {
+    },
+    body: formdata
+})
+
+}
+
 
 
 
