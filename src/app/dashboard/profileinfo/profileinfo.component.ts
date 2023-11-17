@@ -23,7 +23,9 @@ constructor(private userService: UserService){
 
 
   sosButton(){
-      this.userService.sendSMS('','This is an emergency.')
+    var user = this.userService.getSession('username')
+      this.userService.sendSMS('09212825922','This is an emergency. from '+String(user))
+      this.userService.toastSuccess('Success', 'SOS alerted')
   }
 
 }

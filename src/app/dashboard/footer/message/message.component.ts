@@ -18,7 +18,7 @@ export class MessageComponent implements OnInit{
   openChannelname?: string
   messagesWS: any
   messageToSend: any
-  private socket = io('https://5d33-110-54-130-215.ngrok-free.app',{
+  private socket = io('https://cc2b-58-69-61-224.ngrok-free.app',{
     extraHeaders: {
       "ngrok-skip-browser-warning" : "69420"
     }
