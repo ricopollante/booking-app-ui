@@ -23,7 +23,7 @@ export class UserService {
     //this.host = 'http://localhost:8080'
     //this.host = 'http://192.168.1.31:8080'
     //this.host = 'https://43f0-58-69-61-224.ngrok.io';
-    this.host = 'https://a05b-58-69-61-224.ngrok-free.app'
+    this.host = 'https://0dc1-112-198-121-138.ngrok-free.app'
     this.socketioHost = ''
    }
 
@@ -81,7 +81,7 @@ export class UserService {
   })
   }
 
-  bookService(agenda: string, location: string, duration: string, notes: string, rentals: string, prefgender: string, service_type:string, user_id:string, pet:string, cars_count:string, accepter_id:string, rate: string){
+  bookService(agenda: string, location: string, duration: string, notes: string, rentals: string, prefgender: string, service_type:string, user_id:string, pet:string, cars_count:string, accepter_id:string, rate: string, weight:string, lot_area:string, bathroom_size:string){
     let data = new FormData()
     data.append('agenda', agenda)
     data.append('location', location)
@@ -95,6 +95,9 @@ export class UserService {
     data.append('cars_count', cars_count)
     data.append('accepter_id', accepter_id)
     data.append('rate', rate)
+    data.append("weight", weight);
+    data.append("lot_area", lot_area);
+    data.append("bathroom_size", bathroom_size);
     return fetch(this.host + '/book/service', {
       method: 'POST',
       headers: {},
@@ -217,6 +220,7 @@ formdata.append("username", username);
 formdata.append("password", password);
 formdata.append("gender", gender);
 formdata.append("rate", rate);
+
   return fetch(this.host + '/user/signup', {
     method: 'POST',
     headers: {},
@@ -230,10 +234,14 @@ getServicetypes(){
     headers: {}
 })
 }
-getAgenda(){
+
+getAgenda(id: string){
+  var formdata = new FormData();
+  formdata.append("id", id);
   return fetch(this.host+"/book/service/agenda", {
     method: 'POST',
-    headers: {}
+    headers: {},
+    body: formdata
 })
 }
 
@@ -490,8 +498,12 @@ endBooking(book_id:string, overtime_charge:string){
 
 }
 
-
-
+getServices(){
+  return fetch(this.host + '/book/service/types', {
+    method: 'POST',
+    headers: {
+    }
+})}
 
 
 }

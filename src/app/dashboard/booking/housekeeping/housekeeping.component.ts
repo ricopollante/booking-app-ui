@@ -35,6 +35,7 @@ export class HousekeepingComponent implements OnInit {
   weight: any
   bathroom_size: any
   cars: any
+  servicetype_id:any
 
 constructor(@Inject(DOCUMENT) private document: Document, private userService: UserService){
 
@@ -54,11 +55,7 @@ ngOnInit(): void {
     this.user_id = res.user_id
   })
 
-  this.userService.getAgenda()
-  .then(res => res.json())
-  .then(res => {
-    this.agendas = res.data;
-  })
+
 
   this.userService.getServicetypes()
   .then(res => res.json())
@@ -102,6 +99,21 @@ ngOnInit(): void {
 showStaffServers(service:any){
   this.isServerStaffList = true;
   this.serviceType = service;
+  this.userService.getServices()
+  .then(res => res.json())
+  .then(res => {
+      for(var i=0;i<res.data.length;i++){
+        if (res.data[i].text==this.serviceType){
+            this.servicetype_id = res.data[i].id
+            console.log(res.data[i].id)
+            this.userService.getAgenda(res.data[i].id)
+            .then(res => res.json())
+            .then(res => {
+              this.agendas = res.data;
+            })
+        }
+      }
+  })
 }
 
 bookService(accepter_id:string){
@@ -125,6 +137,44 @@ startBooking(){
 
      })
      break;
+     case 'laundry':
+     this.userService.bookService(this.selectedAgenda, this.location, this.selectedDuration, this.notes, this.selectedRental, '0','5', this.user_id, '', '', this.selectedAccepterID, this.selectedRate, '', this.lot_area ,'')
+     .then(res => res.json())
+     .then(async res => {
+      await this.userService.toastSuccess("Success", "Booked Successfully")
+
+      setTimeout(() => {
+        this.document.location.href = "/dashboard"
+      }, 3000);
+
+     })
+     break;
+     case 'carwash':
+      this.userService.bookService(this.selectedAgenda, this.location, this.selectedDuration, this.notes, this.selectedRental, '0','5', this.user_id, '', '', this.selectedAccepterID, this.selectedRate, '', this.lot_area ,'')
+      .then(res => res.json())
+      .then(async res => {
+       await this.userService.toastSuccess("Success", "Booked Successfully")
+ 
+       setTimeout(() => {
+         this.document.location.href = "/dashboard"
+       }, 3000);
+ 
+      })
+      break;
+      case 'toilet':
+        this.userService.bookService(this.selectedAgenda, this.location, this.selectedDuration, this.notes, this.selectedRental, '0','5', this.user_id, '', '', this.selectedAccepterID, this.selectedRate, '', this.lot_area ,'')
+        .then(res => res.json())
+        .then(async res => {
+         await this.userService.toastSuccess("Success", "Booked Successfully")
+   
+         setTimeout(() => {
+           this.document.location.href = "/dashboard"
+         }, 3000);
+   
+        })
+        break;
+ 
+
 
 
 
