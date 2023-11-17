@@ -38,6 +38,10 @@ export class AppComponent {
 
     }
 
+    setInterval(() => {
+      
+    }, 3000);
+
 
 }
 }

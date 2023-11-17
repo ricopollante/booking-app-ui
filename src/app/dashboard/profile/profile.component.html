@@ -351,10 +351,16 @@
                   <!-- <img class="w-3.5 h-3.5 mr-2" src="assets/marker-icon.png" alt=""> -->
                   <p class="text-xs text-black">Notes: {{booking.notes}}</p>
                 </div>
+               
                 <div class="flex flex-row w-[100px] mb-1">
                   <!-- <img class="w-3.5 h-3.5 mr-2" src="assets/marker-icon.png" alt=""> -->
-                  <p class="text-xs text-black">Fee: PHP {{booking.overtime_charge}} </p>
+                  <p class="text-xs text-black">Regular charge: PHP {{booking.regular_charge}} </p>
                 </div>
+                <div class="flex flex-row w-[100px] mb-1">
+                  <!-- <img class="w-3.5 h-3.5 mr-2" src="assets/marker-icon.png" alt=""> -->
+                  <p class="text-xs text-red-500">Overtime charge: PHP {{booking.overtime_charge}} </p>
+                </div>
+
 
               </div>
 

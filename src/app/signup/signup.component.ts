@@ -269,8 +269,12 @@ CARECOM APP`
         this.ec_fullname, this.ec_relationship, this.ec_mobile, "3",this.valid_id, this.firstname, '', this.username, this.password, this.gender, this.rate)
     }
 
-    this.document.location.href = "/login"
+  
     this.userService.toastSuccess('Success', 'Housekeeper Sign Up successfully')
+   
+    setTimeout(() => {
+      this.document.location.href = "/login"
+    }, 3000);
 
 
   }
@@ -286,8 +290,13 @@ CARECOM APP`
         this.ec_fullname, this.ec_relationship, this.ec_mobile, "2",this.valid_id, this.firstname, '', this.email, this.email, this.gender, this.rate)
     }
 
-    this.document.location.href = "/dashboard"
+
     this.userService.toastSuccess('Success', 'Caregiver Sign Up successfully')
+
+    setTimeout(() => {
+          this.document.location.href = "/login"
+    }, 3000);
+
 
 
   }
@@ -303,11 +312,11 @@ CARECOM APP`
       this.userService.signup(this.lastname, this.middlename, this.bdate, this.address, this.selectedRegion, this.selectedCity, this.selectedBrgy, this.email,
         this.ec_fullname, this.ec_relationship, this.ec_mobile, "1",this.valid_id, this.firstname, '', this.email, this.email, this.gender, this.rate)
     }
-
-    this.document.location.href = "/dashboard"
     this.userService.toastSuccess('Success', 'User Sign Up successfully')
 
-
+    setTimeout(() => {
+      this.document.location.href = "/dashboard"
+}, 3000);
   }
 
 

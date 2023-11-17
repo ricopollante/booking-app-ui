@@ -485,10 +485,11 @@ saveLocation(user_id:string, lat:string, long:string){
 }
 
 
-endBooking(book_id:string, overtime_charge:string){
+endBooking(book_id:string, overtime_charge:string, regular_charge:string){
   var formdata = new FormData();
   formdata.append("book_id", book_id);
   formdata.append("overtime_charge", overtime_charge);
+  formdata.append("regular_charge", regular_charge);
   return fetch(this.host + '/book/service/end/booking', {
     method: 'POST',
     headers: {

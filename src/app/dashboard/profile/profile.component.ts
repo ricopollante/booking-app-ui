@@ -47,6 +47,7 @@ export class ProfileComponent implements OnInit {
   rate: any
   overtime: any
   overtimeCharge:any
+  regularCharge: any
   private socket = io('https://0a98-216-247-89-37.ngrok-free.app',{
     extraHeaders: {
       "ngrok-skip-browser-warning" : "69420"
@@ -155,6 +156,7 @@ export class ProfileComponent implements OnInit {
       }
 
       if (this.isUser){
+        
         this.userService.listBookingwaiting(this.user_id, 'user','false')
         this.userService.listBookingaccepted(this.user_id, 'user','true')
         this.userService.listBookingHistory(this.user_id, 'user','ended')
@@ -364,7 +366,10 @@ export class ProfileComponent implements OnInit {
   }
 
   endBooking(booking_id:string){
-    this.userService.endBooking(booking_id, this.overtimeCharge)
+    this.userService.endBooking(booking_id, this.overtimeCharge, this.regularCharge)
+    ///150 per hr regular
+    ///80 per hr OT
+    ///300 general cleaning
   }
 
 }
