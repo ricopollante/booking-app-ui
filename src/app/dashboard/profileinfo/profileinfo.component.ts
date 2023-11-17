@@ -21,4 +21,9 @@ constructor(private userService: UserService){
     })
   }
 
+
+  sosButton(){
+      this.userService.sendSMS('','This is an emergency.')
+  }
+
 }
