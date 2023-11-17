@@ -49,6 +49,17 @@ userInfo: string;
       const user: User = await GoogleAuth.signIn();
       console.log(user)
       this.userService.debugger(JSON.stringify(user));
+      this.userService.login(user.email, user.email)
+    .then(res => res.json())
+    .then(res => {
+        localStorage.setItem("user_token", res.token)
+        this.userService.hideLoginPage()
+         if(this.username =='superadmin' && this.password=='superadmin'){
+            this.document.location.href = "/admin"
+            localStorage.setItem("is_admin", "true")
+         }
+    })
+
     }
     catch (error) {
       this.userService.debugger(String(error));

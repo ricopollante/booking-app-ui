@@ -67,7 +67,7 @@
             <span>
                 <img class="h-4 w-4 mr-2" src="assets/google.png" />
             </span>
-            <span class="font-medium">Sign Up with Google</span>
+            <span class="font-medium" (click)="signUpGoogle()">Sign Up with Google</span>
         </button>
         <button class="w-full content-center text-gray-800 font-bold py-2 px-4 text-center rounded inline-flex items-center shadow-md border justify-center">
           <span>
@@ -123,7 +123,7 @@
           <button (click)="sendOTPmobile()"  class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
             Sign Up
           </button>
-          <button class="w-full content-center text-gray-800 font-bold py-2 px-4 text-center rounded inline-flex items-center shadow-md border justify-center">
+          <button  (click)="signUpGoogle()" class="w-full content-center text-gray-800 font-bold py-2 px-4 text-center rounded inline-flex items-center shadow-md border justify-center">
             <span>
                 <img class="h-4 w-4 mr-2" src="assets/google.png" />
             </span>
@@ -183,7 +183,7 @@
             <button (click)="sendOTPmobile()"  class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
               Sign Up
             </button>
-            <button class="w-full content-center text-gray-800 font-bold py-2 px-4 text-center rounded inline-flex items-center shadow-md border justify-center">
+            <button  (click)="signUpGoogle()" class="w-full content-center text-gray-800 font-bold py-2 px-4 text-center rounded inline-flex items-center shadow-md border justify-center">
               <span>
                   <img class="h-4 w-4 mr-2" src="assets/google.png" />
               </span>

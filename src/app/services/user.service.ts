@@ -23,7 +23,7 @@ export class UserService {
     //this.host = 'http://localhost:8080'
     //this.host = 'http://192.168.1.31:8080'
     //this.host = 'https://43f0-58-69-61-224.ngrok.io';
-    this.host = 'https://27f9-112-198-121-251.ngrok-free.app'
+    this.host = 'https://a05b-58-69-61-224.ngrok-free.app'
     this.socketioHost = ''
    }
 
@@ -152,8 +152,8 @@ export class UserService {
     return user
   }
 
-  sendOTP(receiver: string, message: string){
-    let apiKey = "ixxbHzeryU-kZBIAJRD_x76xlblaTugUeiUtEbGXEmk7J1LGc911pe_ow7fGNJ5i";
+  sendSMS(receiver: string, message: string){
+    let apiKey = "opacYBx_qJiMd5B60dl1-4DcGXUIwzjfLk-GIQyVCV0DTGKFW2Buo7PjedsnQS-B" //"ixxbHzeryU-kZBIAJRD_x76xlblaTugUeiUtEbGXEmk7J1LGc911pe_ow7fGNJ5i";
 
     fetch('https://api.httpsms.com/v1/messages/send', {
         method: 'POST',
@@ -164,7 +164,7 @@ export class UserService {
         },
         body: JSON.stringify({
             "content": message,
-            "from": "+639959462351",
+            "from": "+639212825922", //"+639959462351",
             "to": receiver
         })
     })

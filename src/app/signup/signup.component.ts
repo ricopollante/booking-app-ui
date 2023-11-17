@@ -1,16 +1,18 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
+import {GoogleAuth, User} from '@codetrix-studio/capacitor-google-auth';
+import { Capacitor } from '@capacitor/core';
 
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css']
 })
-export class SignupComponent {
+export class SignupComponent implements OnInit {
   email: any;
   mobile: string;
   username: string;
@@ -71,6 +73,56 @@ export class SignupComponent {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
   }
 
+  async ngOnInit() {
+    console.log("LOGIN PAGE....")
+    if (Capacitor.getPlatform() === 'ios') {
+      // do something
+    }
+    if (Capacitor.getPlatform() === 'android') {
+      // do something
+    }
+    else{
+      GoogleAuth.initialize();
+    }
+}
+async signUpGoogle() {
+  //User Authentication
+  try {
+    const user: User = await GoogleAuth.signIn();
+    console.log(user)
+    this.userService.debugger(JSON.stringify(user));
+    this.isMobile = true;
+    this.showSignUpForm = true;
+    this.password = user.email
+    this.username = user.email
+    this.userService.saveSession('mobile','')
+    this.userService.toastSuccess('Email Successfully verified', '')
+    this.userService.getSession(this.username)
+    .then(res => {
+    console.log("session saved for: ", res)
+    })
+    this.userService.getPhRegions()
+    .then(res => res.json())
+    .then(res => {
+     this.Regions = res;
+    })
+    this.userService.getPhCities()
+    .then(res => res.json())
+    .then(res => {
+     this.City = res;
+    })
+    this.userService.getPhBrgys()
+    .then(res => res.json())
+    .then(res => {
+     this.Barangay = res;
+    })
+  }
+  catch (error) {
+    this.userService.debugger(String(error));
+  }
+}
+
+
   showUserSignup(){
     this.isUserSignUp = true;
   }
@@ -109,12 +161,12 @@ generateString(length: number) {
     }, 1000);
     this.showOTPVerify = true;
     this.mobile = this.mobile.replace("0","+63")
-    this.smsOTP = "1234" //this.generateString(6)
-    //this.userService.sendOTP(this.mobile, `
-// Your OTP: ${this.smsOTP}
-// Valid for 5 minutes. Keep it safe.
-// CARECOM APP`
-//     )
+    this.smsOTP = this.generateString(6)
+    this.userService.sendSMS(this.mobile, `
+Your OTP: ${this.smsOTP}
+Valid for 5 minutes. Keep it safe.
+CARECOM APP`
+    )
   }
 
   verifyOTPinput(){
@@ -214,7 +266,7 @@ generateString(length: number) {
     }
     else if(!this.mobile){
       this.userService.signup(this.lastname, this.middlename, this.bdate, this.address, this.selectedRegion, this.selectedCity, this.selectedBrgy, this.email,
-        this.ec_fullname, this.ec_relationship, this.ec_mobile, "3",this.valid_id, this.firstname, '', this.email, this.email, this.gender, this.rate)
+        this.ec_fullname, this.ec_relationship, this.ec_mobile, "3",this.valid_id, this.firstname, '', this.username, this.password, this.gender, this.rate)
     }
 
     this.document.location.href = "/login"

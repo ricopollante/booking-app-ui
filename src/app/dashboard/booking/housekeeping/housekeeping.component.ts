@@ -17,7 +17,7 @@ export class HousekeepingComponent implements OnInit {
   duration: any
   notes: any
   isServerStaffList: any
-  caregivers: any
+  housekeepers: any
   selectedServiceType: any
   selectedAgenda: any
   selectedRental: any
@@ -31,6 +31,11 @@ export class HousekeepingComponent implements OnInit {
   serviceType: "" |"laundry" | "toilet" | "carwash" | "chores" = "";
   token: any;
   user_id: any
+  lot_area: any
+  weight: any
+  bathroom_size: any
+  cars: any
+
 constructor(@Inject(DOCUMENT) private document: Document, private userService: UserService){
 
 }
@@ -41,7 +46,7 @@ ngOnInit(): void {
 
   this.userService.availableStaff.subscribe(
     (data: any) =>{
-      this.caregivers = data.data;
+      this.housekeepers = data.data;
   })
   this.userService.getProfile(this.token)
   .then(res => res.json())
@@ -89,7 +94,7 @@ ngOnInit(): void {
   this.userService.getCaregiver('')
   .then(res => res.json())
   .then(res => {
-    this.caregivers = res.data;
+    this.housekeepers = res.data;
   })
 
 }
@@ -108,8 +113,8 @@ bookService(accepter_id:string){
 
 startBooking(){
   switch(this.serviceType){
-    case 'laundry':
-     this.userService.bookService(this.selectedAgenda, this.location, this.selectedDuration, this.notes, this.selectedRental, '0','5', this.user_id, '', '', this.selectedAccepterID, this.selectedRate)
+    case 'chores':
+     this.userService.bookService(this.selectedAgenda, this.location, this.selectedDuration, this.notes, this.selectedRental, '0','5', this.user_id, '', '', this.selectedAccepterID, this.selectedRate, '', this.lot_area ,'')
      .then(res => res.json())
      .then(async res => {
       await this.userService.toastSuccess("Success", "Booked Successfully")
@@ -120,6 +125,8 @@ startBooking(){
 
      })
      break;
+
+
 
 
  }
@@ -153,7 +160,7 @@ selectRental(data: string){
 
 selectGender(data: string){
   this.selectedGender = data
-  this.userService.getAvailableStaff('caregiver', data);
+  this.userService.getAvailableStaff('housekeeper', data);
   console.log("UPDATE GENDER....")
 }
 

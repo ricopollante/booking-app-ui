@@ -108,7 +108,7 @@ export class CaregivingComponent implements OnInit{
   startBooking(){
     switch(this.serviceType){
       case 'companion':
-       this.userService.bookService(this.selectedAgenda, this.location, this.selectedDuration, this.notes, this.selectedRental, '0','5', this.user_id, '', '', this.selectedAccepterID, this.selectedRate)
+       this.userService.bookService(this.selectedAgenda, this.location, this.selectedDuration, this.notes, this.selectedRental, '0','5', this.user_id, '', '', this.selectedAccepterID, this.selectedRate, '', '','')
        .then(res => res.json())
        .then(async res => {
         await this.userService.toastSuccess("Success", "Booked Successfully")
@@ -119,6 +119,47 @@ export class CaregivingComponent implements OnInit{
 
        })
        break;
+
+       case 'personal_care':
+        this.userService.bookService(this.selectedAgenda, this.location, this.selectedDuration, this.notes, this.selectedRental, '0','5', this.user_id, '', '', this.selectedAccepterID, this.selectedRate, '', '','')
+        .then(res => res.json())
+        .then(async res => {
+         await this.userService.toastSuccess("Success", "Booked Successfully")
+
+         setTimeout(() => {
+           this.document.location.href = "/dashboard"
+         }, 3000);
+
+        })
+        break;
+
+
+       case 'babysitting':
+        this.userService.bookService(this.selectedAgenda, this.location, this.selectedDuration, this.notes, this.selectedRental, '0','5', this.user_id, this.pet, '', this.selectedAccepterID, this.selectedRate, '', '','')
+        .then(res => res.json())
+        .then(async res => {
+         await this.userService.toastSuccess("Success", "Booked Successfully")
+
+         setTimeout(() => {
+           this.document.location.href = "/dashboard"
+         }, 3000);
+
+        })
+        break;
+
+        case 'errands':
+          this.userService.bookService(this.selectedAgenda, this.location, this.selectedDuration, this.notes, this.selectedRental, '0','5', this.user_id, '', '', this.selectedAccepterID, this.selectedRate, '', '','')
+          .then(res => res.json())
+          .then(async res => {
+           await this.userService.toastSuccess("Success", "Booked Successfully")
+
+           setTimeout(() => {
+             this.document.location.href = "/dashboard"
+           }, 3000);
+
+          })
+          break;
+
 
 
    }
