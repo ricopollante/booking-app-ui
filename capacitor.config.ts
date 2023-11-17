@@ -1,9 +1,9 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'app.carecom.io',
-  appName: 'carecom',
-  webDir: 'dist/bookingapp',
+  appId: 'io.ionic.starter',
+  appName: 'bookingapp',
+  webDir: 'dist\bookingapp',
   server: {
     androidScheme: 'https'
   },
