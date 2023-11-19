@@ -107,6 +107,7 @@ userInfo: string;
     this.userService.login(this.username, this.password)
     .then(res => res.json())
     .then(res => {
+      this.userService.toastSuccess("Success","User Logged in")
         localStorage.setItem("user_token", res.token)
         this.userService.hideLoginPage()
          if(this.username =='superadmin' && this.password=='superadmin'){
@@ -114,6 +115,11 @@ userInfo: string;
             localStorage.setItem("is_admin", "true")
          }
     })
+    .catch(error=>{
+        this.userService.toastError("Error","Invalid Login")
+    })
+
+
   }
 
 }

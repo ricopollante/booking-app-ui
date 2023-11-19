@@ -23,7 +23,7 @@ export class UserService {
     //this.host = 'http://localhost:8080'
     //this.host = 'http://192.168.1.31:8080'
     //this.host = 'https://43f0-58-69-61-224.ngrok.io';
-    this.host = 'https://0dc1-112-198-121-138.ngrok-free.app'
+    this.host = 'https://a11d-58-69-61-224.ngrok-free.app'
     this.socketioHost = ''
    }
 
@@ -81,7 +81,7 @@ export class UserService {
   })
   }
 
-  bookService(agenda: string, location: string, duration: string, notes: string, rentals: string, prefgender: string, service_type:string, user_id:string, pet:string, cars_count:string, accepter_id:string, rate: string, weight:string, lot_area:string, bathroom_size:string){
+  bookService(agenda: string, location: string, duration: string, notes: string, rentals: any, prefgender: string, service_type:string, user_id:string, pet:string, cars_count:string, accepter_id:string, rate: string, weight:string, lot_area:string, bathroom_size:string){
     let data = new FormData()
     data.append('agenda', agenda)
     data.append('location', location)
@@ -235,13 +235,20 @@ getServicetypes(){
 })
 }
 
-getAgenda(id: string){
+getAgendaSelect(id: string){
   var formdata = new FormData();
   formdata.append("id", id);
-  return fetch(this.host+"/book/service/agenda", {
+  return fetch(this.host+"/book/service/agenda/select", {
     method: 'POST',
     headers: {},
     body: formdata
+})
+}
+
+getAgenda(){
+  return fetch(this.host+"/book/service/agenda", {
+    method: 'POST',
+    headers: {}
 })
 }
 
@@ -288,7 +295,7 @@ getCaregiver(gender:string){
 getHousekeeper(gender:string){
   var formdata = new FormData();
   formdata.append("gender", gender);
-  return fetch(this.host+"user/list/housekeeper", {
+  return fetch(this.host+"/user/list/housekeeper", {
     method: 'POST',
     headers: {},
     body: formdata
@@ -332,10 +339,14 @@ getAvailableStaff(stafftype:string, gender:string){
 }
 
 listBookingwaiting(id: string, accepter:string, status:string){
+
   this.getBookings(id, accepter, status)
   .then(res => res.json())
       .then(res => {
           this.bookinglistWaiting.next(res)
+          if(res){
+            this.toastSuccess('New Booking','Please check on waiting list')
+          }
       })
 }
 
@@ -505,6 +516,52 @@ getServices(){
     headers: {
     }
 })}
+
+
+addRates(rate:string){
+  var formdata = new FormData();
+  formdata.append("rate", rate);
+  return fetch(this.host + '/book/service/add/rate', {
+    method: 'POST',
+    headers: {
+    },
+    body: formdata
+})
+}
+
+deleteRates(id:string){
+  var formdata = new FormData();
+  formdata.append("id", id);
+  return fetch(this.host + '/book/service/delete/rate', {
+    method: 'POST',
+    headers: {
+    },
+    body: formdata
+})
+}
+
+addAgenda(agenda:string, service_id:string){
+  var formdata = new FormData();
+  formdata.append("agenda", agenda);
+  formdata.append("service_id", service_id);
+  return fetch(this.host + '/book/service/add/agenda', {
+    method: 'POST',
+    headers: {
+    },
+    body: formdata
+})
+}
+
+addRentals(rental:string){
+  var formdata = new FormData();
+  formdata.append("rental", rental);
+  return fetch(this.host + '/book/service/add/rental', {
+    method: 'POST',
+    headers: {
+    },
+    body: formdata
+})
+}
 
 
 }

@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
 import { DOCUMENT } from '@angular/common';
-
+import {io} from 'socket.io-client';
 @Component({
   selector: 'app-caregiving',
   templateUrl: './caregiving.component.html',
@@ -32,6 +32,11 @@ export class CaregivingComponent implements OnInit{
   token: any;
   user_id: any
   servicetype_id:any
+  private socket = io('https://6252-58-69-61-224.ngrok-free.app',{
+    extraHeaders: {
+      "ngrok-skip-browser-warning" : "69420"
+    }
+  });
   constructor(@Inject(DOCUMENT) private document: Document, private userService: UserService){
       this.token = localStorage.getItem("user_token");
   }
@@ -49,7 +54,7 @@ export class CaregivingComponent implements OnInit{
       this.user_id = res.user_id
     })
 
-    this.userService.getAgenda(this.servicetype_id)
+    this.userService.getAgendaSelect(this.servicetype_id)
     .then(res => res.json())
     .then(res => {
       this.agendas = res.data;
@@ -103,7 +108,7 @@ export class CaregivingComponent implements OnInit{
         for(var i=0;i<res.data.length;i++){
           if (res.data[i].text==this.serviceType){
               this.servicetype_id = res.data[i].id
-              this.userService.getAgenda(res.data[i].id)
+              this.userService.getAgendaSelect(res.data[i].id)
               .then(res => res.json())
               .then(res => {
                 this.agendas = res.data;
@@ -121,9 +126,10 @@ export class CaregivingComponent implements OnInit{
   }
 
   startBooking(){
+    this.socket.emit('update_booking', {"id" : this.selectedAccepterID}); // listen and save src coordinates
     switch(this.serviceType){
       case 'companion':
-       this.userService.bookService(this.selectedAgenda, this.location, this.selectedDuration, this.notes, this.selectedRental, '0','5', this.user_id, '', '', this.selectedAccepterID, this.selectedRate, '', '','')
+       this.userService.bookService(this.selectedAgenda, this.location, this.selectedDuration, this.notes, 0, '0','5', this.user_id, '', '', this.selectedAccepterID, '1', '', '','')
        .then(res => res.json())
        .then(async res => {
         await this.userService.toastSuccess("Success", "Booked Successfully")
@@ -136,7 +142,7 @@ export class CaregivingComponent implements OnInit{
        break;
 
        case 'personal_care':
-        this.userService.bookService(this.selectedAgenda, this.location, this.selectedDuration, this.notes, this.selectedRental, '0','5', this.user_id, '', '', this.selectedAccepterID, this.selectedRate, '', '','')
+        this.userService.bookService(this.selectedAgenda, this.location, this.selectedDuration, this.notes, this.selectedRental, '0','5', this.user_id, '', '', this.selectedAccepterID, '1', '', '','')
         .then(res => res.json())
         .then(async res => {
          await this.userService.toastSuccess("Success", "Booked Successfully")
@@ -150,7 +156,7 @@ export class CaregivingComponent implements OnInit{
 
 
        case 'babysitting':
-        this.userService.bookService(this.selectedAgenda, this.location, this.selectedDuration, this.notes, this.selectedRental, '0','5', this.user_id, this.pet, '', this.selectedAccepterID, this.selectedRate, '', '','')
+        this.userService.bookService(this.selectedAgenda, this.location, this.selectedDuration, this.notes, this.selectedRental, '0','5', this.user_id, this.pet, '', this.selectedAccepterID, '1', '', '','')
         .then(res => res.json())
         .then(async res => {
          await this.userService.toastSuccess("Success", "Booked Successfully")
@@ -163,7 +169,7 @@ export class CaregivingComponent implements OnInit{
         break;
 
         case 'errands':
-          this.userService.bookService(this.selectedAgenda, this.location, this.selectedDuration, this.notes, this.selectedRental, '0','5', this.user_id, '', '', this.selectedAccepterID, this.selectedRate, '', '','')
+          this.userService.bookService(this.selectedAgenda, this.location, this.selectedDuration, this.notes, this.selectedRental, '0','5', this.user_id, '', '', this.selectedAccepterID, '1', '', '','')
           .then(res => res.json())
           .then(async res => {
            await this.userService.toastSuccess("Success", "Booked Successfully")

@@ -57,7 +57,7 @@ export class MessageComponent implements OnInit{
         this.socket.on('on_message_rcv', (data: any) => {
           console.log(data)
           if (this.user_id != data.user_id){
-            this.userService.saveMessage(this.user_id, data.uuid, data.data);
+            //this.userService.saveMessage(this.user_id, data.uuid, data.data);
 
           }
           setTimeout(() => {
@@ -96,13 +96,14 @@ export class MessageComponent implements OnInit{
   }
 
   sendMessage(){
-    this.socket.emit('on_message', {"uuid" : this.openChannel, "data" : this.messageToSend, "user_id" : this.user_id}); //
+    //this.socket.emit('on_message', {"uuid" : this.openChannel, "data" : this.messageToSend, "user_id" : this.user_id}); //
+    this.userService.saveMessage(this.user_id,this.openChannel, this.messageToSend);
+
     setTimeout(() => {
       this.userService.updateMessages(this.openChannel)
     }, 1000);
 
 
-    //this.userService.saveMessage(this.user_id,this.openChannel, this.messageToSend);
 
   }
 

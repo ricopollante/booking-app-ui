@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { UserService } from './services/user.service';
-
+import {io} from 'socket.io-client';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -11,7 +11,15 @@ export class AppComponent {
   isLoggedIn: boolean;
   token: any;
   title = 'bookingapp';
+  user_id:any
+  _accepterid:any
+  private socket = io('https://6252-58-69-61-224.ngrok-free.app',{
+    extraHeaders: {
+      "ngrok-skip-browser-warning" : "69420"
+    }
+  });
   constructor(private userService: UserService){
+    this._accepterid =    localStorage.getItem("_accepterid");
     this.token = ''
     this.isLoggedIn = false;
     this.showLogin = true;
@@ -33,14 +41,19 @@ export class AppComponent {
         if (res){
           this.isLoggedIn = true;
           this.showLogin = false;
+          localStorage.setItem("_accepterid", res.user_id);
+
         }
       })
 
+
     }
 
-    setInterval(() => {
-      
-    }, 3000);
+    this.socket.on('on_booking_update', (data: any) => {
+      var id = data.data.id
+      console.log(data.data.id)
+      this.userService.listBookingwaiting(id, 'accepter','false')
+    });
 
 
 }

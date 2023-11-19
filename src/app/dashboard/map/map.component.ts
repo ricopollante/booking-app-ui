@@ -14,7 +14,7 @@ Leaflet.Icon.Default.imagePath = 'assets/';
   styleUrls: ['./map.component.css']
 })
 export class MapComponent implements OnInit {
-  private socket = io('https://0a98-216-247-89-37.ngrok-free.app',{
+  private socket = io('https://6252-58-69-61-224.ngrok-free.app',{
     extraHeaders: {
       "ngrok-skip-browser-warning" : "69420"
     }
