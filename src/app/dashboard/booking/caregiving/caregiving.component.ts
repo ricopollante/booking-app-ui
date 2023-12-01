@@ -32,7 +32,7 @@ export class CaregivingComponent implements OnInit{
   token: any;
   user_id: any
   servicetype_id:any
-  private socket = io('https://6252-58-69-61-224.ngrok-free.app',{
+  private socket = io('https://0241-58-69-61-224.ngrok-free.app',{
     extraHeaders: {
       "ngrok-skip-browser-warning" : "69420"
     }

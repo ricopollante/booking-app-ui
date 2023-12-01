@@ -36,7 +36,7 @@ export class HousekeepingComponent implements OnInit {
   bathroom_size: any
   cars: any
   servicetype_id:any
-  private socket = io('https://6252-58-69-61-224.ngrok-free.app',{
+  private socket = io('https://0241-58-69-61-224.ngrok-free.app',{
     extraHeaders: {
       "ngrok-skip-browser-warning" : "69420"
     }

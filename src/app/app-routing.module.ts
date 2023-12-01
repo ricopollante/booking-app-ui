@@ -8,6 +8,7 @@ import { MapComponent } from './dashboard/map/map.component';
 import { LoginComponent } from './login/login.component';
 import { UnderdevelopmentComponent } from './underdevelopment/underdevelopment.component';
 import { AdminComponent } from './admin/admin.component';
+import { WalletComponent } from './wallet/wallet.component';
 
 const routes: Routes = [
   {
@@ -30,6 +31,9 @@ const routes: Routes = [
   },
   {
     path: "admin" , component: AdminComponent,
+  },
+  {
+    path: "wallet" , component: WalletComponent,
   },
   {
     path: '',   redirectTo: 'dashboard', pathMatch: 'full' ,

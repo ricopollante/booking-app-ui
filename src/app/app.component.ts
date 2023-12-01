@@ -13,7 +13,7 @@ export class AppComponent {
   title = 'bookingapp';
   user_id:any
   _accepterid:any
-  private socket = io('https://6252-58-69-61-224.ngrok-free.app',{
+  private socket = io('https://0241-58-69-61-224.ngrok-free.app',{
     extraHeaders: {
       "ngrok-skip-browser-warning" : "69420"
     }

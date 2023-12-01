@@ -29,6 +29,7 @@ import { MessageComponent } from './dashboard/footer/message/message.component';
 import { UnderdevelopmentComponent } from './underdevelopment/underdevelopment.component';
 import { AdminComponent } from './admin/admin.component';
 import { SosComponent } from './sos/sos.component';
+import { WalletComponent } from './wallet/wallet.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { SosComponent } from './sos/sos.component';
     MessageComponent,
     UnderdevelopmentComponent,
     AdminComponent,
-    SosComponent
+    SosComponent,
+    WalletComponent
   ],
   imports: [
     RouterModule,
