@@ -1,11 +1,11 @@
-<div *ngIf="!isTopUp && !isWithdraw ">
+<div *ngIf="!isTopUp && !isWithdraw && !isActivity ">
   <div class="w-full flex flex-col items-center">
     <a href="#" routerLink="/wallet" routerLinkActive="active" class="block max-w-sm px-6 py-10 bg-blue-300 border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 relative w-full">
       <img  src="assets/refresh.png" class="w-6 top-2 right-2 absolute" alt="">
-      <h5 class="mb-2 text-md font-bold tracking-tight text-gray-900 dark:text-white">VAR WALLET</h5>
+      <h5 class="mb-2 text-md font-bold tracking-tight text-gray-900 dark:text-white">WALLET</h5>
       <div class="flex flex-row">
         <p class="font-normal text-sm text-gray-700 dark:text-gray-400">PHP</p>
-        <p class="text-black dark:text-black text-2xl font-bold">00.00</p>
+        <p class="text-black dark:text-black text-2xl font-bold">{{wallet.amount}}.00</p>
       </div>
     </a>
   </div>
@@ -29,7 +29,7 @@
       <img class="w-6 h-6" src="assets/transfer.png" alt="" srcset="">
       <p>Transfer</p>
     </div>
-    <div class="flex flex-row bg-blue-300 mx-14 my-2 justify-center items-center shadow-md p-2 rounded-full">
+    <div (click)="showTrans()" class="flex flex-row bg-blue-300 mx-14 my-2 justify-center items-center shadow-md p-2 rounded-full">
       <div class="flex flex-row ">
       <img class="w-6 h-6" src="assets/restore.png" alt="" srcset="">
       <p>Wallet Activity</p>
@@ -46,7 +46,7 @@
     Amount to Top up:
   </label>
   <input [(ngModel)]="amountTopup" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="number" placeholder="0 PHP">
-  <button class="w-full bg-blue-500 hover:bg-blue-700 text-xs text-white font-normal py-2 px-6 rounded my-0.5">
+  <button (click)="deposit()" class="w-full bg-blue-500 hover:bg-blue-700 text-xs text-white font-normal py-2 px-6 rounded my-0.5">
     SUBMIT
   </button>
 
@@ -58,14 +58,62 @@
   <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
     Amount to Withdraw:
   </label>
-  <input [(ngModel)]="amountTopup" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="number" placeholder="0 PHP">
+  <input [(ngModel)]="amountWithdraw" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="number" placeholder="0 PHP">
   <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
     Gcash number:
   </label>
-  <input [(ngModel)]="amountTopup" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="number" placeholder="09*******">
-  <button class="w-full bg-blue-500 hover:bg-blue-700 text-xs text-white font-normal py-2 px-6 rounded my-0.5">
+  <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="number" placeholder="09*******">
+  <button (click)="withdraw()" class="w-full bg-blue-500 hover:bg-blue-700 text-xs text-white font-normal py-2 px-6 rounded my-0.5">
     SUBMIT
   </button>
+
+</div>
+
+
+
+<div *ngIf="isActivity" class="mx-4">
+  <p class="text-center font-semibold text-2xl">Wallet Transactions</p>
+    <div *ngFor="let trans of walletTrans.receive">
+      <div  class="bg-blue-200 m-4 p-8 rounded-lg shadow-md">
+        <div class="flex flex-row">
+          <p class=" font-semibold mr-2">Amount:  </p>
+          <p>{{trans.amount}}.00 PHP</p>
+        </div>
+        <div class="flex flex-row">
+          <p class=" font-semibold  mr-2">Transaction:  </p>
+          <p>{{trans.transaction}}</p>
+        </div>
+        <div *ngIf="trans.from_firstname && trans.from_lastname" class="flex flex-row">
+          <p class=" font-semibold  mr-2">From:  </p>
+          <p>{{trans.from_firstname}}  {{trans.from_lastname}}</p>
+        </div>
+        <div *ngIf="trans.to_firstname && trans.to_lastname" class="flex flex-row">
+          <p class=" font-semibold  mr-2">To:  </p>
+          <p>{{trans.to_firstname}} {{trans.to_lastname}}</p>
+        </div>
+      </div>
+    </div>
+
+    <div *ngFor="let trans of walletTrans.send">
+      <div  class="bg-blue-200 m-4 p-8 rounded-lg shadow-md">
+        <div class="flex flex-row">
+          <p class=" font-semibold mr-2">Amount:  </p>
+          <p>{{trans.amount}}.00 PHP</p>
+        </div>
+        <div class="flex flex-row">
+          <p class=" font-semibold  mr-2">Transaction:  </p>
+          <p>{{trans.transaction}}</p>
+        </div>
+        <div *ngIf="trans.from_firstname && trans.from_lastname" class="flex flex-row">
+          <p class=" font-semibold  mr-2">From:  </p>
+          <p>{{trans.from_firstname}}  {{trans.from_lastname}}</p>
+        </div>
+        <div *ngIf="trans.to_firstname && trans.to_lastname" class="flex flex-row">
+          <p class=" font-semibold  mr-2">To:  </p>
+          <p>{{trans.to_firstname}} {{trans.to_lastname}}</p>
+        </div>
+      </div>
+    </div>
 
 </div>
 

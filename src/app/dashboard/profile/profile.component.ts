@@ -9,6 +9,7 @@ import { DOCUMENT } from '@angular/common';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
+  wallet:any
   token: any;
   name: string;
   isUser: boolean;
@@ -48,14 +49,15 @@ export class ProfileComponent implements OnInit {
   overtime: any
   overtimeCharge:any
   regularCharge: any
-  private socket = io('https://0241-58-69-61-224.ngrok-free.app',{
+  accepterid: any
+  userid:any
+  private socket = io('https://aa63-66-85-26-53.ngrok-free.app',{
     extraHeaders: {
       "ngrok-skip-browser-warning" : "69420"
     }
   });
 
   constructor(private userService: UserService, @Inject(DOCUMENT) private document: Document) {
-    this.overtimeCharge = 0
     this.overtime = false
     this.isTimerStarted = false
     this.Date = new Date();
@@ -88,8 +90,17 @@ export class ProfileComponent implements OnInit {
         console.log(res);
         this.name = res.firstname;
         this.user_id = res.user_id
+        this.user_type = res.user_type
         localStorage.setItem("user_type",res.user_type)
 
+        setInterval(() => {
+          this.userService.readWallet(res.user_id)
+          .then(res => res.json())
+          .then(res => {
+            this.wallet = res;
+            console.log(res)
+          })
+        }, 3000);
 
 
         this.userService.bookinglistWaiting.subscribe(
@@ -366,7 +377,20 @@ export class ProfileComponent implements OnInit {
   }
 
   endBooking(booking_id:string){
-    this.userService.endBooking(booking_id, this.overtimeCharge, this.regularCharge)
+    this.accepterid = localStorage.getItem("accepter_id")
+    this.userid = localStorage.getItem("user_id")
+    this.userService.bookingCharge(booking_id)
+    .then(res => res.json())
+    .then(res => {
+      this.userService.endBooking(booking_id, this.overtimeCharge, res.amount)
+      this.userService.chargeWallet(this.accepterid, this.userid, res.amount )
+      this.userService.listBookingwaiting(this.user_id, 'accepter','false')
+      this.userService.listBookingaccepted(this.user_id, 'accepter','true')
+      this.userService.listBookingHistory(this.user_id, 'accepter','ended')
+
+    })
+
+
     ///150 per hr regular
     ///80 per hr OT
     ///300 general cleaning

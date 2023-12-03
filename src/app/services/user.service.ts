@@ -23,7 +23,7 @@ export class UserService {
     //this.host = 'http://localhost:8080'
     //this.host = 'http://192.168.1.31:8080'
     //this.host = 'https://43f0-58-69-61-224.ngrok.io';
-    this.host = 'https://c2df-66-85-26-53.ngrok-free.app'
+    this.host = 'https://69ef-66-85-26-53.ngrok-free.app'
     this.socketioHost = ''
    }
 
@@ -496,19 +496,6 @@ saveLocation(user_id:string, lat:string, long:string){
 }
 
 
-endBooking(book_id:string, overtime_charge:string, regular_charge:string){
-  var formdata = new FormData();
-  formdata.append("book_id", book_id);
-  formdata.append("overtime_charge", overtime_charge);
-  formdata.append("regular_charge", regular_charge);
-  return fetch(this.host + '/book/service/end/booking', {
-    method: 'POST',
-    headers: {
-    },
-    body: formdata
-})
-
-}
 
 getServices(){
   return fetch(this.host + '/book/service/types', {
@@ -561,6 +548,99 @@ addRentals(rental:string){
     },
     body: formdata
 })
+}
+
+
+readWallet(user: string){
+  var formdata = new FormData();
+  formdata.append("user_id", user);
+  return fetch(this.host + '/book/read/wallet', {
+    method: 'POST',
+    headers: {
+    },
+    body: formdata
+})
+}
+
+
+readWalletTrans(user: string){
+  var formdata = new FormData();
+  formdata.append("user_id", user);
+  return fetch(this.host + '/book/read/wallet/trans', {
+    method: 'POST',
+    headers: {
+    },
+    body: formdata
+})
+}
+
+chargeWallet(to_user:string, from_user:string, amount:string){
+  var formdata = new FormData();
+  formdata.append("to_user", to_user);
+  formdata.append("from_user", from_user);
+  formdata.append("amount", amount);
+  return fetch(this.host + '/book/charge/wallet', {
+    method: 'POST',
+    headers: {
+    },
+    body: formdata
+})
+}
+
+depositWallet(user_id:string, amount:string){
+  var formdata = new FormData();
+  formdata.append("user_id", user_id);
+  formdata.append("amount", amount);
+  return fetch(this.host + '/book/deposit/wallet', {
+    method: 'POST',
+    headers: {
+    },
+    body: formdata
+})
+}
+
+
+withdrawWallet(user_id:string, amount:string){
+  var formdata = new FormData();
+  formdata.append("user_id", user_id);
+  formdata.append("amount", amount);
+  return fetch(this.host + '/book/withdraw/wallet', {
+    method: 'POST',
+    headers: {
+    },
+    body: formdata
+})
+}
+
+
+
+
+
+
+endBooking(book_id:string, overtime_charge:string, regular_charge:string){
+  var formdata = new FormData();
+  formdata.append("book_id", book_id);
+  formdata.append("overtime_charge", overtime_charge);
+  formdata.append("regular_charge", regular_charge);
+  return fetch(this.host + '/book/service/end/booking', {
+    method: 'POST',
+    headers: {
+    },
+    body: formdata
+})
+
+}
+
+bookingCharge(book_id:string){
+  var formdata = new FormData();
+  formdata.append("book_id", book_id);
+  return fetch(this.host + '/book/service/charges', {
+    method: 'POST',
+    headers: {
+    },
+    body: formdata
+})
+
 }
 
 
