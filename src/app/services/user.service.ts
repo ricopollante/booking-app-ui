@@ -23,7 +23,7 @@ export class UserService {
     //this.host = 'http://localhost:8080'
     //this.host = 'http://192.168.1.31:8080'
     //this.host = 'https://43f0-58-69-61-224.ngrok.io';
-    this.host = 'https://69ef-66-85-26-53.ngrok-free.app'
+    this.host = 'https://ead6-66-85-26-53.ngrok-free.app'
     this.socketioHost = ''
    }
 
@@ -527,10 +527,11 @@ deleteRates(id:string){
 })
 }
 
-addAgenda(agenda:string, service_id:string){
+addAgenda(agenda:string, service_id:string, rate:string){
   var formdata = new FormData();
   formdata.append("agenda", agenda);
   formdata.append("service_id", service_id);
+  formdata.append("rate", rate);
   return fetch(this.host + '/book/service/add/agenda', {
     method: 'POST',
     headers: {
@@ -539,9 +540,24 @@ addAgenda(agenda:string, service_id:string){
 })
 }
 
-addRentals(rental:string){
+deleteAgenda(agenda:string){
+  var formdata = new FormData();
+  formdata.append("id", agenda);
+  return fetch(this.host + '/book/service/delete/agenda', {
+    method: 'POST',
+    headers: {
+    },
+    body: formdata
+})
+}
+
+
+
+
+addRentals(rental:string, price:string){
   var formdata = new FormData();
   formdata.append("rental", rental);
+  formdata.append("price", price);
   return fetch(this.host + '/book/service/add/rental', {
     method: 'POST',
     headers: {
@@ -550,6 +566,45 @@ addRentals(rental:string){
 })
 }
 
+deleteRental(rental:string){
+  var formdata = new FormData();
+  formdata.append("id", rental);
+  return fetch(this.host + '/book/service/delete/rental', {
+    method: 'POST',
+    headers: {
+    },
+    body: formdata
+})
+}
+
+
+addDuration(duration:string){
+  var formdata = new FormData();
+  formdata.append("duration", duration);
+  return fetch(this.host + '/book/service/add/duration', {
+    method: 'POST',
+    headers: {
+    },
+    body: formdata
+})
+}
+
+deleteDuration(duration:string){
+  var formdata = new FormData();
+  formdata.append("id", duration);
+  return fetch(this.host + '/book/service/delete/duration', {
+    method: 'POST',
+    headers: {
+    },
+    body: formdata
+})
+}
+
+
+
+
+// path('service/add/duration', views.add_duration),
+// path('service/delete/duration', views.delete_duration),
 
 readWallet(user: string){
   var formdata = new FormData();
@@ -643,5 +698,18 @@ bookingCharge(book_id:string){
 
 }
 
+bookRental(book_id:string, rental_id:string, user_id:string){
+  var formdata = new FormData();
+  formdata.append("book_id", book_id);
+  formdata.append("rental_id", rental_id);
+  formdata.append("user_id", user_id);
+  return fetch(this.host + '/book/service/rental/book', {
+    method: 'POST',
+    headers: {
+    },
+    body: formdata
+})
+
+}
 
 }

@@ -20,13 +20,17 @@ export class AdminComponent {
   itemName: any
   rate: any
   agenda: any
+  agenda_id:any
   duration: any
+  duration_id:any
   rental: any
+  rental_id:any
   isAddFormRates: any
   isAddFormRentals: any
   isAddFormDurations: any
   isAddFormAgendas: any
   servicetype: any
+
 constructor(private userService: UserService){
 
   this.userService.getAgenda()
@@ -71,38 +75,25 @@ hideItem(){
   this.isViewItem = false
 }
 
-showAddFormRates(id:string, item:string){
-  this.isAddFormRates = true
-  this.itemId = id
-  this.itemName = item
+selectAgendaID(id:string){
+  this.agenda_id = id;
+  console.log(id)
 }
-submitRates(){
-  this.isAddFormRates = false
-  if (this.itemName=='rates'){
-    this.userService.addRates(this.rate)
-    setTimeout(() => {
-      this.userService.toastSuccess('Success','Data Added')
-      window.location.reload();
-    }, 5000);
 
-  }
-
+selectRentalID(id:string){
+  this.rental_id = id;
+  console.log(id)
 }
-deleteRates(id:string){
-  if (this.isViewItem=='rates'){
-      this.userService.deleteRates(id)
-      setTimeout(() => {
-        this.userService.toastSuccess('Success','Deleted')
-        window.location.reload();
-      }, 5000);
 
-  }
+selectDurationID(id:string){
+this.duration_id = id
 }
+
 
 submitAgendas(){
   this.isAddFormRates = false
   if (this.isViewItem=='agendas'){
-    this.userService.addAgenda(this.agenda, this.servicetype)
+    this.userService.addAgenda(this.agenda, this.servicetype, this.rate)
     setTimeout(() => {
       this.userService.toastSuccess('Success','Data Added')
       window.location.reload();
@@ -111,9 +102,36 @@ submitAgendas(){
   }
 
 }
-deleteAgendas(id:string){
+deleteAgendas(){
   if (this.isViewItem=='agendas'){
-      this.userService.deleteRates(id)
+      this.userService.deleteAgenda(this.agenda_id)
+      setTimeout(() => {
+        this.userService.toastSuccess('Success','Deleted')
+        window.location.reload();
+      }, 5000);
+
+  }
+}
+
+showFormAgendas(){
+  this.isAddFormAgendas = true
+}
+
+submitRental(){
+  this.isAddFormRates = false
+  if (this.isViewItem=='rentals'){
+    this.userService.addRentals(this.rental, this.rate)
+    setTimeout(() => {
+      this.userService.toastSuccess('Success','Data Added')
+      window.location.reload();
+    }, 5000);
+
+  }
+
+}
+deleteRental(){
+  if (this.isViewItem=='rentals'){
+      this.userService.deleteRental(this.rental_id)
       setTimeout(() => {
         this.userService.toastSuccess('Success','Deleted')
         window.location.reload();
@@ -123,10 +141,26 @@ deleteAgendas(id:string){
 }
 
 
-submitRentals(){
+
+
+
+
+
+showFormRental(){
+  this.isAddFormRentals = true
+}
+
+
+
+showFormDurations(){
+  this.isAddFormDurations = true
+}
+
+
+submitDuration(){
   this.isAddFormRates = false
-  if (this.isViewItem=='rentals'){
-    this.userService.addRentals(this.rental)
+  if (this.isViewItem=='durations'){
+    this.userService.addDuration(this.duration)
     setTimeout(() => {
       this.userService.toastSuccess('Success','Data Added')
       window.location.reload();
@@ -135,15 +169,17 @@ submitRentals(){
   }
 
 }
+deleteDuration(){
+  if (this.isViewItem=='durations'){
+      this.userService.deleteDuration(this.duration_id)
+      setTimeout(() => {
+        this.userService.toastSuccess('Success','Deleted')
+        window.location.reload();
+      }, 5000);
 
-showFormRentals(){
-  this.isAddFormRentals = true
+  }
 }
 
-
-showFormAgendas(){
-  this.isAddFormAgendas = true
-}
 
 
 selectService(service:string){

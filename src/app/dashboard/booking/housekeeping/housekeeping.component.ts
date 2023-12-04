@@ -36,13 +36,15 @@ export class HousekeepingComponent implements OnInit {
   bathroom_size: any
   cars: any
   servicetype_id:any
-  private socket = io('https://aa63-66-85-26-53.ngrok-free.app',{
+  rentalsSelected: any
+  private socket = io('https://de0b-66-85-26-53.ngrok-free.app',{
     extraHeaders: {
       "ngrok-skip-browser-warning" : "69420"
     }
   });
 constructor(@Inject(DOCUMENT) private document: Document, private userService: UserService){
   this.token = localStorage.getItem("user_token");
+  this.rentalsSelected = []
 
 
 }
@@ -132,11 +134,16 @@ bookService(accepter_id:string){
 
 startBooking(){
   this.socket.emit('update_booking', {"id" : this.selectedAccepterID});  // listen and save src coordinates
+
+
   switch(this.serviceType){
     case 'chores':
      this.userService.bookService('25', this.location, this.selectedDuration, this.notes, this.selectedRental, '0','5', this.user_id, '', '', this.selectedAccepterID, this.selectedRate, '', this.lot_area ,'')
      .then(res => res.json())
      .then(async res => {
+      this.rentalsSelected.forEach( (value: any) => {
+        this.userService.bookRental(res.book_id, value, this.user_id)
+      });
       await this.userService.toastSuccess("Success", "Booked Successfully")
 
       setTimeout(() => {
@@ -149,6 +156,9 @@ startBooking(){
      this.userService.bookService('25', this.location, this.selectedDuration, this.notes, this.selectedRental, '0','5', this.user_id, '', '', this.selectedAccepterID, this.selectedRate, '', this.lot_area ,'')
      .then(res => res.json())
      .then(async res => {
+      this.rentalsSelected.forEach( (value: any) => {
+        this.userService.bookRental(res.book_id, value, this.user_id)
+      });
       await this.userService.toastSuccess("Success", "Booked Successfully")
 
       setTimeout(() => {
@@ -161,6 +171,9 @@ startBooking(){
       this.userService.bookService('25', this.location, this.selectedDuration, this.notes, this.selectedRental, '0','5', this.user_id, '', '', this.selectedAccepterID, this.selectedRate, '', this.lot_area ,'')
       .then(res => res.json())
       .then(async res => {
+        this.rentalsSelected.forEach( (value: any) => {
+          this.userService.bookRental(res.book_id, value, this.user_id)
+        });
        await this.userService.toastSuccess("Success", "Booked Successfully")
 
        setTimeout(() => {
@@ -173,6 +186,9 @@ startBooking(){
         this.userService.bookService('25', this.location, this.selectedDuration, this.notes, this.selectedRental, '0','5', this.user_id, '', '', this.selectedAccepterID, this.selectedRate, '', this.lot_area ,'')
         .then(res => res.json())
         .then(async res => {
+          this.rentalsSelected.forEach( (value: any) => {
+            this.userService.bookRental(res.book_id, value, this.user_id)
+          });
          await this.userService.toastSuccess("Success", "Booked Successfully")
 
          setTimeout(() => {
@@ -233,6 +249,22 @@ selectDuration(data: string){
 
 selectAccepter(data: string){
   this.selectedAccepterID = data;
+}
+
+selectRentals(event: any){
+  if(event.target.checked){
+    console.log(event.target.value,"checked")
+    this.rentalsSelected.push(event.target.value)
+  }
+  else{
+    console.log(event.target.value,"unchecked")
+    const index = this.rentalsSelected.indexOf(event.target.value);
+    console.log(index);
+    if (index !== -1) {
+      this.rentalsSelected.splice(index, 1);
+    }
+  }
+
 }
 
 

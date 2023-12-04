@@ -51,7 +51,7 @@ export class ProfileComponent implements OnInit {
   regularCharge: any
   accepterid: any
   userid:any
-  private socket = io('https://aa63-66-85-26-53.ngrok-free.app',{
+  private socket = io('https://de0b-66-85-26-53.ngrok-free.app',{
     extraHeaders: {
       "ngrok-skip-browser-warning" : "69420"
     }
@@ -384,6 +384,9 @@ export class ProfileComponent implements OnInit {
     .then(res => {
       this.userService.endBooking(booking_id, this.overtimeCharge, res.amount)
       this.userService.chargeWallet(this.accepterid, this.userid, res.amount )
+      this.userService.chargeWallet(this.accepterid, this.userid, res.amount )
+      this.userService.chargeWallet(this.accepterid, this.userid, res.overtime )
+      this.userService.chargeWallet(this.accepterid, this.userid, res.rental_charge )
       this.userService.listBookingwaiting(this.user_id, 'accepter','false')
       this.userService.listBookingaccepted(this.user_id, 'accepter','true')
       this.userService.listBookingHistory(this.user_id, 'accepter','ended')
