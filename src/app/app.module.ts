@@ -30,6 +30,7 @@ import { UnderdevelopmentComponent } from './underdevelopment/underdevelopment.c
 import { AdminComponent } from './admin/admin.component';
 import { SosComponent } from './sos/sos.component';
 import { WalletComponent } from './wallet/wallet.component';
+import { ShoppingComponent } from './dashboard/footer/shopping/shopping.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { WalletComponent } from './wallet/wallet.component';
     UnderdevelopmentComponent,
     AdminComponent,
     SosComponent,
-    WalletComponent
+    WalletComponent,
+    ShoppingComponent
   ],
   imports: [
     RouterModule,
