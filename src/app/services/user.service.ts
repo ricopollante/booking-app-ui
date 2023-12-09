@@ -23,7 +23,7 @@ export class UserService {
     //this.host = 'http://localhost:8080'
     //this.host = 'http://192.168.1.31:8080'
     //this.host = 'https://43f0-58-69-61-224.ngrok.io';
-    this.host = 'https://ead6-66-85-26-53.ngrok-free.app'
+    this.host = 'https://2423-66-85-26-53.ngrok-free.app'
     this.socketioHost = ''
    }
 
@@ -711,5 +711,38 @@ bookRental(book_id:string, rental_id:string, user_id:string){
 })
 
 }
+
+getChildCenters(){
+  return fetch(this.host + '/book/service/child/centers',   {
+    method: 'POST',
+    headers: {
+    }
+})
+
+}
+
+getChildCenter(id:string){
+  var formdata = new FormData();
+  formdata.append("id", id);
+  return fetch(this.host + '/book/service/child/centers',   {
+    method: 'POST',
+    headers: {
+    },
+    body: formdata
+})
+
+}
+
+cancelBook(id:string){
+  var formdata = new FormData();
+  formdata.append("id", id);
+  return fetch(this.host + '/book/service/cancel',   {
+    method: 'POST',
+    headers: {
+    },
+    body: formdata
+})
+}
+
 
 }

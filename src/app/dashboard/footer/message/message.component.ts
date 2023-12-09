@@ -79,7 +79,7 @@ export class MessageComponent implements OnInit{
     setInterval(() => {
       this.userService.updateChannels(this.user_id)
       console.log("updating channels...")
-    }, 3000);
+    }, 5000);
     this.openMessage = false;
   }
 

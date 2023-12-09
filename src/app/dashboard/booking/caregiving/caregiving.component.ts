@@ -2,6 +2,8 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
 import { DOCUMENT } from '@angular/common';
 import {io} from 'socket.io-client';
+import { Geolocation } from '@capacitor/geolocation';
+import * as Leaflet from 'leaflet';
 @Component({
   selector: 'app-caregiving',
   templateUrl: './caregiving.component.html',
@@ -32,16 +34,23 @@ export class CaregivingComponent implements OnInit{
   token: any;
   user_id: any
   servicetype_id:any
-  private socket = io('https://de0b-66-85-26-53.ngrok-free.app',{
+  currentLat:any
+  currentLong:any
+  nearCC: any
+  selectedChildCenter:any
+  private socket = io('https://f0c6-66-85-26-53.ngrok-free.app',{
     extraHeaders: {
       "ngrok-skip-browser-warning" : "69420"
     }
   });
   constructor(@Inject(DOCUMENT) private document: Document, private userService: UserService){
+      this.nearCC = []
       this.token = localStorage.getItem("user_token");
   }
 
   ngOnInit(): void {
+
+    this.userCurrentPosition()
 
 
     this.userService.availableStaff.subscribe(
@@ -98,6 +107,73 @@ export class CaregivingComponent implements OnInit{
     })
 
   }
+
+  userCurrentPosition = async () => { // GET USER CURRENT POSITION
+    var self = this;
+    let location = await Geolocation.getCurrentPosition({
+        enableHighAccuracy: true,
+        timeout: 30000,
+        maximumAge: Infinity
+    });
+    const wait = Geolocation.watchPosition({enableHighAccuracy: true, timeout: 1000}, (position: any, err) => {
+      console.log(err)
+      console.log(position)
+
+        this.currentLat = position.coords.latitude
+        this.currentLong = position.coords.longitude
+         // save dst coordinates
+
+         this.userService.getChildCenters()
+         .then(res => res.json())
+         .then(res => {
+           console.log(res)
+           res.data.forEach( (value: any) => {
+             console.log(value.name)
+            var dist =  this.getDistanceKM([Number(this.currentLat), Number(this.currentLong)],[Number(value.lat), Number(value.long)])
+            console.log( dist)
+            if (Number(dist)<100){
+              value['dist'] = dist
+             this.nearCC.push(value)
+             console.log(value)
+            }
+
+           });
+
+         })
+
+
+    });
+
+
+    }
+
+    getDistanceKM(dst:any,src:any){
+      var fromLatLng = Leaflet.latLng(dst[0], dst[1]);
+      var toLatLng = Leaflet.latLng(src[0], src[1]);
+      var dis = fromLatLng.distanceTo(toLatLng);
+      let distanceConversion = ((dis) / 1000).toFixed(0);
+      let distanceKm = distanceConversion;
+      console.log(distanceKm || 0, "km");
+      return distanceKm || 0
+
+    }
+
+    nearChildCenter(){
+      this.userService.getChildCenters()
+      .then(res => res.json())
+      .then(res => {
+        var items_arr = []
+        res.data.forEach( (value: any) => {
+        var dist = this.getDistanceKM([Number(value.lat),Number(value.long)], [this.currentLat,  this.currentLat])
+            if (Number(dist)<16){
+              items_arr.push(dist)
+            }
+
+        });
+
+      })
+    }
+
 
   showStaffServers(service:any){
     this.isServerStaffList = true;
@@ -229,6 +305,15 @@ export class CaregivingComponent implements OnInit{
 
   selectAccepter(data: string){
     this.selectedAccepterID = data;
+  }
+
+  selectChildCenter(data: string){
+    localStorage.setItem('SelectedChildCenter', data)
+
+  }
+
+  showChildCenters(){
+    this.userCurrentPosition()
   }
 
 

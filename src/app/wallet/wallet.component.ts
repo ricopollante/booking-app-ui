@@ -39,7 +39,7 @@ this.userService.getProfile(this.token)
         this.walletTrans = res;
         console.log(res)
       })
-    }, 3000);
+    }, 5000);
 
 
   }

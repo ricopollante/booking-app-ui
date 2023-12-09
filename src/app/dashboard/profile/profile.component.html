@@ -204,16 +204,18 @@
 
   <div class="flex flex-row justify-between my-6">
 
-    <div (click)="showNavWaiting()" class="">
+    <div (click)="showNavWaiting()"  [ngClass]="navBook == 'waiting' ? 'bg-blue-400 p-4 shadow-md rounded-lg' : ''" >
       <img class="w-24 p-4" src="assets/wait.png" alt="">
       <p class="text-center text-xs font-semibold">Waiting</p>
     </div>
-   <div>
+
+   <div [ngClass]="navBook == 'accepted' ? 'bg-blue-400 p-4 shadow-md rounded-lg' : ''" >
     <img (click)="showNavAccepted()" class="ml-4 w-24 p-4" src="assets/ongoing.png" alt="">
     <p class="text-center text-xs font-semibold">Ongoing</p>
    </div>
-  <div>
-    <img (click)="showNavHistory()" class="ml-2 w-24 p-4" src="assets/done.png" alt="">
+
+  <div [ngClass]="navBook == 'history' ? 'bg-blue-400 p-4 shadow-md rounded-lg' : ''" >
+    <img (click)="showNavHistory()"  class="ml-2 w-24 p-4" src="assets/done.png" alt="">
     <p class="text-center text-xs font-semibold">History</p>
   </div>
 
@@ -258,7 +260,7 @@
                 <button *ngIf="usertype=='USER'" class="text-center w-1/2 bg-blue-500 text-xs hover:bg-blue-700 text-white font-normal py-2 px-0 rounded mt-4">
                   Waiting
                 </button>
-                 <button *ngIf="usertype=='USER'" class="text-center w-1/2 bg-red-500 text-xs hover:bg-red-700 text-white font-normal py-2 px-0 rounded mt-4">
+                 <button (click)="cancel(booking.id)" *ngIf="usertype=='USER'" class="text-center w-1/2 bg-red-500 text-xs hover:bg-red-700 text-white font-normal py-2 px-0 rounded mt-4">
                   Cancel
                 </button>
             </div>

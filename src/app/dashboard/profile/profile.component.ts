@@ -51,7 +51,7 @@ export class ProfileComponent implements OnInit {
   regularCharge: any
   accepterid: any
   userid:any
-  private socket = io('https://de0b-66-85-26-53.ngrok-free.app',{
+  private socket = io('https://f0c6-66-85-26-53.ngrok-free.app',{
     extraHeaders: {
       "ngrok-skip-browser-warning" : "69420"
     }
@@ -397,6 +397,10 @@ export class ProfileComponent implements OnInit {
     ///150 per hr regular
     ///80 per hr OT
     ///300 general cleaning
+  }
+
+  cancel(id:string){
+    this.userService.cancelBook(id)
   }
 
 }
