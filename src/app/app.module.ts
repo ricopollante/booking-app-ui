@@ -31,6 +31,7 @@ import { AdminComponent } from './admin/admin.component';
 import { SosComponent } from './sos/sos.component';
 import { WalletComponent } from './wallet/wallet.component';
 import { ShoppingComponent } from './dashboard/footer/shopping/shopping.component';
+import { UserprofileComponent } from './userprofile/userprofile.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { ShoppingComponent } from './dashboard/footer/shopping/shopping.componen
     AdminComponent,
     SosComponent,
     WalletComponent,
-    ShoppingComponent
+    ShoppingComponent,
+    UserprofileComponent
   ],
   imports: [
     RouterModule,

@@ -1,10 +1,9 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">bookingapp</string>
-    <string name="title_activity_main">bookingapp</string>
+    <string name="app_name">carecom</string>
+    <string name="title_activity_main">carecom</string>
     <string name="package_name">io.ionic.starter</string>
     <string name="custom_url_scheme">io.ionic.starter</string>
-    <string name="server_client_id">216907772562-k80aqsd288sdpmo27bn51rhvtslbm4sc.apps.googleusercontent.com</string>
     <string name="facebook_app_id">1073203297189449</string>
-<string name="facebook_client_token">1073203297189449</string>
+<string name="facebook_client_token">f5b2abb8280e18ce2bc31a1260fc48dd</string>
 </resources>

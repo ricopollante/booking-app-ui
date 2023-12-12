@@ -46,6 +46,7 @@ export class CaregivingComponent implements OnInit{
   constructor(@Inject(DOCUMENT) private document: Document, private userService: UserService){
       this.nearCC = []
       this.token = localStorage.getItem("user_token");
+      this.selectedRental = 1
   }
 
   ngOnInit(): void {

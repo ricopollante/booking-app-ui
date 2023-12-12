@@ -379,29 +379,39 @@ export class ProfileComponent implements OnInit {
   endBooking(booking_id:string){
     this.accepterid = localStorage.getItem("accepter_id")
     this.userid = localStorage.getItem("user_id")
-    this.userService.bookingCharge(booking_id)
-    .then(res => res.json())
-    .then(res => {
-      this.userService.endBooking(booking_id, this.overtimeCharge, res.amount)
-      this.userService.chargeWallet(this.accepterid, this.userid, res.amount )
-      this.userService.chargeWallet(this.accepterid, this.userid, res.amount )
-      this.userService.chargeWallet(this.accepterid, this.userid, res.overtime )
-      this.userService.chargeWallet(this.accepterid, this.userid, res.rental_charge )
+    // this.userService.bookingCharge(booking_id)
+    // .then(res => res.json())
+    // .then(res => {
+      this.userService.endBooking(booking_id, this.overtimeCharge, "150")
+      this.userService.chargeWallet(this.accepterid, this.userid, "150" )
+      this.userService.chargeWallet(this.accepterid, this.userid, "150" )
+      this.userService.chargeWallet(this.accepterid, this.userid, "400" )
+      this.userService.chargeWallet(this.accepterid, this.userid, "500" )
       this.userService.listBookingwaiting(this.user_id, 'accepter','false')
       this.userService.listBookingaccepted(this.user_id, 'accepter','true')
       this.userService.listBookingHistory(this.user_id, 'accepter','ended')
+      window.location.reload();
 
-    })
+   // })
 
 
     ///150 per hr regular
     ///80 per hr OT
     ///300 general cleaning
   }
-
-  cancel(id:string){
+cancel(id:string){
     this.userService.cancelBook(id)
+    this.userService.listBookingwaiting(this.user_id, 'user','false')
+    this.userService.listBookingaccepted(this.user_id, 'user','true')
+    this.userService.listBookingHistory(this.user_id, 'user','ended')
   }
 
+  decline(id:string){
+    this.userService.declineBook(id)
+    this.userService.listBookingwaiting(this.user_id, 'accepter','false')
+    this.userService.listBookingaccepted(this.user_id, 'accepter','true')
+    this.userService.listBookingHistory(this.user_id, 'accepter','ended')
+
+  }
 }
 

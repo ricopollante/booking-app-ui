@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-footer',
@@ -7,11 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FooterComponent implements OnInit {
   isAdmin: any
-  constructor() {
+  constructor(private router: Router) {
     this.isAdmin = localStorage.getItem("is_admin")
    }
 
   ngOnInit(): void {
+  }
+
+  Home(){
+    window.location.reload()
   }
 
 }

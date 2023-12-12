@@ -45,6 +45,7 @@ export class HousekeepingComponent implements OnInit {
 constructor(@Inject(DOCUMENT) private document: Document, private userService: UserService){
   this.token = localStorage.getItem("user_token");
   this.rentalsSelected = []
+  this.selectedRental = 1
 
 
 }
@@ -153,7 +154,7 @@ startBooking(){
      })
      break;
      case 'laundry':
-     this.userService.bookService('25', this.location, this.selectedDuration, this.notes, this.selectedRental, '0','5', this.user_id, '', '', this.selectedAccepterID, this.selectedRate, '', this.lot_area ,'')
+     this.userService.bookService(this.selectedAgenda, this.location, this.selectedDuration, this.notes, this.selectedRental, '0','5', this.user_id, '', '', this.selectedAccepterID, this.selectedRate, '', this.lot_area ,'')
      .then(res => res.json())
      .then(async res => {
       this.rentalsSelected.forEach( (value: any) => {
@@ -183,7 +184,7 @@ startBooking(){
       })
       break;
       case 'toilet':
-        this.userService.bookService('25', this.location, this.selectedDuration, this.notes, this.selectedRental, '0','5', this.user_id, '', '', this.selectedAccepterID, this.selectedRate, '', this.lot_area ,'')
+        this.userService.bookService(this.selectedAgenda, this.location, this.selectedDuration, this.notes, this.selectedRental, '0','5', this.user_id, '', '', this.selectedAccepterID, this.selectedRate, '', this.lot_area ,'')
         .then(res => res.json())
         .then(async res => {
           this.rentalsSelected.forEach( (value: any) => {

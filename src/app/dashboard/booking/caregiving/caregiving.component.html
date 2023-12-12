@@ -66,6 +66,13 @@
     <p class="mt-16">Please fill out the form:</p>
     <div class="shadow-md w-full p-6 rounded-lg bg-blue-300">
 
+      <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Rentals</label>
+      <select  #Rentals (change)="selectRental(Rentals.value)"  id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4">
+        <option selected>Select</option>
+        <option *ngFor="let rentals of rentals" value="{{rentals.id}}">{{rentals.text}}</option>
+      </select>
+
+
       <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Agenda</label>
       <select #agenda (change)="selectAgenda(agenda.value)" id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4">
         <option selected>Select</option>
@@ -106,6 +113,12 @@
         <label for="default-radio-1" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">HUMAN BABY</label>
     </div>
 
+
+    <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Agenda</label>
+    <select #agenda (change)="selectAgenda(agenda.value)" id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4">
+      <option selected>Select</option>
+      <option *ngFor="let agenda of agendas" value="{{agenda.id}}">{{agenda.text}}</option>
+    </select>
 
 
     <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nearest Child Center</label>

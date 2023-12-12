@@ -92,6 +92,18 @@
         <option *ngFor="let agenda of agendas" value="{{agenda.id}}">{{agenda.text}}</option>
       </select>
 
+
+      <div class="my-2">
+        <p>Rentals</p>
+        <div class=" bg-white shadow-md rounded-lg p-2">
+          <div  *ngFor="let rentals of rentals" class="flex items-center my-2">
+            <input (click)="selectRentals($event)" id="default-checkbox" type="checkbox" value="{{rentals.id}}" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+            <label for="default-checkbox" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{rentals.text}}</label>
+          </div>
+        </div>
+      </div>
+
+
       <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Duration</label>
       <select #Duration (change)="selectDuration(Duration.value)"  id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4">
         <option selected>Select</option>
@@ -117,15 +129,6 @@
     <p class="mt-16">Please fill out the form:</p>
     <div class="shadow-md w-full p-6 rounded-lg bg-blue-300">
 
-      <div class="flex items-center mb-4">
-        <input [(ngModel)]="pet" id="default-radio-1" type="radio" value="PET CAT" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-        <label for="default-radio-1" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">PET CAT</label>
-        <input [(ngModel)]="pet" id="default-radio-1" type="radio" value="PET DOG" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-        <label for="default-radio-1" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">PET DOG</label>
-        <input [(ngModel)]="pet" id="default-radio-1" type="radio" value="HUMAN BABY" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-        <label for="default-radio-1" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">HUMAN BABY</label>
-    </div>
-
 
 
       <label for="Notes" class="block text-sm font-medium text-gray-900 dark:text-white">Age</label>
@@ -137,6 +140,17 @@
         <option selected>Select</option>
         <option *ngFor="let duration of duration" value="{{duration.id}}">{{duration.text}}</option>
       </select>
+
+      <div class="my-2">
+        <p>Rentals</p>
+        <div class=" bg-white shadow-md rounded-lg p-2">
+          <div  *ngFor="let rentals of rentals" class="flex items-center my-2">
+            <input (click)="selectRentals($event)" id="default-checkbox" type="checkbox" value="{{rentals.id}}" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+            <label for="default-checkbox" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{rentals.text}}</label>
+          </div>
+        </div>
+      </div>
+
 
 
       <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Rate</label>
@@ -167,6 +181,17 @@
         <option selected>Select</option>
         <option *ngFor="let duration of duration" value="{{duration.id}}">{{duration.text}}</option>
       </select>
+
+
+      <div class="my-2">
+        <p>Rentals</p>
+        <div class=" bg-white shadow-md rounded-lg p-2">
+          <div  *ngFor="let rentals of rentals" class="flex items-center my-2">
+            <input (click)="selectRentals($event)" id="default-checkbox" type="checkbox" value="{{rentals.id}}" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+            <label for="default-checkbox" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{rentals.text}}</label>
+          </div>
+        </div>
+      </div>
 
 
       <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Rate</label>

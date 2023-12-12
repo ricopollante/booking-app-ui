@@ -254,7 +254,7 @@
                 <button (click)="acceptBooking(booking.id, booking.user)" *ngIf="usertype=='CAREGIVER' || usertype=='HOUSEKEEPER' "  class="text-center w-1/2 bg-blue-500 text-xs hover:bg-blue-700 text-white font-normal py-2 px-4 rounded  mt-4">
                   Accept
                 </button>
-                <button *ngIf="usertype=='CAREGIVER' || usertype=='HOUSEKEEPER' "  class="text-center w-1/2 bg-red-500 text-xs hover:bg-red-700 text-white font-normal py-2 px-4 my-2 rounded  mt-4">
+                <button (click)="decline(booking.id)" *ngIf="usertype=='CAREGIVER' || usertype=='HOUSEKEEPER' "  class="text-center w-1/2 bg-red-500 text-xs hover:bg-red-700 text-white font-normal py-2 px-4 my-2 rounded  mt-4">
                   Decline
                 </button>
                 <button *ngIf="usertype=='USER'" class="text-center w-1/2 bg-blue-500 text-xs hover:bg-blue-700 text-white font-normal py-2 px-0 rounded mt-4">
@@ -354,6 +354,10 @@
                   <p class="text-xs text-black">Notes: {{booking.notes}}</p>
                 </div>
 
+                <div *ngIf="booking.decline">
+                  <p class="text-red-500 font-bold">Booking Declined !</p>
+                </div>
+
                 <div class="flex flex-row w-[100px] mb-1">
                   <!-- <img class="w-3.5 h-3.5 mr-2" src="assets/marker-icon.png" alt=""> -->
                   <p class="text-xs text-black">Regular charge: PHP {{booking.regular_charge}} </p>
@@ -371,7 +375,7 @@
               <button *ngIf="usertype=='CAREGIVER' || usertype=='HOUSEKEEPER' || usertype=='USER' "  class="text-center w-full bg-blue-500 text-xs hover:bg-blue-700 text-white font-normal py-2 px-4 rounded  mt-4">
                Receipt
               </button>
-              <button *ngIf="usertype=='CAREGIVER' || usertype=='HOUSEKEEPER' || usertype=='USER'"  class="text-center w-full bg-red-500 text-xs hover:bg-red-700 text-white font-normal py-2 px-4 my-2 rounded  mt-4">
+              <button (click)="cancel(booking.id)" *ngIf="usertype=='CAREGIVER' || usertype=='HOUSEKEEPER' || usertype=='USER'"  class="text-center w-full bg-red-500 text-xs hover:bg-red-700 text-white font-normal py-2 px-4 my-2 rounded  mt-4">
                 Delete
               </button>
             </div>

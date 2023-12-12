@@ -49,12 +49,12 @@ export class MapComponent implements OnInit {
     this.userid = localStorage.getItem("user_id")
     this.usertype = localStorage.getItem("user_type")
     this.channelid = localStorage.getItem("channel_uuid")
-    this.destLat = 14.615436707493016
-    this.destLong = 121.18302593231203
-    this.srcLat = 14.615436707493016
-    this.srcLong = 121.18302593231203
-    this.ccLat = 0
-    this.ccLong = 0
+    this.destLat = 14.6760
+    this.destLong = 121.0437
+    this.srcLat = 14.6760
+    this.srcLong = 121.0437
+    this.ccLat = 14.6760
+    this.ccLong = 121.0437
     this.token = localStorage.getItem("user_token");
 
     // this.socket.on("connect_error", (err) => {

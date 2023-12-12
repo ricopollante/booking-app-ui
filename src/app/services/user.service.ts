@@ -744,5 +744,17 @@ cancelBook(id:string){
 })
 }
 
+declineBook(id:string){
+  var formdata = new FormData();
+  formdata.append("id", id);
+  return fetch(this.host + '/book/service/decline',   {
+    method: 'POST',
+    headers: {
+    },
+    body: formdata
+})
+}
+
+
 
 }
