@@ -51,7 +51,7 @@ export class ProfileComponent implements OnInit {
   regularCharge: any
   accepterid: any
   userid:any
-  private socket = io('https://f0c6-66-85-26-53.ngrok-free.app',{
+  private socket = io('https://9059-66-85-26-53.ngrok-free.app',{
     extraHeaders: {
       "ngrok-skip-browser-warning" : "69420"
     }
@@ -282,6 +282,12 @@ export class ProfileComponent implements OnInit {
   }
 
   acceptBooking(booking_id:string, receiver_id:string){
+    if (this.bookingListAccepted.length > 0){
+      console.log(this.bookingListAccepted)
+        this.userService.toastError('Cannot accept booking','Please wait to end ongoing booking to accept new booking')
+        this.userService.listBookingaccepted(this.user_id, 'accepter','true')
+    }
+    else{
       this.userService.bookAccept(booking_id,this.token)
       this.userService.listBookingwaiting(this.user_id, 'accepter','false')
       this.userService.listBookingaccepted(this.user_id, 'accepter','true')
@@ -294,12 +300,14 @@ export class ProfileComponent implements OnInit {
         this.userService.saveMessage(this.user_id, res.channel, "Hello I'm glad to accept your booking. Feel free to contact me via this chat.");
         this.userService.updateChannels(this.user_id)
       })
+    }
+
   }
 
   startTimer(booking_id: string){
-    if (!this.isTimerStarted){
+    //if (!this.isTimerStarted){
       this.userService.startBookingTimer(booking_id);
-    }
+    //}
 
     this.isTimerStarted = true;
     this.userService.getBookingTimer(booking_id)
@@ -379,20 +387,21 @@ export class ProfileComponent implements OnInit {
   endBooking(booking_id:string){
     this.accepterid = localStorage.getItem("accepter_id")
     this.userid = localStorage.getItem("user_id")
-    // this.userService.bookingCharge(booking_id)
-    // .then(res => res.json())
-    // .then(res => {
-      this.userService.endBooking(booking_id, this.overtimeCharge, "150")
-      this.userService.chargeWallet(this.accepterid, this.userid, "150" )
-      this.userService.chargeWallet(this.accepterid, this.userid, "150" )
-      this.userService.chargeWallet(this.accepterid, this.userid, "400" )
-      this.userService.chargeWallet(this.accepterid, this.userid, "500" )
+    this.userService.endBooking(booking_id, this.overtimeCharge, '0')
+    this.userService.bookingCharge(booking_id)
+    .then(res => res.json())
+    .then(res => {
+
+      this.userService.chargeWallet(this.accepterid, this.userid, res.amount )
+      this.userService.chargeWallet(this.accepterid, this.userid, res.amount )
+      this.userService.chargeWallet(this.accepterid, this.userid, res.overtime )
+      this.userService.chargeWallet(this.accepterid, this.userid, res.rental_charge )
       this.userService.listBookingwaiting(this.user_id, 'accepter','false')
       this.userService.listBookingaccepted(this.user_id, 'accepter','true')
       this.userService.listBookingHistory(this.user_id, 'accepter','ended')
       window.location.reload();
 
-   // })
+   })
 
 
     ///150 per hr regular

@@ -38,7 +38,7 @@ export class CaregivingComponent implements OnInit{
   currentLong:any
   nearCC: any
   selectedChildCenter:any
-  private socket = io('https://f0c6-66-85-26-53.ngrok-free.app',{
+  private socket = io('https://9059-66-85-26-53.ngrok-free.app',{
     extraHeaders: {
       "ngrok-skip-browser-warning" : "69420"
     }
