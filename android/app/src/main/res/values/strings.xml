@@ -6,4 +6,5 @@
     <string name="custom_url_scheme">io.ionic.starter</string>
     <string name="facebook_app_id">1073203297189449</string>
 <string name="facebook_client_token">f5b2abb8280e18ce2bc31a1260fc48dd</string>
+ <string name="server_client_id">216907772562-k80aqsd288sdpmo27bn51rhvtslbm4sc.apps.googleusercontent.com</string>
 </resources>

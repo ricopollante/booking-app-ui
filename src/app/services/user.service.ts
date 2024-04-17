@@ -20,10 +20,10 @@ export class UserService {
   messages = new Subject<any>();
   constructor(private toastrService: ToastrService) {
     //this.host = 'http://10.42.0.67:8080'
-    //this.host = 'http://localhost:8080'
-    //this.host = 'http://192.168.1.31:8080'
+    //this.host = 'http://127.0.0.1:8000'
+    //this.host = 'https://192.168.1.8:8000'
     //this.host = 'https://43f0-58-69-61-224.ngrok.io';
-    this.host = 'https://d4fe-66-85-26-53.ngrok-free.app'
+    this.host = 'https://2a0c-58-69-61-224.ngrok-free.app'
     this.socketioHost = ''
    }
 
