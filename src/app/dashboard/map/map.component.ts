@@ -14,7 +14,7 @@ Leaflet.Icon.Default.imagePath = 'assets/';
   styleUrls: ['./map.component.css']
 })
 export class MapComponent implements OnInit {
-  private socket = io('https://9059-66-85-26-53.ngrok-free.app',{
+  private socket = io('https://de0b-66-85-26-53.ngrok-free.app',{
     extraHeaders: {
       "ngrok-skip-browser-warning" : "69420"
     }
@@ -23,8 +23,6 @@ export class MapComponent implements OnInit {
   destLong: any;
   srcLat: any;
   srcLong: any;
-  ccLat: any
-  ccLong: any
   title = 'AngularOSM';
   map!: Leaflet.Map;
   markers: Leaflet.Marker[] = [];
@@ -42,19 +40,15 @@ export class MapComponent implements OnInit {
   userid:any
   accepterid:any
   channelid:any
-  SelectedChildCenter:any
   constructor(private userService: UserService){
-    this.SelectedChildCenter = localStorage.getItem("SelectedChildCenter")
     this.accepterid = localStorage.getItem("accepter_id")
     this.userid = localStorage.getItem("user_id")
     this.usertype = localStorage.getItem("user_type")
     this.channelid = localStorage.getItem("channel_uuid")
-    this.destLat = 14.6760
-    this.destLong = 121.0437
-    this.srcLat = 14.6760
-    this.srcLong = 121.0437
-    this.ccLat = 14.6760
-    this.ccLong = 121.0437
+    this.destLat = 14.615436707493016
+    this.destLong = 121.18302593231203
+    this.srcLat = 14.615436707493016
+    this.srcLong = 121.18302593231203
     this.token = localStorage.getItem("user_token");
 
     // this.socket.on("connect_error", (err) => {
@@ -64,15 +58,6 @@ export class MapComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
-    this.userService.getChildCenter(this.SelectedChildCenter)
-    .then(res => res.json())
-    .then(res => {
-      this.markers[2].setLatLng({ lat: res.lat, lng: res.long });
-    })
-
-
-
 
 //TEST ROUTES //GET
     this.userService.locSrc.subscribe( //UPDATE SOURCE
@@ -87,17 +72,6 @@ export class MapComponent implements OnInit {
         this.destLat = data.lat;
         this.destLong = data.long;
         this.markers[0].setLatLng({ lat: data.lat, lng: data.long });
-
-        // this.userService.getChildCenters()
-        // .then(res => res.json())
-        // .then(res => {
-        //   res.data.forEach( (value: any) => {
-        //     var dist = this.getDistanceKM([Number(data.lat),Number(data.long)], [this.srcLat,  this.srcLong])
-        //     console.log(dist)
-        //   });
-
-        // })
-
       }
     )
 
@@ -149,18 +123,6 @@ export class MapComponent implements OnInit {
 
 }
 
-
-
-getDistanceKM(dst:any,src:any){
-  var fromLatLng = Leaflet.latLng(dst[0], dst[1]);
-  var toLatLng = Leaflet.latLng(src[0], src[1]);
-  var dis = fromLatLng.distanceTo(toLatLng);
-  let distanceConversion = ((dis) / 1000).toFixed(0);
-  let distanceKm = distanceConversion;
-  console.log(distanceKm || 0, "km");
-  return distanceKm || 0
-
-}
 userCurrentPosition = async () => { // GET USER CURRENT POSITION
   var self = this;
   let location = await Geolocation.getCurrentPosition({
@@ -198,10 +160,6 @@ userCurrentPosition = async () => { // GET USER CURRENT POSITION
       {
         position: { lat: this.srcLat , lng: this.srcLong  }, //Source
         draggable: false,
-      },
-      {
-        position: { lat: this.ccLat , lng: this.ccLong  }, //Child Centre
-        draggable: false,
       }
     ];
 
@@ -210,14 +168,10 @@ userCurrentPosition = async () => { // GET USER CURRENT POSITION
       const marker = this.generateMarker(data, index);
       //marker.addTo(this.map).bindPopup(`<b>${data.position.lat},  ${data.position.lng}</b>`);
       if(index == 1){
-        marker.addTo(this.map).bindPopup(`<b>Service Provider</b>`).openPopup();
+        marker.addTo(this.map).bindPopup(`<b>SERVICE PROVIDER</b>`).openPopup();
       }
       if(index ==0){
-        marker.addTo(this.map).bindPopup(`<b>User</b>`).openPopup();
-      }
-      if(index ==2){
-
-        marker.addTo(this.map).bindPopup(`<b>Child Center</b>`).openPopup();
+        marker.addTo(this.map).bindPopup(`<b>USER</b>`).openPopup();
       }
       this.map.panTo(data.position);
       this.markers.push(marker)

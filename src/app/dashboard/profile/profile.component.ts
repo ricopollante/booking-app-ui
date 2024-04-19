@@ -323,6 +323,7 @@ export class ProfileComponent implements OnInit {
           var logHr = String(log).split(" ")[1].split(":")[0]
           var logMin = String(log).split(" ")[1].split(":")[1]
           var logSec = String(log).split(" ")[1].split(":")[2]
+          console.log('time>>>>', currentHr)
           this.hr = Math.abs(Number(currentHr) - Number(logHr));
           this.min = Math.abs((Number(currentMin) - Number(logMin)));
           this.sec = Math.abs((Number(currentSec) - Number(logSec)));

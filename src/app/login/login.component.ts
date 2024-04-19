@@ -47,7 +47,7 @@ userInfo: string;
     //User Authentication
     try {
       const user: User = await GoogleAuth.signIn();
-      console.log(user)
+      console.log(JSON.stringify(user))
       this.userService.debugger(JSON.stringify(user));
       this.userService.login(user.email, user.email)
     .then(res => res.json())
@@ -116,7 +116,7 @@ userInfo: string;
          }
     })
     .catch(error=>{
-        this.userService.toastError("Error","Invalid Login")
+        this.userService.toastError("Server busy","Server Under Maintenance")
     })
 
 

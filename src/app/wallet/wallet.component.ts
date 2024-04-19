@@ -26,6 +26,7 @@ this.userService.getProfile(this.token)
 .then(res => {
   if (res){
     this.user_id = res.user_id
+
     setInterval(() => {
       this.userService.readWallet(res.user_id)
       .then(res => res.json())
@@ -39,7 +40,7 @@ this.userService.getProfile(this.token)
         this.walletTrans = res;
         console.log(res)
       })
-    }, 5000);
+    }, 10000);
 
 
   }

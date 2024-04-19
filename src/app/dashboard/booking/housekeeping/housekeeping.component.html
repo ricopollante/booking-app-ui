@@ -77,6 +77,15 @@
       <textarea [(ngModel)]="notes" class="shadow-lg appearance-none border rounded w-full py-2.5 px-2 my-2 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder=""></textarea>
 
     </div>
+    <div class="flex flex-row my-2 justify-between">
+      <div *ngIf="showBill" class="mx-1 p-2 bg-blue-300 text-black text-sm rounded-md">
+        <b>Wallet balance</b>: {{walletBalance}} PHP
+
+      </div>
+      <div class="mx-1 p-2 bg-blue-300 text-black text-sm rounded-md">
+        <b>Total bill</b>: {{bill}} PHP
+      </div>
+    </div>
     <button (click)="startBooking()" type="button" class="w-full text-white bg-blue-400 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-md px-6 py-2.5 mt-2 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">SUBMIT</button>
   </div>
 
@@ -120,6 +129,15 @@
       <textarea [(ngModel)]="notes" class="shadow-lg appearance-none border rounded w-full py-2.5 px-2 my-2 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder=""></textarea>
 
     </div>
+    <div class="flex flex-row my-2 justify-between">
+      <div *ngIf="showBill" class="mx-1 p-2 bg-blue-300 text-black text-sm rounded-md">
+        <b>Wallet balance</b>: {{walletBalance}} PHP
+
+      </div>
+      <div class="mx-1 p-2 bg-blue-300 text-black text-sm rounded-md">
+        <b>Total bill</b>: {{bill}} PHP
+      </div>
+    </div>
     <button (click)="startBooking()" type="button" class="w-full text-white bg-blue-400 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-md px-6 py-2.5 mt-2 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">SUBMIT</button>
   </div>
 
@@ -162,6 +180,15 @@
       <textarea [(ngModel)]="notes" class="shadow-lg appearance-none border rounded w-full py-2.5 px-2 my-2 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder=""></textarea>
 
     </div>
+    <div class="flex flex-row my-2 justify-between">
+      <div *ngIf="showBill" class="mx-1 p-2 bg-blue-300 text-black text-sm rounded-md">
+        <b>Wallet balance</b>: {{walletBalance}} PHP
+
+      </div>
+      <div class="mx-1 p-2 bg-blue-300 text-black text-sm rounded-md">
+        <b>Total bill</b>: {{bill}} PHP
+      </div>
+    </div>
     <button (click)="startBooking()" type="button" class="w-full text-white bg-blue-400 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-md px-6 py-2.5 mt-2 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">SUBMIT</button>
   </div>
 
@@ -202,6 +229,15 @@
       <label for="Notes" class="block text-sm font-medium text-gray-900 dark:text-white">Notes</label>
       <textarea [(ngModel)]="notes" class="shadow-lg appearance-none border rounded w-full py-2.5 px-2 my-2 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder=""></textarea>
 
+    </div>
+    <div class="flex flex-row my-2 justify-between">
+      <div *ngIf="showBill" class="mx-1 p-2 bg-blue-300 text-black text-sm rounded-md">
+        <b>Wallet balance</b>: {{walletBalance}} PHP
+
+      </div>
+      <div class="mx-1 p-2 bg-blue-300 text-black text-sm rounded-md">
+        <b>Total bill</b>: {{bill}} PHP
+      </div>
     </div>
     <button (click)="startBooking()" type="button" class="w-full text-white bg-blue-400 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-md px-6 py-2.5 mt-2 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">SUBMIT</button>
   </div>

@@ -37,6 +37,9 @@ export class HousekeepingComponent implements OnInit {
   cars: any
   servicetype_id:any
   rentalsSelected: any
+  showBill: boolean
+  walletBalance: number
+  bill: number
   private socket = io('https://9059-66-85-26-53.ngrok-free.app',{
     extraHeaders: {
       "ngrok-skip-browser-warning" : "69420"
@@ -46,7 +49,9 @@ constructor(@Inject(DOCUMENT) private document: Document, private userService: U
   this.token = localStorage.getItem("user_token");
   this.rentalsSelected = []
   this.selectedRental = 1
-
+  this.showBill = false
+  this.walletBalance = 0
+  this.bill = 0
 
 }
 
@@ -58,6 +63,12 @@ ngOnInit(): void {
   .then(res => {
     console.log(res)
     this.user_id = res.user_id
+    this.userService.readWallet(res.user_id)
+    .then(res => res.json())
+    .then(res => {
+      this.walletBalance = Number(res.amount);
+      console.log(res)
+    })
   })
 
   this.userService.availableStaff.subscribe(
@@ -130,6 +141,7 @@ bookService(accepter_id:string){
   this.selectedAccepterID = accepter_id
   this.isShowServiceForm = this.serviceType;
   this.isServerStaffList = false;
+  this.showBill = true
 
 }
 

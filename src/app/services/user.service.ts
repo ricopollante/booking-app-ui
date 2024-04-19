@@ -23,7 +23,7 @@ export class UserService {
     //this.host = 'http://127.0.0.1:8000'
     //this.host = 'https://192.168.1.8:8000'
     //this.host = 'https://43f0-58-69-61-224.ngrok.io';
-    this.host = 'https://2a0c-58-69-61-224.ngrok-free.app'
+    this.host = 'https://direct-grubworm-vigorously.ngrok-free.app'
     this.socketioHost = ''
    }
 

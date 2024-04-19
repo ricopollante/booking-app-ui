@@ -16,7 +16,7 @@ export class FooterComponent implements OnInit {
   }
 
   Home(){
-    window.location.reload()
+    this.router.navigate(['/dashboard'])
   }
 
 }
