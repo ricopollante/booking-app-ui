@@ -7,7 +7,6 @@ import { ToastrModule, ToastrService } from 'ngx-toastr';
   providedIn: 'root'
 })
 export class UserService {
-  host: string;
   socketioHost: string;
   showLogin = new Subject<boolean>();
   locSrc = new Subject<any>();
@@ -18,21 +17,59 @@ export class UserService {
   bookinglistHistory = new Subject<any>();
   channels = new Subject<any>();
   messages = new Subject<any>();
+  hosts: string[] = [
+    'https://kindly-massive-herring.ngrok-free.app/',
+    'https://minnow-elegant-cicada.ngrok-free.app/',
+    'https://direct-grubworm-vigorously.ngrok-free.app/',
+    'https://urgently-better-oriole.ngrok-free.app/'
+    // Add more URLs as needed
+  ];
+  currentHostIndex = 0;
+  maxRetries = 3;
+  retryCount = 0;
+
   constructor(private toastrService: ToastrService) {
     //this.host = 'http://10.42.0.67:8080'
     //this.host = 'http://127.0.0.1:8000'
     //this.host = 'https://192.168.1.8:8000'
     //this.host = 'https://43f0-58-69-61-224.ngrok.io';
-    this.host = 'https://direct-grubworm-vigorously.ngrok-free.app'
+    //this.host = "https://kindly-massive-herring.ngrok-free.app" || 'https://direct-grubworm-vigorously.ngrok-free.app'
     this.socketioHost = ''
+
    }
+
+   async fetchWithRandomHost(url: string, options: RequestInit, retry = true): Promise<Response> {
+    if (this.hosts.length === 0) {
+      throw new Error('No hosts available to fetch.');
+    }
+
+    for (const host of this.hosts) {
+      const requestUrl = host + url.replace(/^\//, '');
+
+      try {
+        const response = await fetch(requestUrl, options);
+        if (response.ok) {
+          return response;
+        } else {
+          console.error('Request failed:', response.statusText);
+          // Optionally, you can throw an error here if you want to handle failed requests differently
+        }
+      } catch (error) {
+        console.error('Request failed:', error);
+        // Optionally, you can throw an error here if you want to handle failed requests differently
+      }
+    }
+
+    throw new Error('All hosts failed to respond.'); // Throw an error if all hosts fail
+  }
+
 
 
   login(username: string, password: string){
     let data = new FormData()
     data.append('username', username)
     data.append('password', password)
-    return fetch(this.host + '/user/login', {
+    return this.fetchWithRandomHost( '/user/login', {
       method: 'POST',
       headers: {},
       body: data
@@ -45,7 +82,7 @@ export class UserService {
   }
 
   getProfile(token: string){
-    return fetch(this.host + '/user/profile', {
+    return this.fetchWithRandomHost( '/user/profile', {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${token}`
@@ -62,7 +99,7 @@ export class UserService {
       data.append('accepter_id', id)
     }
     data.append('status', status)
-    return fetch(this.host + '/book/list', {
+    return this.fetchWithRandomHost( '/book/list', {
       method: 'POST',
       headers: {},
       body: data
@@ -72,7 +109,7 @@ export class UserService {
   bookAccept(id: string, token: string){
     let data = new FormData()
     data.append('id', id)
-    return fetch(this.host + '/book/accept', {
+    return this.fetchWithRandomHost( '/book/accept', {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${token}`
@@ -98,7 +135,7 @@ export class UserService {
     data.append("weight", weight);
     data.append("lot_area", lot_area);
     data.append("bathroom_size", bathroom_size);
-    return fetch(this.host + '/book/service', {
+    return this.fetchWithRandomHost( '/book/service', {
       method: 'POST',
       headers: {},
       body: data
@@ -117,7 +154,7 @@ export class UserService {
   debugger(logs: string){
     let data = new FormData()
     data.append('logs', logs)
-    return fetch(this.host + '/user/logger', {
+    return this.fetchWithRandomHost( '/user/logger', {
       method: 'POST',
       headers: {},
       body: data
@@ -134,7 +171,7 @@ export class UserService {
   }
 
   getChannel(token: string){
-    return fetch(this.host + '/user/get_uuid', {
+    return this.fetchWithRandomHost( '/user/get_uuid', {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${token}`
@@ -221,7 +258,7 @@ formdata.append("password", password);
 formdata.append("gender", gender);
 formdata.append("rate", rate);
 
-  return fetch(this.host + '/user/signup', {
+  return this.fetchWithRandomHost( '/user/signup', {
     method: 'POST',
     headers: {},
     body: formdata
@@ -229,7 +266,7 @@ formdata.append("rate", rate);
 }
 
 getServicetypes(){
-  return fetch(this.host+"/book/service/types", {
+  return this.fetchWithRandomHost("/book/service/types", {
     method: 'POST',
     headers: {}
 })
@@ -238,7 +275,7 @@ getServicetypes(){
 getAgendaSelect(id: string){
   var formdata = new FormData();
   formdata.append("id", id);
-  return fetch(this.host+"/book/service/agenda/select", {
+  return this.fetchWithRandomHost("/book/service/agenda/select", {
     method: 'POST',
     headers: {},
     body: formdata
@@ -246,14 +283,14 @@ getAgendaSelect(id: string){
 }
 
 getAgenda(){
-  return fetch(this.host+"/book/service/agenda", {
+  return this.fetchWithRandomHost("/book/service/agenda", {
     method: 'POST',
     headers: {}
 })
 }
 
 getDuration(){
-  return fetch(this.host+"/book/service/duration", {
+  return this.fetchWithRandomHost("/book/service/duration", {
     method: 'POST',
     headers: {}
 })
@@ -261,21 +298,21 @@ getDuration(){
 
 
 getRental(){
-  return fetch(this.host+"/book/service/rental", {
+  return this.fetchWithRandomHost("/book/service/rental", {
     method: 'POST',
     headers: {}
 })
 }
 
 getGender(){
-  return fetch(this.host+"/book/service/gender", {
+  return this.fetchWithRandomHost("/book/service/gender", {
     method: 'POST',
     headers: {}
 })
 }
 
 getRate(){
-  return fetch(this.host+"/book/service/rate", {
+  return this.fetchWithRandomHost("/book/service/rate", {
     method: 'POST',
     headers: {}
 })
@@ -284,7 +321,7 @@ getRate(){
 getCaregiver(gender:string){
   var formdata = new FormData();
   formdata.append("gender", gender);
-  return fetch(this.host+"/user/list/caregiver", {
+  return this.fetchWithRandomHost("/user/list/caregiver", {
     method: 'POST',
     headers: {},
     body: formdata
@@ -295,7 +332,7 @@ getCaregiver(gender:string){
 getHousekeeper(gender:string){
   var formdata = new FormData();
   formdata.append("gender", gender);
-  return fetch(this.host+"/user/list/housekeeper", {
+  return this.fetchWithRandomHost("/user/list/housekeeper", {
     method: 'POST',
     headers: {},
     body: formdata
@@ -313,7 +350,10 @@ toastSuccess(success: string, body: string) {
       }
 
 getApiHost(){
-  return this.host
+  return this.fetchWithRandomHost( '/user/login', {
+    method: 'GET',
+    headers: {}
+})
 }
 
 getSocketioHost(){
@@ -371,7 +411,7 @@ createChannelMessage(sender_id:string, receiver_id:string){
   var formdata = new FormData();
   formdata.append("sender_userid", sender_id);
   formdata.append("receiver_userid", receiver_id);
-  return fetch(this.host+"/user/create_channel", {
+  return this.fetchWithRandomHost("/user/create_channel", {
     method: 'POST',
     headers: {},
     body: formdata
@@ -381,7 +421,7 @@ createChannelMessage(sender_id:string, receiver_id:string){
 getAllChannelOfMessage(user_id: string){
   var formdata = new FormData();
   formdata.append("user_id", user_id);
-  return fetch(this.host + '/user/select_channel', {
+  return this.fetchWithRandomHost( '/user/select_channel', {
     method: 'POST',
     headers: {
     },
@@ -392,7 +432,7 @@ getAllChannelOfMessage(user_id: string){
 getMyMessages(uuid: string){
   var formdata = new FormData();
   formdata.append("uuid", uuid);
-  return fetch(this.host + '/user/get_message', {
+  return this.fetchWithRandomHost( '/user/get_message', {
     method: 'POST',
     headers: {
     },
@@ -405,7 +445,7 @@ saveMessage(user_id:string, uuid:string, body:string){
   formdata.append("uuid", uuid);
   formdata.append("user_id", user_id);
   formdata.append("body", body);
-  return fetch(this.host + '/user/save_message', {
+  return this.fetchWithRandomHost( '/user/save_message', {
     method: 'POST',
     headers: {
     },
@@ -433,7 +473,7 @@ updateMessages(uuid: string){
 getBookingTimer(book_id:string){
   var formdata = new FormData();
   formdata.append("book_id", book_id);
-  return fetch(this.host + '/book/service/status/timer', {
+  return this.fetchWithRandomHost( '/book/service/status/timer', {
     method: 'POST',
     headers: {
     },
@@ -445,7 +485,7 @@ getBookingTimer(book_id:string){
 startBookingTimer(book_id:string){
   var formdata = new FormData();
   formdata.append("book_id", book_id);
-  return fetch(this.host + '/book/service/start/timer', {
+  return this.fetchWithRandomHost( '/book/service/start/timer', {
     method: 'POST',
     headers: {
     },
@@ -458,7 +498,7 @@ selectMapChannel(user_id:string, accepter_id:string){
   var formdata = new FormData();
   formdata.append("user_id", user_id);
   formdata.append("accepter_id", accepter_id);
-  return fetch(this.host + '/user/select/channel/map', {
+  return this.fetchWithRandomHost( '/user/select/channel/map', {
     method: 'POST',
     headers: {
     },
@@ -471,7 +511,7 @@ selectMapChannel(user_id:string, accepter_id:string){
 getLocation(user_id:string){
   var formdata = new FormData();
   formdata.append("user_id", user_id);
-  return fetch(this.host + '/user/get/location', {
+  return this.fetchWithRandomHost( '/user/get/location', {
     method: 'POST',
     headers: {
     },
@@ -486,7 +526,7 @@ saveLocation(user_id:string, lat:string, long:string){
   formdata.append("user_id", user_id);
   formdata.append("lat", lat);
   formdata.append("long", long);
-  return fetch(this.host + '/user/save/location', {
+  return this.fetchWithRandomHost( '/user/save/location', {
     method: 'POST',
     headers: {
     },
@@ -498,7 +538,7 @@ saveLocation(user_id:string, lat:string, long:string){
 
 
 getServices(){
-  return fetch(this.host + '/book/service/types', {
+  return this.fetchWithRandomHost( '/book/service/types', {
     method: 'POST',
     headers: {
     }
@@ -508,7 +548,7 @@ getServices(){
 addRates(rate:string){
   var formdata = new FormData();
   formdata.append("rate", rate);
-  return fetch(this.host + '/book/service/add/rate', {
+  return this.fetchWithRandomHost( '/book/service/add/rate', {
     method: 'POST',
     headers: {
     },
@@ -519,7 +559,7 @@ addRates(rate:string){
 deleteRates(id:string){
   var formdata = new FormData();
   formdata.append("id", id);
-  return fetch(this.host + '/book/service/delete/rate', {
+  return this.fetchWithRandomHost( '/book/service/delete/rate', {
     method: 'POST',
     headers: {
     },
@@ -532,7 +572,7 @@ addAgenda(agenda:string, service_id:string, rate:string){
   formdata.append("agenda", agenda);
   formdata.append("service_id", service_id);
   formdata.append("rate", rate);
-  return fetch(this.host + '/book/service/add/agenda', {
+  return this.fetchWithRandomHost( '/book/service/add/agenda', {
     method: 'POST',
     headers: {
     },
@@ -543,7 +583,7 @@ addAgenda(agenda:string, service_id:string, rate:string){
 deleteAgenda(agenda:string){
   var formdata = new FormData();
   formdata.append("id", agenda);
-  return fetch(this.host + '/book/service/delete/agenda', {
+  return this.fetchWithRandomHost( '/book/service/delete/agenda', {
     method: 'POST',
     headers: {
     },
@@ -558,7 +598,7 @@ addRentals(rental:string, price:string){
   var formdata = new FormData();
   formdata.append("rental", rental);
   formdata.append("price", price);
-  return fetch(this.host + '/book/service/add/rental', {
+  return this.fetchWithRandomHost( '/book/service/add/rental', {
     method: 'POST',
     headers: {
     },
@@ -569,7 +609,7 @@ addRentals(rental:string, price:string){
 deleteRental(rental:string){
   var formdata = new FormData();
   formdata.append("id", rental);
-  return fetch(this.host + '/book/service/delete/rental', {
+  return this.fetchWithRandomHost( '/book/service/delete/rental', {
     method: 'POST',
     headers: {
     },
@@ -581,7 +621,7 @@ deleteRental(rental:string){
 addDuration(duration:string){
   var formdata = new FormData();
   formdata.append("duration", duration);
-  return fetch(this.host + '/book/service/add/duration', {
+  return this.fetchWithRandomHost( '/book/service/add/duration', {
     method: 'POST',
     headers: {
     },
@@ -592,7 +632,7 @@ addDuration(duration:string){
 deleteDuration(duration:string){
   var formdata = new FormData();
   formdata.append("id", duration);
-  return fetch(this.host + '/book/service/delete/duration', {
+  return this.fetchWithRandomHost( '/book/service/delete/duration', {
     method: 'POST',
     headers: {
     },
@@ -609,7 +649,7 @@ deleteDuration(duration:string){
 readWallet(user: string){
   var formdata = new FormData();
   formdata.append("user_id", user);
-  return fetch(this.host + '/book/read/wallet', {
+  return this.fetchWithRandomHost( '/book/read/wallet', {
     method: 'POST',
     headers: {
     },
@@ -621,7 +661,7 @@ readWallet(user: string){
 readWalletTrans(user: string){
   var formdata = new FormData();
   formdata.append("user_id", user);
-  return fetch(this.host + '/book/read/wallet/trans', {
+  return this.fetchWithRandomHost( '/book/read/wallet/trans', {
     method: 'POST',
     headers: {
     },
@@ -634,7 +674,7 @@ chargeWallet(to_user:string, from_user:string, amount:string){
   formdata.append("to_user", to_user);
   formdata.append("from_user", from_user);
   formdata.append("amount", amount);
-  return fetch(this.host + '/book/charge/wallet', {
+  return this.fetchWithRandomHost( '/book/charge/wallet', {
     method: 'POST',
     headers: {
     },
@@ -646,7 +686,7 @@ depositWallet(user_id:string, amount:string){
   var formdata = new FormData();
   formdata.append("user_id", user_id);
   formdata.append("amount", amount);
-  return fetch(this.host + '/book/deposit/wallet', {
+  return this.fetchWithRandomHost( '/book/deposit/wallet', {
     method: 'POST',
     headers: {
     },
@@ -659,7 +699,7 @@ withdrawWallet(user_id:string, amount:string){
   var formdata = new FormData();
   formdata.append("user_id", user_id);
   formdata.append("amount", amount);
-  return fetch(this.host + '/book/withdraw/wallet', {
+  return this.fetchWithRandomHost( '/book/withdraw/wallet', {
     method: 'POST',
     headers: {
     },
@@ -677,7 +717,7 @@ endBooking(book_id:string, overtime_charge:string, regular_charge:string){
   formdata.append("book_id", book_id);
   formdata.append("overtime_charge", overtime_charge);
   formdata.append("regular_charge", regular_charge);
-  return fetch(this.host + '/book/service/end/booking', {
+  return this.fetchWithRandomHost( '/book/service/end/booking', {
     method: 'POST',
     headers: {
     },
@@ -689,7 +729,7 @@ endBooking(book_id:string, overtime_charge:string, regular_charge:string){
 bookingCharge(book_id:string){
   var formdata = new FormData();
   formdata.append("book_id", book_id);
-  return fetch(this.host + '/book/service/charges', {
+  return this.fetchWithRandomHost( '/book/service/charges', {
     method: 'POST',
     headers: {
     },
@@ -703,7 +743,7 @@ bookRental(book_id:string, rental_id:string, user_id:string){
   formdata.append("book_id", book_id);
   formdata.append("rental_id", rental_id);
   formdata.append("user_id", user_id);
-  return fetch(this.host + '/book/service/rental/book', {
+  return this.fetchWithRandomHost( '/book/service/rental/book', {
     method: 'POST',
     headers: {
     },
@@ -713,7 +753,7 @@ bookRental(book_id:string, rental_id:string, user_id:string){
 }
 
 getChildCenters(){
-  return fetch(this.host + '/book/service/child/centers',   {
+  return this.fetchWithRandomHost( '/book/service/child/centers',   {
     method: 'POST',
     headers: {
     }
@@ -724,7 +764,7 @@ getChildCenters(){
 getChildCenter(id:string){
   var formdata = new FormData();
   formdata.append("id", id);
-  return fetch(this.host + '/book/service/child/centers',   {
+  return this.fetchWithRandomHost( '/book/service/child/centers',   {
     method: 'POST',
     headers: {
     },
@@ -736,7 +776,7 @@ getChildCenter(id:string){
 cancelBook(id:string){
   var formdata = new FormData();
   formdata.append("id", id);
-  return fetch(this.host + '/book/service/cancel',   {
+  return this.fetchWithRandomHost( '/book/service/cancel',   {
     method: 'POST',
     headers: {
     },
@@ -747,13 +787,67 @@ cancelBook(id:string){
 declineBook(id:string){
   var formdata = new FormData();
   formdata.append("id", id);
-  return fetch(this.host + '/book/service/decline',   {
+  return this.fetchWithRandomHost( '/book/service/decline',   {
     method: 'POST',
     headers: {
     },
     body: formdata
 })
 }
+
+getBillRental(rental:string,time:string){
+  var formdata = new FormData();
+  formdata.append("rental", rental);
+  formdata.append("time", time);
+  return this.fetchWithRandomHost( '/book/charge/bill/rental',   {
+    method: 'POST',
+    headers: {
+    },
+    body: formdata
+})
+}
+
+
+getBillAgenda(agenda:string,time:string){
+  var formdata = new FormData();
+  formdata.append("agenda", agenda);
+  formdata.append("time", time);
+  return this.fetchWithRandomHost( '/book/charge/bill/agenda',   {
+    method: 'POST',
+    headers: {
+    },
+    body: formdata
+})
+}
+
+
+saveBill(amount:string, user:string, server:string, base_amount: string, servicebook:string){
+  var formdata = new FormData();
+  formdata.append("amount", amount);
+  formdata.append("server", server);
+  formdata.append("user", user);
+  formdata.append("base_amount", base_amount);
+  formdata.append("servicebook", servicebook);
+  return this.fetchWithRandomHost( '/book/save/bill',   {
+    method: 'POST',
+    headers: {
+    },
+    body: formdata
+})
+}
+
+
+totalBill(servicebook:string){
+  var formdata = new FormData();
+  formdata.append("servicebook", servicebook);
+  return this.fetchWithRandomHost( '/book/get/bill/total',   {
+    method: 'POST',
+    headers: {
+    },
+    body: formdata
+})
+}
+
 
 
 

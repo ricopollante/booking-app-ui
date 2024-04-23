@@ -41,6 +41,8 @@ export class CaregivingComponent implements OnInit{
   showBill: boolean
   walletBalance: number
   bill: number
+  underCredit: boolean;
+  base_bill: number
   private socket = io('https://9059-66-85-26-53.ngrok-free.app',{
     extraHeaders: {
       "ngrok-skip-browser-warning" : "69420"
@@ -54,6 +56,9 @@ export class CaregivingComponent implements OnInit{
       this.showBill = false
       this.walletBalance = 0
       this.bill = 0
+      this.selectedDuration = false
+      this.underCredit = false
+      this.base_bill = 0
   }
 
   ngOnInit(): void {
@@ -219,11 +224,17 @@ export class CaregivingComponent implements OnInit{
 
   startBooking(){
     this.socket.emit('update_booking', {"id" : this.selectedAccepterID}); // listen and save src coordinates
+    if(this.underCredit){
+      this.userService.toastError("Booking error","Insufficient Funds, Please add funds to your wallet.")
+    }
+    else{
+      this.socket.emit('update_booking', {"id" : this.selectedAccepterID});  // listen and save src coordinates
     switch(this.serviceType){
       case 'companion':
        this.userService.bookService(this.selectedAgenda, this.location, this.selectedDuration, this.notes, 0, '0','5', this.user_id, '', '', this.selectedAccepterID, '1', '', '','')
        .then(res => res.json())
        .then(async res => {
+        await this.userService.saveBill(this.bill.toString(), this.user_id, this.selectedAccepterID, this.base_bill.toString(), res.bookid)
         await this.userService.toastSuccess("Success", "Booked Successfully")
 
         setTimeout(() => {
@@ -237,6 +248,7 @@ export class CaregivingComponent implements OnInit{
         this.userService.bookService(this.selectedAgenda, this.location, this.selectedDuration, this.notes, this.selectedRental, '0','5', this.user_id, '', '', this.selectedAccepterID, '1', '', '','')
         .then(res => res.json())
         .then(async res => {
+          await this.userService.saveBill(this.bill.toString(), this.user_id, this.selectedAccepterID, this.base_bill.toString(), res.bookid)
          await this.userService.toastSuccess("Success", "Booked Successfully")
 
          setTimeout(() => {
@@ -251,6 +263,7 @@ export class CaregivingComponent implements OnInit{
         this.userService.bookService(this.selectedAgenda, this.location, this.selectedDuration, this.notes, this.selectedRental, '0','5', this.user_id, this.pet, '', this.selectedAccepterID, '1', '', '','')
         .then(res => res.json())
         .then(async res => {
+          await this.userService.saveBill(this.bill.toString(), this.user_id, this.selectedAccepterID, this.base_bill.toString(), res.bookid)
          await this.userService.toastSuccess("Success", "Booked Successfully")
 
          setTimeout(() => {
@@ -264,6 +277,7 @@ export class CaregivingComponent implements OnInit{
           this.userService.bookService(this.selectedAgenda, this.location, this.selectedDuration, this.notes, this.selectedRental, '0','5', this.user_id, '', '', this.selectedAccepterID, '1', '', '','')
           .then(res => res.json())
           .then(async res => {
+            await this.userService.saveBill(this.bill.toString(), this.user_id, this.selectedAccepterID, this.base_bill.toString(), res.bookid)
            await this.userService.toastSuccess("Success", "Booked Successfully")
 
            setTimeout(() => {
@@ -272,7 +286,7 @@ export class CaregivingComponent implements OnInit{
 
           })
           break;
-
+        }
 
 
    }
@@ -292,8 +306,33 @@ export class CaregivingComponent implements OnInit{
   }
 
 
+  chargeAgenda(agenda: string){
+    console.log("charging total....")
+      this.userService.getBillAgenda(agenda,this.selectedDuration)
+      .then(res => res.json())
+      .then(res => {
+        console.log(res)
+      this.bill = this.bill + res.rate
+      if(this.bill>this.walletBalance){
+        this.underCredit = true
+        this.userService.toastError("Booking Error","Insufficient Funds, Please add funds to your wallet.")
+      }
+      if(this.bill<=this.walletBalance){
+        this.underCredit = false
+      }
+      });
+      this.userService.getBillRental(agenda,'2')
+      .then(res => res.json())
+      .then(res => {
+        console.log(res)
+      this.base_bill = this.base_bill + res.rate
+      });
+  }
+
+
   selectAgenda(data: string){
     this.selectedAgenda = data;
+    this.chargeAgenda(data)
   }
 
   selectServiceType(data:string){
@@ -317,6 +356,8 @@ export class CaregivingComponent implements OnInit{
 
   selectDuration(data: string){
     this.selectedDuration = data;
+    this.bill = 0
+    this.chargeAgenda(this.selectedAgenda)
   }
 
   selectAccepter(data: string){

@@ -40,6 +40,8 @@ export class HousekeepingComponent implements OnInit {
   showBill: boolean
   walletBalance: number
   bill: number
+  underCredit: boolean;
+  base_bill: number
   private socket = io('https://9059-66-85-26-53.ngrok-free.app',{
     extraHeaders: {
       "ngrok-skip-browser-warning" : "69420"
@@ -52,7 +54,9 @@ constructor(@Inject(DOCUMENT) private document: Document, private userService: U
   this.showBill = false
   this.walletBalance = 0
   this.bill = 0
-
+  this.selectedDuration = false
+  this.underCredit = false
+  this.base_bill = 0
 }
 
 
@@ -109,7 +113,7 @@ ngOnInit(): void {
     this.duration = res.data;
   })
 
-  this.userService.getCaregiver('')
+  this.userService.getHousekeeper('')
   .then(res => res.json())
   .then(res => {
     this.housekeepers = res.data;
@@ -146,7 +150,11 @@ bookService(accepter_id:string){
 }
 
 startBooking(){
-  this.socket.emit('update_booking', {"id" : this.selectedAccepterID});  // listen and save src coordinates
+  if(this.underCredit){
+    this.userService.toastError("Booking error","Insufficient Funds, Please add funds to your wallet.")
+  }
+  else{
+    this.socket.emit('update_booking', {"id" : this.selectedAccepterID});  // listen and save src coordinates
 
 
   switch(this.serviceType){
@@ -157,6 +165,7 @@ startBooking(){
       this.rentalsSelected.forEach( (value: any) => {
         this.userService.bookRental(res.book_id, value, this.user_id)
       });
+      await this.userService.saveBill(this.bill.toString(), this.user_id, this.selectedAccepterID, this.base_bill.toString(), res.bookid)
       await this.userService.toastSuccess("Success", "Booked Successfully")
 
       setTimeout(() => {
@@ -172,6 +181,7 @@ startBooking(){
       this.rentalsSelected.forEach( (value: any) => {
         this.userService.bookRental(res.book_id, value, this.user_id)
       });
+      await this.userService.saveBill(this.bill.toString(), this.user_id, this.selectedAccepterID, this.base_bill.toString(), res.bookid)
       await this.userService.toastSuccess("Success", "Booked Successfully")
 
       setTimeout(() => {
@@ -187,6 +197,7 @@ startBooking(){
         this.rentalsSelected.forEach( (value: any) => {
           this.userService.bookRental(res.book_id, value, this.user_id)
         });
+        await this.userService.saveBill(this.bill.toString(), this.user_id, this.selectedAccepterID, this.base_bill.toString(), res.bookid)
        await this.userService.toastSuccess("Success", "Booked Successfully")
 
        setTimeout(() => {
@@ -202,6 +213,7 @@ startBooking(){
           this.rentalsSelected.forEach( (value: any) => {
             this.userService.bookRental(res.book_id, value, this.user_id)
           });
+          await this.userService.saveBill(this.bill.toString(), this.user_id, this.selectedAccepterID, this.base_bill.toString(), res.bookid)
          await this.userService.toastSuccess("Success", "Booked Successfully")
 
          setTimeout(() => {
@@ -210,11 +222,7 @@ startBooking(){
 
         })
         break;
-
-
-
-
-
+  }
 
  }
 
@@ -232,9 +240,81 @@ startBooking(){
 
 }
 
+chargeAgenda(agenda: string){
+  console.log("charging total....")
+    this.userService.getBillAgenda(agenda,this.selectedDuration)
+    .then(res => res.json())
+    .then(res => {
+      console.log(res)
+    this.bill = this.bill + res.rate
+    if(this.bill>this.walletBalance){
+      this.underCredit = true
+      this.userService.toastError("Booking Error","Insufficient Funds, Please add funds to your wallet.")
+    }
+    if(this.bill<=this.walletBalance){
+      this.underCredit = false
+    }
+    });
+    this.userService.getBillRental(agenda,'2')
+    .then(res => res.json())
+    .then(res => {
+      console.log(res)
+    this.base_bill = this.base_bill + res.rate
+    });
+}
+
+chargeRental(rental: string){
+    console.log("charging total....")
+      this.userService.getBillRental(rental,this.selectedDuration)
+      .then(res => res.json())
+      .then(res => {
+        console.log(res)
+      this.bill = this.bill + res.rate
+      if(this.bill>this.walletBalance){
+        this.underCredit = true
+        this.userService.toastError("Booking Error","Insufficient Funds, Please add funds to your wallet.")
+      }
+      if(this.bill<=this.walletBalance){
+        this.underCredit = false
+      }
+      this.userService.getBillRental(rental,'2')
+      .then(res => res.json())
+      .then(res => {
+        console.log(res)
+      this.base_bill = this.base_bill + res.rate
+      });
+      });
+
+}
+
+dechargeRental(rental: string){
+  console.log("charging total....")
+    this.userService.getBillRental(rental,this.selectedDuration)
+    .then(res => res.json())
+    .then(res => {
+      console.log(res)
+    this.bill = this.bill - res.rate
+    });
+    if(this.bill>this.walletBalance){
+      this.underCredit = true
+      this.userService.toastError("Booking Error","Insufficient Funds, Please add funds to your wallet.")
+    }
+    if(this.bill<=this.walletBalance){
+      this.underCredit = false
+    }
+    this.userService.getBillRental(rental,'2')
+    .then(res => res.json())
+    .then(res => {
+      console.log(res)
+    this.base_bill = this.base_bill - res.rate
+    });
+}
+
+
 
 selectAgenda(data: string){
   this.selectedAgenda = data;
+  this.chargeAgenda(data)
 }
 
 selectServiceType(data:string){
@@ -243,6 +323,7 @@ selectServiceType(data:string){
 
 selectRental(data: string){
   this.selectedRental = data
+
 }
 
 selectGender(data: string){
@@ -258,6 +339,11 @@ selectRate(data: string){
 
 selectDuration(data: string){
   this.selectedDuration = data;
+  this.bill = 0
+  this.chargeAgenda(this.selectedAgenda)
+  this.rentalsSelected.forEach( (value: any) => {
+    this.chargeRental(value)
+  });
 }
 
 selectAccepter(data: string){
@@ -268,6 +354,7 @@ selectRentals(event: any){
   if(event.target.checked){
     console.log(event.target.value,"checked")
     this.rentalsSelected.push(event.target.value)
+    this.chargeRental(event.target.value)
   }
   else{
     console.log(event.target.value,"unchecked")
@@ -276,6 +363,7 @@ selectRentals(event: any){
     if (index !== -1) {
       this.rentalsSelected.splice(index, 1);
     }
+    this.dechargeRental(event.target.value)
   }
 
 }

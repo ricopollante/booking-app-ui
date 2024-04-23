@@ -43,13 +43,6 @@
       <input [(ngModel)]="cars" class="shadow-lg appearance-none border rounded w-full py-2.5 px-2 my-2 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="">
 
 
-
-      <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Agenda</label>
-      <select #agenda (change)="selectAgenda(agenda.value)" id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4">
-        <option selected>Select</option>
-        <option *ngFor="let agenda of agendas" value="{{agenda.id}}">{{agenda.text}}</option>
-      </select>
-
       <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Duration</label>
       <select #Duration (change)="selectDuration(Duration.value)"  id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4">
         <option selected>Select</option>
@@ -57,10 +50,12 @@
       </select>
 
 
-      <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Rate</label>
-      <select #Rate (change)="selectRate(Rate.value)"  id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4">
-        <option  *ngFor="let rates of rates"  value="{{rates.id}}" selected>{{rates.text}} </option>
+      <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Agenda</label>
+      <select #agenda (change)="selectAgenda(agenda.value)" id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4">
+        <option selected>Select</option>
+        <option *ngFor="let agenda of agendas" value="{{agenda.id}}">{{agenda.text}}</option>
       </select>
+
 
       <div class="my-2">
         <p>Rentals</p>
@@ -78,11 +73,13 @@
 
     </div>
     <div class="flex flex-row my-2 justify-between">
-      <div *ngIf="showBill" class="mx-1 p-2 bg-blue-300 text-black text-sm rounded-md">
+      <div *ngIf="showBill && !underCredit" class="mx-1 p-2 bg-blue-300 text-black text-xs rounded-md">
         <b>Wallet balance</b>: {{walletBalance}} PHP
-
       </div>
-      <div class="mx-1 p-2 bg-blue-300 text-black text-sm rounded-md">
+      <div *ngIf="showBill && underCredit" class="mx-1 p-2 bg-blue-300 text-red-500 text-xs rounded-md">
+        <b>Wallet balance</b>: {{walletBalance}} PHP
+      </div>
+      <div class="mx-1 p-2 bg-blue-300 text-black text-xs rounded-md">
         <b>Total bill</b>: {{bill}} PHP
       </div>
     </div>
@@ -95,6 +92,13 @@
     <p class="mt-16">Please fill out the form:</p>
     <div class="shadow-md w-full p-6 rounded-lg bg-blue-300">
 
+      <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Duration</label>
+      <select #Duration (change)="selectDuration(Duration.value)"  id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4">
+        <option selected>Select</option>
+        <option *ngFor="let duration of duration" value="{{duration.id}}">{{duration.text}}</option>
+      </select>
+
+
       <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Agenda</label>
       <select #agenda (change)="selectAgenda(agenda.value)" id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4">
         <option selected>Select</option>
@@ -113,29 +117,16 @@
       </div>
 
 
-      <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Duration</label>
-      <select #Duration (change)="selectDuration(Duration.value)"  id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4">
-        <option selected>Select</option>
-        <option *ngFor="let duration of duration" value="{{duration.id}}">{{duration.text}}</option>
-      </select>
-
-
-      <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Rate</label>
-      <select #Rate (change)="selectRate(Rate.value)"  id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4">
-        <option  *ngFor="let rates of rates"  value="{{rates.id}}" selected>{{rates.text}} </option>
-      </select>
-
       <label for="Notes" class="block text-sm font-medium text-gray-900 dark:text-white">Notes</label>
       <textarea [(ngModel)]="notes" class="shadow-lg appearance-none border rounded w-full py-2.5 px-2 my-2 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder=""></textarea>
 
     </div>
     <div class="flex flex-row my-2 justify-between">
-      <div *ngIf="showBill" class="mx-1 p-2 bg-blue-300 text-black text-sm rounded-md">
+      <div *ngIf="showBill && !underCredit" class="mx-1 p-2 bg-blue-300 text-black text-xs rounded-md">
         <b>Wallet balance</b>: {{walletBalance}} PHP
-
       </div>
-      <div class="mx-1 p-2 bg-blue-300 text-black text-sm rounded-md">
-        <b>Total bill</b>: {{bill}} PHP
+      <div *ngIf="showBill && underCredit" class="mx-1 p-2 bg-blue-300 text-red-500 text-xs rounded-md">
+        <b>Wallet balance</b>: {{walletBalance}} PHP
       </div>
     </div>
     <button (click)="startBooking()" type="button" class="w-full text-white bg-blue-400 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-md px-6 py-2.5 mt-2 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">SUBMIT</button>
@@ -170,22 +161,18 @@
       </div>
 
 
-
-      <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Rate</label>
-      <select #Rate (change)="selectRate(Rate.value)"  id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4">
-        <option  *ngFor="let rates of rates"  value="{{rates.id}}" selected>{{rates.text}} </option>
-      </select>
-
       <label for="Notes" class="block text-sm font-medium text-gray-900 dark:text-white">Notes</label>
       <textarea [(ngModel)]="notes" class="shadow-lg appearance-none border rounded w-full py-2.5 px-2 my-2 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder=""></textarea>
 
     </div>
     <div class="flex flex-row my-2 justify-between">
-      <div *ngIf="showBill" class="mx-1 p-2 bg-blue-300 text-black text-sm rounded-md">
+      <div *ngIf="showBill && !underCredit" class="mx-1 p-2 bg-blue-300 text-black text-xs rounded-md">
         <b>Wallet balance</b>: {{walletBalance}} PHP
-
       </div>
-      <div class="mx-1 p-2 bg-blue-300 text-black text-sm rounded-md">
+      <div *ngIf="showBill && underCredit" class="mx-1 p-2 bg-blue-300 text-red-500 text-xs rounded-md">
+        <b>Wallet balance</b>: {{walletBalance}} PHP
+      </div>
+      <div class="mx-1 p-2 bg-blue-300 text-black text-xs rounded-md">
         <b>Total bill</b>: {{bill}} PHP
       </div>
     </div>
@@ -197,18 +184,17 @@
     <p class="mt-16">Please fill out the form:</p>
     <div class="shadow-md w-full p-6 rounded-lg bg-blue-300">
 
-      <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Agenda</label>
-      <select #agenda (change)="selectAgenda(agenda.value)" id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4">
-        <option selected>Select</option>
-        <option *ngFor="let agenda of agendas" value="{{agenda.id}}">{{agenda.text}}</option>
-      </select>
-
       <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Duration</label>
       <select #Duration (change)="selectDuration(Duration.value)"  id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4">
         <option selected>Select</option>
         <option *ngFor="let duration of duration" value="{{duration.id}}">{{duration.text}}</option>
       </select>
 
+      <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Agenda</label>
+      <select #agenda (change)="selectAgenda(agenda.value)" id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4">
+        <option selected>Select</option>
+        <option *ngFor="let agenda of agendas" value="{{agenda.id}}">{{agenda.text}}</option>
+      </select>
 
       <div class="my-2">
         <p>Rentals</p>
@@ -221,21 +207,18 @@
       </div>
 
 
-      <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Rate</label>
-      <select #Rate (change)="selectRate(Rate.value)"  id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4">
-        <option  *ngFor="let rates of rates"  value="{{rates.id}}" selected>{{rates.text}} </option>
-      </select>
-
       <label for="Notes" class="block text-sm font-medium text-gray-900 dark:text-white">Notes</label>
       <textarea [(ngModel)]="notes" class="shadow-lg appearance-none border rounded w-full py-2.5 px-2 my-2 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder=""></textarea>
 
     </div>
     <div class="flex flex-row my-2 justify-between">
-      <div *ngIf="showBill" class="mx-1 p-2 bg-blue-300 text-black text-sm rounded-md">
+      <div *ngIf="showBill && !underCredit" class="mx-1 p-2 bg-blue-300 text-black text-xs rounded-md">
         <b>Wallet balance</b>: {{walletBalance}} PHP
-
       </div>
-      <div class="mx-1 p-2 bg-blue-300 text-black text-sm rounded-md">
+      <div *ngIf="showBill && underCredit" class="mx-1 p-2 bg-blue-300 text-red-500 text-xs rounded-md">
+        <b>Wallet balance</b>: {{walletBalance}} PHP
+      </div>
+      <div class="mx-1 p-2 bg-blue-300 text-black text-xs rounded-md">
         <b>Total bill</b>: {{bill}} PHP
       </div>
     </div>

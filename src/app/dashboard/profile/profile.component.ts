@@ -388,21 +388,22 @@ export class ProfileComponent implements OnInit {
   endBooking(booking_id:string){
     this.accepterid = localStorage.getItem("accepter_id")
     this.userid = localStorage.getItem("user_id")
-    this.userService.endBooking(booking_id, this.overtimeCharge, '0')
-    this.userService.bookingCharge(booking_id)
+    console.log("end booking....")
+    this.userService.totalBill(booking_id)
     .then(res => res.json())
     .then(res => {
-
+      console.log("total bill....")
       this.userService.chargeWallet(this.accepterid, this.userid, res.amount )
-      this.userService.chargeWallet(this.accepterid, this.userid, res.amount )
-      this.userService.chargeWallet(this.accepterid, this.userid, res.overtime )
-      this.userService.chargeWallet(this.accepterid, this.userid, res.rental_charge )
       this.userService.listBookingwaiting(this.user_id, 'accepter','false')
       this.userService.listBookingaccepted(this.user_id, 'accepter','true')
       this.userService.listBookingHistory(this.user_id, 'accepter','ended')
-      window.location.reload();
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+
 
    })
+   this.userService.endBooking(booking_id, this.overtimeCharge, '0')
 
 
     ///150 per hr regular
