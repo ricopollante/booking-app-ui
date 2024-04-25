@@ -40,6 +40,7 @@ export class MapComponent implements OnInit {
   userid:any
   accepterid:any
   channelid:any
+  isCaregiver: boolean
   constructor(private userService: UserService){
     this.accepterid = localStorage.getItem("accepter_id")
     this.userid = localStorage.getItem("user_id")
@@ -50,7 +51,7 @@ export class MapComponent implements OnInit {
     this.srcLat = 14.615436707493016
     this.srcLong = 121.18302593231203
     this.token = localStorage.getItem("user_token");
-
+    this.isCaregiver = false
     // this.socket.on("connect_error", (err) => {
     //   console.log(`connect_error due to ${err.message}`);
     // });
@@ -65,6 +66,12 @@ export class MapComponent implements OnInit {
         this.srcLat = data.lat;
         this.srcLong = data.long;
         this.markers[1].setLatLng({ lat: data.lat, lng: data.long });
+        if (data.usertype==2){
+          this.isCaregiver = true
+        }
+        if (data.usertype==3){
+          this.isCaregiver = false
+        }
       }
     )
     this.userService.locDst.subscribe( //UPDATE DSTINATION
@@ -72,6 +79,12 @@ export class MapComponent implements OnInit {
         this.destLat = data.lat;
         this.destLong = data.long;
         this.markers[0].setLatLng({ lat: data.lat, lng: data.long });
+        if (data.usertype==2){
+          this.isCaregiver = true
+        }
+        if (data.usertype==3){
+          this.isCaregiver = false
+        }
       }
     )
 
@@ -168,9 +181,15 @@ userCurrentPosition = async () => { // GET USER CURRENT POSITION
       const marker = this.generateMarker(data, index);
       //marker.addTo(this.map).bindPopup(`<b>${data.position.lat},  ${data.position.lng}</b>`);
       if(index == 1){
-        marker.addTo(this.map).bindPopup(`<b>SERVICE PROVIDER</b>`).openPopup();
+        if(this.isCaregiver){
+          marker.addTo(this.map).bindPopup(`<b>CAREGIVER</b>`).openPopup();
+        }
+        else{
+          marker.addTo(this.map).bindPopup(`<b>HOUSEKEEPER</b>`).openPopup();
+        }
+
       }
-      if(index ==0){
+      if(index == 0){
         marker.addTo(this.map).bindPopup(`<b>USER</b>`).openPopup();
       }
       this.map.panTo(data.position);
