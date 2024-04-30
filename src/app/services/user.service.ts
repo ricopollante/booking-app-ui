@@ -787,7 +787,7 @@ cancelBook(id:string){
 declineBook(id:string){
   var formdata = new FormData();
   formdata.append("id", id);
-  return this.fetchWithRandomHost( '/book/service/decline',   {
+  return this.fetchWithRandomHost( '/book/service/cancel',   {
     method: 'POST',
     headers: {
     },

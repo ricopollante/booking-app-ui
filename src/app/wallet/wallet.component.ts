@@ -16,12 +16,14 @@ wallet:any
 walletTrans:any
 token: any;
 user_id: any
+walletAmount: any
 constructor(private userService: UserService){
 this.isActivity = false
 this.isTopUp = false
 this.isWithdraw = false
 this.token = localStorage.getItem("user_token");
 this.userService.getProfile(this.token)
+
 .then(res => res.json())
 .then(res => {
   if (res){
@@ -32,6 +34,7 @@ this.userService.getProfile(this.token)
       .then(res => res.json())
       .then(res => {
         this.wallet = res;
+        this.walletAmount = res.amount
         console.log(res)
       })
         this.userService.readWalletTrans(res.user_id)
@@ -71,12 +74,18 @@ deposit(){
 }
 
 withdraw(){
-  this.userService.withdrawWallet(this.user_id, this.amountWithdraw)
+  if(this.wallet.amount < this.amountWithdraw){
+    this.userService.toastError('Error', 'Insufficient Funds')
+  }
+  else{
+    this.userService.withdrawWallet(this.user_id, this.amountWithdraw)
   this.userService.toastSuccess('Success', 'Amount withdrawed')
   setTimeout(() => {
     this.isTopUp = false
     window.location.reload();
   }, 3000);
+  }
+
 }
 
 
