@@ -1,3 +1,12 @@
+<div>
+  <div (click)="isShowServices && hideServices()" class=" my-8">
+    <div class="rounded-full p-2 sm:p-4 text-center flex flex-row w-full justify-start">
+      <img class="my-4 w-4 h-4 m-2" src="assets/back.png" alt="">
+      <p class="text-xl text-center font-semibold sm:text-xs mt-4">Back </p>
+    </div>
+  </div>
+</div>
+
 <div *ngIf="isShowServices">
     <div class="mb-36" *ngIf="isShowBooking && !showBookingList">
       <div>

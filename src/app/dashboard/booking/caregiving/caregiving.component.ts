@@ -63,6 +63,23 @@ export class CaregivingComponent implements OnInit{
 
   ngOnInit(): void {
 
+    this.userService.isServiceForm.subscribe(
+      (data: any) =>{
+        if(!data){
+          this.isServerStaffList = true
+          console.log('hide service form......')
+        }
+    })
+
+    this.userService.isStaffServerlist.subscribe(
+      (data: any) =>{
+        if(!data){
+          this.isServerStaffList = false;
+          console.log('hide service form......')
+        }
+    })
+
+
     this.userCurrentPosition()
 
 
@@ -196,6 +213,7 @@ export class CaregivingComponent implements OnInit{
 
 
   showStaffServers(service:any){
+    this.userService.showStaffserverlist()
     this.isServerStaffList = true;
     this.serviceType = service;
     this.userService.getServices()
@@ -219,6 +237,7 @@ export class CaregivingComponent implements OnInit{
     this.isShowServiceForm = this.serviceType;
     this.isServerStaffList = false;
     this.showBill = true
+    this.userService.serviceFormEnable()
 
   }
 

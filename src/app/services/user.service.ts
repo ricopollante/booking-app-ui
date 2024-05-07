@@ -17,11 +17,14 @@ export class UserService {
   bookinglistHistory = new Subject<any>();
   channels = new Subject<any>();
   messages = new Subject<any>();
+  isServiceForm = new Subject<any>();
+  isStaffServerlist = new Subject<any>();
   hosts: string[] = [
     'https://kindly-massive-herring.ngrok-free.app/',
     'https://minnow-elegant-cicada.ngrok-free.app/',
     'https://direct-grubworm-vigorously.ngrok-free.app/',
-    'https://urgently-better-oriole.ngrok-free.app/'
+    'https://urgently-better-oriole.ngrok-free.app/',
+    'https://causal-hedgehog-wholly.ngrok-free.app/'
     // Add more URLs as needed
   ];
   currentHostIndex = 0;
@@ -848,7 +851,18 @@ totalBill(servicebook:string){
 })
 }
 
+serviceFormEnable(){
+  this.isServiceForm.next(true)
+}
+ hideServiceForm(){
+  this.isServiceForm.next(false)
+ }
 
+ showStaffserverlist(){
+  this.isStaffServerlist.next(true)
+ }
 
-
+ hideStaffserverlist(){
+  this.isStaffServerlist.next(false)
+ }
 }

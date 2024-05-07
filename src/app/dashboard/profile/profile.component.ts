@@ -51,6 +51,8 @@ export class ProfileComponent implements OnInit {
   regularCharge: any
   accepterid: any
   userid:any
+  isServiceForm: boolean
+  isStaffServerlist: boolean
   private socket = io('https://9059-66-85-26-53.ngrok-free.app',{
     extraHeaders: {
       "ngrok-skip-browser-warning" : "69420"
@@ -82,6 +84,8 @@ export class ProfileComponent implements OnInit {
     this.isCaregiver = false;
     this.isShowCaregiverservices = false;
     this.isShowHousekeeperservices = false;
+    this.isServiceForm = false
+    this.isStaffServerlist = false
     console.log(this.token)
     this.userService.getProfile(this.token)
     .then(res => res.json())
@@ -215,6 +219,18 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+
+    this.userService.isServiceForm.subscribe(
+      (data: any) =>{
+      this.isServiceForm = true
+      })
+
+      this.userService.isStaffServerlist.subscribe(
+        (data: any) =>{
+        this.isStaffServerlist = true
+        })
+
   }
 
   showCaregiverservices(){
@@ -226,6 +242,7 @@ export class ProfileComponent implements OnInit {
     this.isShowHousekeeperservices = true;
     this.isShowCaregiverservices = false;
   }
+
 
 
   showBooking(){
@@ -279,6 +296,38 @@ export class ProfileComponent implements OnInit {
 
   showServices(){
     this.isShowServices = true;
+  }
+
+  hideServices(){
+    if(this.isStaffServerlist){
+      this.userService.hideStaffserverlist()
+      this.isStaffServerlist = false
+      this.userService.serviceFormEnable()
+      this.isServiceForm = true
+    }
+    else{
+      if(this.isServiceForm){
+        this.userService.hideServiceForm()
+        this.isServiceForm = false
+        console.log('hide service form...')
+      }
+      else{
+        if(this.isShowServices && !this.isShowHousekeeperservices && !this.isShowCaregiverservices){
+          this.isShowServices = false;
+        }
+        else if(this.isShowServices && this.isShowHousekeeperservices && !this.isShowCaregiverservices){
+          this.isShowHousekeeperservices = false
+          this.isShowCaregiverservices = false;
+        }
+        else if(this.isShowServices && !this.isShowHousekeeperservices && this.isShowCaregiverservices){
+          this.isShowHousekeeperservices = false
+          this.isShowCaregiverservices = false;
+        }
+      }
+    }
+
+
+
   }
 
   acceptBooking(booking_id:string, receiver_id:string){
