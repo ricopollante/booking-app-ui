@@ -32,4 +32,9 @@ constructor(private userService: UserService){
 
   }
 
+  logoutUser(){
+    this.userService.logout()
+    this.userService.showLoginPage()
+  }
+
 }

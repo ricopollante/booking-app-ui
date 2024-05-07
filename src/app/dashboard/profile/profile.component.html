@@ -326,14 +326,12 @@
 
               </div>
 
-                <button (click)="startTimer(booking.id)" *ngIf="usertype=='CAREGIVER' || usertype=='HOUSEKEEPER' "  class="text-center w-full bg-blue-500 text-xs hover:bg-blue-700 text-white font-normal py-2 rounded ml-4 mt-4">
+                <button (click)="startTimer(booking.id)" *ngIf="usertype=='CAREGIVER' || usertype=='HOUSEKEEPER' "  class="text-center w-full bg-blue-500 text-xs hover:bg-blue-700 text-white font-normal py-4 px-6 rounded ml-4 mt-4">
                   Start
                 </button>
-                <button (click)="endBooking(booking.id)" *ngIf="usertype=='USER'" class="text-center w-full bg-blue-500 text-xs hover:bg-blue-700 text-white font-normal py-2 rounded ml-4 mt-4">
+                <button (click)="endBooking(booking.id)" *ngIf="usertype=='USER'" class="text-center w-full bg-red-400 text-xs hover:bg-blue-700 text-white font-normal py-4 px-6 rounded ml-4 mt-4">
                   END
                 </button>
-
-
             </div>
       </div>
   </div>
