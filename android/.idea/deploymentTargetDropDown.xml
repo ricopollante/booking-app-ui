@@ -10,13 +10,12 @@
               <deviceKey>
                 <Key>
                   <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="C:\Users\gigabyte_rico\.android\avd\Medium_Phone_API_31.avd" />
+                  <value value="C:\Users\gigabyte_rico\.android\avd\XIAOMI_NOTE_10_PRO.avd" />
                 </Key>
               </deviceKey>
             </Target>
           </targetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2024-04-09T08:25:01.907792900Z" />
-          <multipleDevicesSelectedInDropDown value="true" />
+          <timeTargetWasSelectedWithDropDown value="2024-05-08T05:21:30.917541600Z" />
           <targetsSelectedWithDialog>
             <Target>
               <type value="QUICK_BOOT_TARGET" />

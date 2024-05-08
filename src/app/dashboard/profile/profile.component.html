@@ -195,7 +195,7 @@
 </div>
 
 <div *ngIf="usertype=='CAREGIVER' || usertype=='HOUSEKEEPER' || usertype=='USER' && !isShowServices" class="w-full">
-  <div (click)="showServices()" *ngIf="usertype=='USER'" class="flex flex-row w-full justify-end">
+  <div (click)="showServices()" *ngIf="usertype=='USER'" class="flex flex-row justify-end  w-28 ml-72">
     <p class="text-black text-right my-2 font-semibold text-xs">Book a service</p>
     <img class="w-5 h-5 ml-2 mt-1.5" src="assets/right-arrow.png" alt="">
   </div>
