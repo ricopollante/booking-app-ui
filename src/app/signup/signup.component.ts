@@ -89,7 +89,7 @@ async signUpGoogle() {
   //User Authentication
   try {
     const user: User = await GoogleAuth.signIn();
-    console.log(user)
+    console.log('google debug...',user)
     this.userService.debugger(JSON.stringify(user));
     this.isMobile = true;
     this.showSignUpForm = true;
@@ -118,7 +118,7 @@ async signUpGoogle() {
     })
   }
   catch (error) {
-    this.userService.debugger(String(error));
+    this.userService.debugger(JSON.stringify(error));
   }
 }
 
@@ -269,9 +269,9 @@ CARECOM APP`
         this.ec_fullname, this.ec_relationship, this.ec_mobile, "3",this.valid_id, this.firstname, '', this.username, this.password, this.gender, this.rate)
     }
 
-  
+
     this.userService.toastSuccess('Success', 'Housekeeper Sign Up successfully')
-   
+
     setTimeout(() => {
       this.document.location.href = "/login"
     }, 3000);

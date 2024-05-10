@@ -62,7 +62,7 @@ userInfo: string;
 
     }
     catch (error) {
-      this.userService.debugger(String(error));
+      this.userService.debugger(JSON.stringify(error));
     }
   }
 

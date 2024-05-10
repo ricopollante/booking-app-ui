@@ -260,16 +260,16 @@
 
             </div>
             <div  class="w-full h-20 flex flex-col items-end justify-center">
-                <button (click)="acceptBooking(booking.id, booking.user)" *ngIf="usertype=='CAREGIVER' || usertype=='HOUSEKEEPER' "  class="text-center w-1/2 bg-blue-500 text-xs hover:bg-blue-700 text-white font-normal py-2 px-4 rounded  mt-4">
+                <button (click)="acceptBooking(booking.id, booking.user)" *ngIf="usertype=='CAREGIVER' || usertype=='HOUSEKEEPER' "  class="text-center w-1/2 bg-blue-500 text-xs hover:bg-blue-700 text-white font-normal py-4 px-10 rounded  mt-2">
                   Accept
                 </button>
-                <button (click)="decline(booking.id)" *ngIf="usertype=='CAREGIVER' || usertype=='HOUSEKEEPER' "  class="text-center w-1/2 bg-red-500 text-xs hover:bg-red-700 text-white font-normal py-2 px-4 my-2 rounded  mt-4">
+                <button (click)="decline(booking.id)" *ngIf="usertype=='CAREGIVER' || usertype=='HOUSEKEEPER' "  class="text-center w-full bg-red-500 text-xs hover:bg-red-700 text-white font-normal py-4 px-10 my-2 rounded  mt-2">
                   Decline
                 </button>
-                <button *ngIf="usertype=='USER'" class="text-center w-1/2 bg-blue-500 text-xs hover:bg-blue-700 text-white font-normal py-2 px-0 rounded mt-4">
+                <button *ngIf="usertype=='USER'" class="text-center w-full bg-blue-500 text-xs hover:bg-blue-700 text-white font-normal py-4 px-10 rounded mt-2">
                   Waiting
                 </button>
-                 <button (click)="cancel(booking.id)" *ngIf="usertype=='USER'" class="text-center w-1/2 bg-red-500 text-xs hover:bg-red-700 text-white font-normal py-2 px-0 rounded mt-4">
+                 <button (click)="cancel(booking.id)" *ngIf="usertype=='USER'" class="text-center w-full bg-red-500 text-xs hover:bg-red-700 text-white font-normal py-4 px-10 rounded mt-2">
                   Cancel
                 </button>
             </div>
@@ -379,10 +379,10 @@
 
             </div>
             <div class="flex flex-col">
-              <button *ngIf="usertype=='CAREGIVER' || usertype=='HOUSEKEEPER' || usertype=='USER' "  class="text-center w-full bg-blue-500 text-xs hover:bg-blue-700 text-white font-normal py-2 px-4 rounded  mt-4">
+              <button *ngIf="usertype=='CAREGIVER' || usertype=='HOUSEKEEPER' || usertype=='USER' "  class="text-center w-full bg-blue-500 text-xs hover:bg-blue-700 text-white font-normal py-4 px-10 rounded  mt-4">
                Receipt
               </button>
-              <button (click)="cancel(booking.id)" *ngIf="usertype=='CAREGIVER' || usertype=='HOUSEKEEPER' || usertype=='USER'"  class="text-center w-full bg-red-500 text-xs hover:bg-red-700 text-white font-normal py-2 px-4 my-2 rounded  mt-4">
+              <button (click)="cancel(booking.id)" *ngIf="usertype=='CAREGIVER' || usertype=='HOUSEKEEPER' || usertype=='USER'"  class="text-center w-full bg-red-500 text-xs hover:bg-red-700 text-white font-normal py-4 px-10 my-2 rounded  mt-4">
                 Delete
               </button>
             </div>
